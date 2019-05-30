@@ -1,0 +1,13 @@
+/* 
+  Localizable.strings
+  Cesium
+
+  Created by Jonathan Foucher on 30/05/2019.
+  Copyright © 2019 Jonathan Foucher. All rights reserved.
+*/
+
+"password_placeholder"="Mot de passe";
+"identifier_placeholder" = "Identifiant secret";
+"login_button_label"="Connection";
+"default_node"="g1.duniter.fr:10901";
+"default_data_host"="https://g1.data.duniter.fr";

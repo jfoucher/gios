@@ -7,14 +7,23 @@
 //
 
 import UIKit
+import Sodium
+import CryptoSwift
 
-class FirstViewController: UIViewController {
+
+
+class FirstViewController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
+    
+    @IBAction func handleLoginAction(_ sender: Any) {
 
-
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        let viewControllerB = storyBoard.instantiateViewController(withIdentifier: "ProfileView") as! ProfileViewController
+        self.present(viewControllerB, animated:true, completion:nil)
+    }
 }
 
