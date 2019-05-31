@@ -39,7 +39,7 @@ struct Transaction: Codable {
 
 
 struct ParsedTransaction {
-    var amount: Int
+    var amount: Decimal
     var time: Int
     var inputs: [String] = []
     var sources: [String] = []
@@ -71,39 +71,40 @@ struct ParsedTransaction {
         self.block_number = tx.block_number!
         
         let total = tx.outputs.reduce(0) {
-            (sum: Int, output: String) -> Int in
+            (sum: Decimal, output: String) -> Decimal in
             let outputArray = output.components(separatedBy: ":")
-            
-            print(outputArray)
-            
-            let outputBase = Int(outputArray[1]);
-            let outputAmount = NSDecimalNumber(decimal: pow(Decimal(Int(outputArray[0])!), outputBase!));
 
-            let outputCondition = outputArray[2];
+            let outputBase = Int(outputArray[1])!
+            let outputAmount = powBase(amount: Decimal(Int(outputArray[0])!), base: outputBase)
+
+            let outputCondition = outputArray[2]
             let pattern = "SIG\\(([0-9a-zA-Z]+)\\)"
 
-            let sigMatches = self.matches(for: pattern, in: outputCondition)
-            
+            var sigMatches:[String] = []
             guard let regex = try? NSRegularExpression(pattern: pattern) else { return 0 }
+            
             let range = NSRange(location: 0, length: outputCondition.utf16.count)
             let m = regex.matches(in: outputCondition, options: [], range: range)
             
             let res =  m.map { match in
-                return (0..<match.numberOfRanges).map {
-                    let rangeBounds = match.range(at: $0)
-                    guard let range = Range(rangeBounds, in: text) else {
+                return (0..<match.numberOfRanges).map { (a) -> String in
+                    let rangeBounds = match.range(at: a)
+                    guard let range = Range(rangeBounds, in: outputCondition) else {
                         return ""
                     }
-                    return String(text[range])
+                    return String(outputCondition[range])
                 }
             }
+            if (res.count > 0) {
+                sigMatches = res[0]
+            }
             
-            if (sigMatches.count > 0) {
+            if ( sigMatches.count > 1) {
                 let outputPubkey = sigMatches[1];
                 
                 if (outputPubkey == pubKey) { // output is for the wallet
                     if (!walletIsIssuer) {
-                        return sum + Int(truncating: outputAmount);
+                        return sum + outputAmount;
                     }
                 }
                 else { // output is for someone else
@@ -111,7 +112,7 @@ struct ParsedTransaction {
                         otherReceiver = outputPubkey;
                     }
                     if (walletIsIssuer) {
-                        return sum - Int(truncating: outputAmount);
+                        return sum - outputAmount;
                     }
                 }
             
@@ -131,7 +132,8 @@ struct ParsedTransaction {
             return sum
         }
         
-        let txPubkey = amount > 0 ? otherIssuer : otherReceiver;
+        let txPubkey = total > 0 ? otherIssuer : otherReceiver;
+        
         let time = tx.time != nil ? tx.time : tx.blockstampTime;
         self.time = time!
         self.amount = total
@@ -151,18 +153,8 @@ struct ParsedTransaction {
 //        }
     }
     
-    func matches(for regex: String, in text: String) -> [String] {
-        
-        do {
-            let regex = try NSRegularExpression(pattern: regex)
-            let results = regex.matches(in: text, range: NSRange(text.startIndex..., in: text))
-            return results.map {
-                String(text[Range($0.range, in: text)!])
-            }
-        } catch let error {
-            print("invalid regex: \(error.localizedDescription)")
-            return []
-        }
+    func powBase(amount: Decimal, base: Int) -> Decimal {
+        return base <= 0 ? amount : amount * pow(10, base);
     }
 }
 

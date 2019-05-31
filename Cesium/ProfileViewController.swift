@@ -123,7 +123,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             }
             
             let transaction = sects[indexPath[0]].transactions[indexPath[1]]
-            print(transaction)
+
             let pk = transaction.pubKey
             cell.name?.text = ""
             cell.publickey?.text = pk
