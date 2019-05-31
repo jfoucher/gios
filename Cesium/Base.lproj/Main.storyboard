@@ -19,25 +19,39 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" tag="12" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="PROFILE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bup-PV-GuN">
-                                <rect key="frame" x="105" y="389" width="205" height="119"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" tag="12" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="PROFILE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bup-PV-GuN">
+                                <rect key="frame" x="105" y="509" width="205" height="119"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="zNL-vG-hky" userLabel="avatar">
+                                <rect key="frame" x="142" y="245" width="130" height="130"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="130" id="KuJ-yD-Ohh"/>
+                                    <constraint firstAttribute="width" constant="130" id="q1S-en-Jrb"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Bup-PV-GuN" firstAttribute="centerX" secondItem="iui-Kc-Y5g" secondAttribute="centerX" id="6ol-o8-UD8"/>
+                            <constraint firstItem="Bup-PV-GuN" firstAttribute="centerY" secondItem="iui-Kc-Y5g" secondAttribute="centerY" constant="120.5" id="7li-63-AWQ"/>
+                            <constraint firstItem="zNL-vG-hky" firstAttribute="centerX" secondItem="Bup-PV-GuN" secondAttribute="centerX" id="bna-JL-Ji0"/>
+                            <constraint firstItem="Bup-PV-GuN" firstAttribute="top" secondItem="zNL-vG-hky" secondAttribute="bottom" constant="179" id="ghd-bT-poO"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Eg2-pc-wyT"/>
                     </view>
                     <connections>
+                        <outlet property="avatar" destination="zNL-vG-hky" id="QG1-dZ-E6I"/>
                         <outlet property="name" destination="Bup-PV-GuN" id="Be2-4R-ChA"/>
+                        <outlet property="view" destination="iui-Kc-Y5g" id="gqw-3v-zn9"/>
                     </connections>
                 </viewController>
             </objects>
             <point key="canvasLocation" x="1753.6231884057972" y="-743.30357142857144"/>
         </scene>
-        <!--Logi-->
+        <!--Login-->
         <scene sceneID="hNz-n2-bh7">
             <objects>
                 <viewController id="9pv-A4-QxB" customClass="LoginViewController" customModule="Cesium" customModuleProvider="target" sceneMemberID="viewController">
@@ -45,9 +59,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <accessibility key="accessibilityConfiguration" identifier="login" label="Login screen">
+                            <bool key="isElement" value="YES"/>
+                        </accessibility>
                         <viewLayoutGuide key="safeArea" id="PQr-Ze-W5v"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Logi" leftItemsSupplementBackButton="YES" id="bDh-YP-161"/>
+                    <navigationItem key="navigationItem" title="Login" leftItemsSupplementBackButton="YES" id="bDh-YP-161"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
             </objects>
@@ -160,6 +177,7 @@
     </scenes>
     <resources>
         <image name="first" width="30" height="30"/>
+        <image name="logo" width="410" height="410"/>
         <image name="second" width="30" height="30"/>
     </resources>
 </document>

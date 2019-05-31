@@ -11,3 +11,6 @@
 "login_button_label"="Login";
 "default_node"="g1.duniter.fr:10901";
 "default_data_host"="https://g1.data.duniter.fr";
+"logout_button_label"="Logout";
+"account_tab_label"="Account";
+"login_tab_label"="Login";

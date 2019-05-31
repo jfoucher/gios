@@ -19,11 +19,26 @@ class LoginViewController: UIViewController {
     
     var password: UITextField = UITextField(frame: CGRect(x: 30, y: 380, width: UIScreen.main.bounds.width - 60, height: 40))
     
+    weak var delegate: LoginDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0 && UIScreen.main.bounds.height - 420 < keyboardSize.height {
+                self.view.frame.origin.y -= keyboardSize.height - 100
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if self.view.frame.origin.y != 0 {
+            self.view.frame.origin.y = 0
+        }
     }
     
 
@@ -31,11 +46,10 @@ class LoginViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         let image = UIImage(named: "logo")
         let imageView = UIImageView(image: image!)
-        imageView.frame = CGRect(x: 0, y: 60, width: 200, height: 200)
+        imageView.frame = CGRect(x: 0, y: 100, width: 150, height: 150)
         imageView.center.x = self.view.center.x
-        imageView.tag = 100
         self.view.addSubview(imageView)
-        
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "logout_button_label".localized(), style: .plain, target: nil, action: nil)
         self.secret.font = UIFont.systemFont(ofSize: 15)
         self.secret.borderStyle = UITextField.BorderStyle.roundedRect
         self.secret.autocorrectionType = UITextAutocorrectionType.no
@@ -45,7 +59,7 @@ class LoginViewController: UIViewController {
         self.secret.clearButtonMode = UITextField.ViewMode.whileEditing
         self.secret.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
         self.secret.isSecureTextEntry = true
-        self.secret.tag = 100
+
         self.secret.addTarget(self, action: #selector(onReturn), for: UIControl.Event.editingDidEndOnExit)
         
         self.password.font = UIFont.systemFont(ofSize: 15)
@@ -117,13 +131,13 @@ class LoginViewController: UIViewController {
                         //We have the profile data, save and display
                         if let profile = profileResponse._source {
                             //We have the profile data, save and display
-                            print(profile)
-                            DispatchQueue.main.async { // Make sure you're on the main thread here
-                                let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-                                let profileViewController = storyBoard.instantiateViewController(withIdentifier: "ProfileView") as! ProfileViewController
-                                profileViewController.profile = profile
-                                self.navigationController?.pushViewController(profileViewController, animated: true)
+                            print("in loginView")
+                            DispatchQueue.main.async {
+                                self.password.text = ""
+                                self.secret.text = ""
                             }
+                            
+                            self.delegate?.login(profile: profile)
                             
                         } else {
                             // display error message
@@ -143,6 +157,10 @@ class LoginViewController: UIViewController {
         } catch {
             print("error")
         }
+        
+    }
+    
+    func error() {
         
     }
 }

@@ -8,6 +8,9 @@
 
 "password_placeholder"="Mot de passe";
 "identifier_placeholder" = "Identifiant secret";
-"login_button_label"="Connection";
+"login_button_label"="Connexion";
 "default_node"="g1.duniter.fr:10901";
 "default_data_host"="https://g1.data.duniter.fr";
+"logout_button_label"="Déconnexion";
+"account_tab_label"="Compte";
+"login_tab_label"="Connexion";

@@ -11,19 +11,46 @@ import Sodium
 import CryptoSwift
 
 
-
 class FirstViewController: UINavigationController {
-
+    
+    weak var logindelegate: LoginDelegate?
+    weak var logoutdelegate: LogoutDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        let vc = self.viewControllers.first as! LoginViewController
+        vc.delegate = self
     }
     
-    @IBAction func handleLoginAction(_ sender: Any) {
+    func handleLogin(profile: Profile) {
+        DispatchQueue.main.async {
+            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+            let profileView = storyBoard.instantiateViewController(withIdentifier: "ProfileView") as! ProfileViewController
+            profileView.delegate = self.logoutdelegate
+            profileView.profile = profile
+            self.pushViewController(profileView, animated:true)
+            
+        }
+        
+    }
+    
+}
 
-        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        let viewControllerB = storyBoard.instantiateViewController(withIdentifier: "ProfileView") as! ProfileViewController
-        self.present(viewControllerB, animated:true, completion:nil)
+
+
+extension FirstViewController: LoginDelegate {
+    func login(profile: Profile) {
+        print("in delegate 1")
+        self.handleLogin(profile: profile)
+        self.logindelegate?.login(profile: profile)
     }
 }
 
+
+extension FirstViewController: LogoutDelegate {
+    func logout() {
+        print("logging out")
+        self.logoutdelegate?.logout()
+    }
+}
