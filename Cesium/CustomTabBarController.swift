@@ -8,12 +8,13 @@
 
 import Foundation
 import UIKit
+import SwipeableTabBarController
 
-class CustomTabBarController:  UITabBarController, UITabBarControllerDelegate {
+class CustomTabBarController: SwipeableTabBarController {
     
     override func viewDidLoad(){
         super.viewDidLoad()
-
+        self.swipeAnimatedTransitioning?.animationType = SwipeAnimationType.push
         self.viewControllers?.forEach({ (cont) in
             if (NSStringFromClass(type(of: cont)) == "Cesium.FirstViewController") {
                 let first = cont as! FirstViewController
@@ -21,6 +22,7 @@ class CustomTabBarController:  UITabBarController, UITabBarControllerDelegate {
                 first.logoutdelegate = self
             }
         })
+        self.isSwipeEnabled = false
         let tabBarControllerItems = self.tabBar.items
         if let tabArray = tabBarControllerItems {
             
@@ -50,6 +52,10 @@ protocol LogoutDelegate: class {
 extension CustomTabBarController: LoginDelegate {
     func login(profile: Profile) {
         DispatchQueue.main.async {
+            self.isSwipeEnabled = true
+            
+            profile.save()
+            
             let tabBarControllerItems = self.tabBar.items
             if let tabArray = tabBarControllerItems {
                 
@@ -66,6 +72,8 @@ extension CustomTabBarController: LoginDelegate {
 extension CustomTabBarController: LogoutDelegate {
     func logout() {
         DispatchQueue.main.async {
+            Profile.remove()
+            self.isSwipeEnabled = false
             let tabBarControllerItems = self.tabBar.items
             if let tabArray = tabBarControllerItems {
                 

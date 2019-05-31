@@ -10,6 +10,7 @@ target 'Cesium' do
   pod 'Sodium', '~> 0.8.0'
   pod 'CryptoSwift', :git => "https://github.com/krzyzanowskim/CryptoSwift", :branch => "master"
   pod 'Base58String', :git => 'https://github.com/cloutiertyler/Base58String.git'
+  pod 'SwipeableTabBarController'
 
   target 'CesiumTests' do
     inherit! :search_paths

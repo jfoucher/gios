@@ -15,49 +15,42 @@ struct ProfileResponse: Codable {
 }
 
 struct Profile: Codable {
+    var uid: String? = nil
     var address: String? = nil
     var city: String? = nil
     var title: String? = nil
     var issuer: String
-    var signature: String
-    var hash: String
+    var signature: String? = nil
+    var hash: String? = nil
     var socials: [Social]? = []
+    
+    init(issuer: String) {
+        self.issuer = issuer
+    }
+    
+    func save() {
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(self) {
+            UserDefaults.standard.set(encoded, forKey: "profile")
+        }
+    }
+    
+    static func remove() {
+        UserDefaults.standard.removeObject(forKey: "profile")
+    }
+    
+    static func load() -> Profile? {
+        if let savedProfile = UserDefaults.standard.object(forKey: "profile") as? Data {
+            let decoder = JSONDecoder()
+            if let loadedProfile = try? decoder.decode(Profile.self, from: savedProfile) {
+                return loadedProfile
+            }
+        }
+        return nil
+    }
 }
 struct Social: Codable {
     var url: String
     var type: String? = nil
 }
 
-
-//{
-//    "_id" = EEdwxSkAuWyHuYMt4eX5V81srJWVy7kUaEkft3CWLEiq;
-//    "_index" = user;
-//    "_source" =     {
-//        address = "N\U00b0 5 Lestap";
-//        avatar =         {
-//            "_content_type" = "image/png";
-//        };
-//        city = Albine;
-//        hash = B5B2FBABF490072400D728603EAC9961AE9244BAB0F5ACD8291A0B92F28E6789;
-//        issuer = EEdwxSkAuWyHuYMt4eX5V81srJWVy7kUaEkft3CWLEiq;
-//        signature = "suABbw+NJrYox3PRobgnFiZvwo/2PsvGjFVyaffrL+f3Um5pFtALeCrzqhmeewCE4UF6NKXEgv1vvnizLbpTDQ==";
-//        socials =         (
-//            {
-//                url = "jfoucher.com";
-//        },
-//            {
-//                type = facebook;
-//                url = "https://facebook.com/jfoucher";
-//        },
-//            {
-//                type = twitter;
-//                url = "https://twitter.com/jfoucher";
-//        }
-//        );
-//        time = 1498421895;
-//        title = "Foucher, Jonathan";
-//    };
-//    "_type" = profile;
-//    "_version" = 1;
-//    found = 1;
-//}

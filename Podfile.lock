@@ -6,17 +6,20 @@ PODS:
   - CryptoSwift (1.0.0)
   - SipHash (1.2.2)
   - Sodium (0.8.0)
+  - SwipeableTabBarController (2.1.1)
 
 DEPENDENCIES:
   - Base58String (from `https://github.com/cloutiertyler/Base58String.git`)
   - CryptoSwift (from `https://github.com/krzyzanowskim/CryptoSwift`, branch `master`)
   - Sodium (~> 0.8.0)
+  - SwipeableTabBarController
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - BigInt
     - SipHash
     - Sodium
+    - SwipeableTabBarController
 
 EXTERNAL SOURCES:
   Base58String:
@@ -39,7 +42,8 @@ SPEC CHECKSUMS:
   CryptoSwift: b91cc3e6902875f4baa91fdf1042c1344108a53b
   SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
   Sodium: 63c0ca312a932e6da481689537d4b35568841bdc
+  SwipeableTabBarController: 8f7f04275f510c5babb630f7be1161b5f28567e0
 
-PODFILE CHECKSUM: 39b215e3ac6662db936f2cc97b952a38e541cdeb
+PODFILE CHECKSUM: 47d023df1ea18ad9773d9bf92e6b3fc666698744
 
 COCOAPODS: 1.7.1

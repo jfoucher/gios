@@ -9,8 +9,14 @@
 "password_placeholder"="Mot de passe";
 "identifier_placeholder" = "Identifiant secret";
 "login_button_label"="Connexion";
-"default_node"="g1.duniter.fr:10901";
+"default_node"="https://g1.nordstrom.duniter.org";
 "default_data_host"="https://g1.data.duniter.fr";
 "logout_button_label"="Déconnexion";
 "account_tab_label"="Compte";
 "login_tab_label"="Connexion";
+"public_key_label"="Clé publique ";
+"account_does_not_exist_title"="Ce compte n'existe pas";
+"account_does_not_exist_message"="C'est peut-être parce que vous avez entré des données incorrectes. Dans ce cas pressez Réessayer pour essayer à nouveau.";
+/*  Si vous souhaitez créer un nouveau compte avec ces identifiants, appuyez sur Créer un compte. */
+"account_does_not_exist_cancel"="Réessayer";
+"account_does_not_exist_create"="Créer un compte";

@@ -11,20 +11,29 @@ import UIKit
 import Sodium
 import CryptoSwift
 
+enum PublicKeyError: Error {
+    case emptyFields
+    case couldNotCalculate
+}
 
-
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var secret: UITextField!
     @IBOutlet weak var password: UITextField!
     @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var publicKey: UILabel!
+    @IBOutlet weak var keyImage: UIImageView!
     
-    weak var delegate: LoginDelegate?
+    weak var loginDelegate: LoginDelegate?
+    weak var loginFailedDelegate: LoginFailedDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        self.keyImage.image = nil
+        self.publicKey.text = ""
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -55,113 +64,136 @@ class LoginViewController: UIViewController {
         imageView.center.x = self.view.center.x
         //self.view.addSubview(imageView)
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "logout_button_label".localized(), style: .plain, target: nil, action: nil)
-        self.secret.font = UIFont.systemFont(ofSize: 15)
-        self.secret.borderStyle = UITextField.BorderStyle.roundedRect
-        self.secret.autocorrectionType = UITextAutocorrectionType.no
-        self.secret.keyboardType = UIKeyboardType.default
-        self.secret.placeholder = "identifier_placeholder".localized()
-        self.secret.returnKeyType = UIReturnKeyType.done
-        self.secret.clearButtonMode = UITextField.ViewMode.whileEditing
-        self.secret.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
-        self.secret.isSecureTextEntry = true
-
-        self.secret.addTarget(self, action: #selector(onReturn), for: UIControl.Event.editingDidEndOnExit)
         
-        self.password.font = UIFont.systemFont(ofSize: 15)
+        
+        
+        self.secret.borderStyle = UITextField.BorderStyle.roundedRect
+        self.secret.placeholder = "identifier_placeholder".localized()
+        self.secret.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
+
+        self.secret.addTarget(self, action: #selector(fieldEditingChanged), for: UIControl.Event.editingChanged)
+        
         self.password.borderStyle = UITextField.BorderStyle.roundedRect
-        self.password.autocorrectionType = UITextAutocorrectionType.no
-        self.password.keyboardType = UIKeyboardType.default
         self.password.placeholder = "password_placeholder".localized()
-        self.password.returnKeyType = UIReturnKeyType.go
-        self.password.clearButtonMode = UITextField.ViewMode.whileEditing
         self.password.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
-        self.password.isSecureTextEntry = true
-        self.password.addTarget(self, action: #selector(onReturn), for: UIControl.Event.editingDidEndOnExit)
+        
+        self.password.addTarget(self, action: #selector(fieldEditingChanged), for: UIControl.Event.editingChanged)
         //sampleTextField.delegate = self
         //self.view.addSubview(self.secret)
         //self.view.addSubview(self.password)
 
         self.loginButton.setTitle("login_button_label".localized(), for: .normal)
         self.loginButton.layer.cornerRadius = 6
+        self.loginButton.addTarget(self, action: #selector(buttonAction), for: UIControl.Event.touchUpInside)
         
         //self.view.addSubview(button)
     }
     
-    @IBAction func onReturn() {
-        self.password.resignFirstResponder()
-        // do whatever you want...
-        print("enter")
-        self.buttonAction(sender: nil)
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == self.secret {
+            textField.resignFirstResponder()
+            self.password.becomeFirstResponder()
+        } else if textField == self.password {
+            textField.resignFirstResponder()
+            self.buttonAction()
+        }
+        return true
     }
     
-    @IBAction func buttonAction(sender: UIButton?) {
+    @objc func fieldEditingChanged(_ sender: Any) {
+        do {
+            let pk = try self.calculatePublicKey()
+            self.publicKey.text = pk
+            self.keyImage.image = UIImage(named:"key")
+        } catch {
+            self.error(message: "could not calculate public key", code: 0)
+            self.keyImage.image = nil
+            self.publicKey.text = ""
+        }
+    }
+    
+    func calculatePublicKey() throws -> String {
         let id: String = self.secret.text!
         let pass: String = self.password.text!
         
         let password: Array<UInt8> = Array(pass.utf8)
         let salt: Array<UInt8> = Array(id.utf8)
-        
-        do {
-            let seed = try Scrypt(password: password, salt: salt, dkLen: 32, N: 4096, r: 16, p: 1).calculate()
-            let sodium = Sodium()
-            let k = sodium.sign.keyPair(seed: seed)
-            if let key = k {
-                let encoded = Base58.base58FromBytes(key.publicKey)
-                print("Encoded string: \(encoded)")
-                
-                // We have the public key, make a request
-                
-                let url = URL(string: String(format: "%@/user/profile/%@?_source_exclude=avatar._content", "default_data_host".localized(), encoded))!
-                
-                let session = URLSession.shared
-                let task = session.dataTask(with: url, completionHandler: { data, response, error in
-                    if let type = response?.mimeType {
-                        guard type == "application/json" else {
-                            print("Wrong MIME type!")
-                            return
-                        }
-                    }
-                    guard let responseData = data else {
-                        print("NO DATA")
-                        return
-                    }
-                    
-                    let decoder = JSONDecoder()
-                    do {
-                        let profileResponse = try decoder.decode(ProfileResponse.self, from: responseData)
-                        //We have the profile data, save and display
-                        if let profile = profileResponse._source {
-                            //We have the profile data, save and display
-                            print("in loginView")
-                            DispatchQueue.main.async {
-                                self.password.text = ""
-                                self.secret.text = ""
-                            }
-                            
-                            self.delegate?.login(profile: profile)
-                            
-                        } else {
-                            // display error message
-                            print("Could not log you in")
-                        }
-                    } catch {
-                        print("error trying to convert data to JSON")
-                        print(error)
-                    }
-                })
-                
-                task.resume()
-                //https://g1.data.duniter.fr/user/profile/EEdwxSkAuWyHuYMt4eX5V81srJWVy7kUaEkft3CWLEiq?&_source_exclude=avatar._content
-                
-            }
-            
-        } catch {
-            print("error")
+        guard let seed = try? Scrypt(password: password, salt: salt, dkLen: 32, N: 4096, r: 16, p: 1).calculate() else {
+           throw PublicKeyError.couldNotCalculate
         }
+        let sodium = Sodium()
+        let k = sodium.sign.keyPair(seed: seed)
+        if let key = k {
+            let encoded = Base58.base58FromBytes(key.publicKey)
+            return encoded
+        }
+        throw PublicKeyError.couldNotCalculate
+    }
+    
+    @IBAction func buttonAction() {
+
+        // We have the public key, make a request
+        guard let pubK = try? self.calculatePublicKey() else {
+            return
+        }
+        
+        self.getRequirements(publicKey: pubK)
+        // TODO this checks if the user is in the API, but they could be only on the nodes
+        // Should we let them in even if the api is not aware ?
+        // https://g1.nordstrom.duniter.org/wot/requirements/9itUPU7CVJEHh5DszAYQvgdUvTDLUNkY6NngMfo3F18k
         
     }
     
-    func error() {
+    func getRequirements(publicKey: String) {
+        let url = String(format: "%@/wot/requirements/%@", "default_node".localized(), publicKey)
         
+        let request = Request(url: url)
+        
+        request.jsonDecodeWithCallback(type: IdentityResponse.self, callback: { identityResponse in
+            if let identities = identityResponse.identities {
+                // TODO think about how to handle multiple identities
+                if let ident = identities.first {
+                    self.getProfile(publicKey: publicKey, identity: ident)
+                }
+                
+                
+            } else {
+                // display error message
+                self.error(message: "Could not log you in", code: 12)
+            }
+        })
+    }
+    
+    func getProfile(publicKey: String, identity: Identity) {
+        let url = String(format: "%@/user/profile/%@?_source_exclude=avatar._content", "default_data_host".localized(), publicKey)
+        
+        let request = Request(url: url)
+        
+        request.jsonDecodeWithCallback(type: ProfileResponse.self, callback: { profileResponse in
+            var profile = Profile(issuer: publicKey)
+            profile.uid = identity.uid
+            profile.signature = identity.sig
+            
+            DispatchQueue.main.async {
+                self.password.text = ""
+                self.secret.text = ""
+                self.publicKey.text = ""
+                self.keyImage.image = nil
+            }
+            
+            if let fullProfile = profileResponse._source {
+                //We have the profile data, save and display
+                profile = fullProfile
+                profile.uid = identity.uid
+            }
+            
+            self.loginDelegate?.login(profile: profile)
+        })
+    }
+    
+    func error(message: String, code: Int) {
+        if (code == 12) {
+            self.loginFailedDelegate?.loginFailed(error: message)
+        }
     }
 }
