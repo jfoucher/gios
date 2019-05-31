@@ -48,6 +48,50 @@ struct Profile: Codable {
         }
         return nil
     }
+    
+    
+    static func getRequirements(publicKey: String, callback: ((Identity?) -> Void)?) {
+        let url = String(format: "%@/wot/requirements/%@", "default_node".localized(), publicKey)
+        
+        let request = Request(url: url)
+        
+        request.jsonDecodeWithCallback(type: IdentityResponse.self, callback: { identityResponse in
+            if let identities = identityResponse.identities {
+                // TODO think about how to handle multiple identities
+                if let ident = identities.first {
+                    callback?(ident)
+                    
+                }
+                
+                
+            } else {
+                // display error message
+                callback?(nil)
+            }
+        })
+    }
+    
+    static func getProfile(publicKey: String, identity: Identity, callback: ((Profile?) -> Void)?) {
+        let url = String(format: "%@/user/profile/%@?_source_exclude=avatar._content", "default_data_host".localized(), publicKey)
+        
+        let request = Request(url: url)
+        
+        request.jsonDecodeWithCallback(type: ProfileResponse.self, callback: { profileResponse in
+            var profile = Profile(issuer: publicKey)
+            profile.uid = identity.uid
+            profile.signature = identity.sig
+            
+            
+            
+            if let fullProfile = profileResponse._source {
+                //We have the profile data, save and display
+                profile = fullProfile
+                profile.uid = identity.uid
+            }
+            
+            callback?(profile)
+        })
+    }
 }
 struct Social: Codable {
     var url: String

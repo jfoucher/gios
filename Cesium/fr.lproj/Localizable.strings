@@ -20,3 +20,8 @@
 /*  Si vous souhaitez créer un nouveau compte avec ces identifiants, appuyez sur Créer un compte. */
 "account_does_not_exist_cancel"="Réessayer";
 "account_does_not_exist_create"="Créer un compte";
+"balance_label"="Solde : ";
+"sent"="Envoyées";
+"sending"="En cours d'envoi";
+"received"="Reçues";
+"receiving"="En cours de réception";

@@ -20,3 +20,8 @@
 /*  If you want to create a new account with these credential, press Create account. */
 "account_does_not_exist_cancel"="Try again";
 "account_does_not_exist_create"="Create account";
+"balance_label"="Balance: ";
+"sent"="Sent";
+"sending"="Sending";
+"received"="Received";
+"receiving"="Receiving";

@@ -137,59 +137,31 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
-        self.getRequirements(publicKey: pubK)
+        Profile.getRequirements(publicKey: pubK, callback: { identity in
+            if let ident = identity {
+                Profile.getProfile(publicKey: pubK, identity: ident, callback: { profile in
+
+                    DispatchQueue.main.async {
+                        self.password.text = ""
+                        self.secret.text = ""
+                        self.publicKey.text = ""
+                        self.keyImage.image = nil
+                    }
+                    if let prof = profile {
+                        self.loginDelegate?.login(profile: prof)
+                    }
+                })
+            } else {
+                self.error(message: "Could not log you in", code: 12)
+            }
+            
+        })
         // TODO this checks if the user is in the API, but they could be only on the nodes
         // Should we let them in even if the api is not aware ?
         // https://g1.nordstrom.duniter.org/wot/requirements/9itUPU7CVJEHh5DszAYQvgdUvTDLUNkY6NngMfo3F18k
         
     }
     
-    func getRequirements(publicKey: String) {
-        let url = String(format: "%@/wot/requirements/%@", "default_node".localized(), publicKey)
-        
-        let request = Request(url: url)
-        
-        request.jsonDecodeWithCallback(type: IdentityResponse.self, callback: { identityResponse in
-            if let identities = identityResponse.identities {
-                // TODO think about how to handle multiple identities
-                if let ident = identities.first {
-                    self.getProfile(publicKey: publicKey, identity: ident)
-                }
-                
-                
-            } else {
-                // display error message
-                self.error(message: "Could not log you in", code: 12)
-            }
-        })
-    }
-    
-    func getProfile(publicKey: String, identity: Identity) {
-        let url = String(format: "%@/user/profile/%@?_source_exclude=avatar._content", "default_data_host".localized(), publicKey)
-        
-        let request = Request(url: url)
-        
-        request.jsonDecodeWithCallback(type: ProfileResponse.self, callback: { profileResponse in
-            var profile = Profile(issuer: publicKey)
-            profile.uid = identity.uid
-            profile.signature = identity.sig
-            
-            DispatchQueue.main.async {
-                self.password.text = ""
-                self.secret.text = ""
-                self.publicKey.text = ""
-                self.keyImage.image = nil
-            }
-            
-            if let fullProfile = profileResponse._source {
-                //We have the profile data, save and display
-                profile = fullProfile
-                profile.uid = identity.uid
-            }
-            
-            self.loginDelegate?.login(profile: profile)
-        })
-    }
     
     func error(message: String, code: Int) {
         if (code == 12) {

@@ -13,9 +13,8 @@ let imageCache = NSCache<NSString, AnyObject>()
 
 
 extension UIImageView {
-    func loadImageUsingCache(withUrl urlString : String) {
+    func loadImageUsingCache(withUrl urlString : String, fail: ((Error?) -> Void)?) {
         let url = URL(string: urlString)
-        self.image = nil
         
         // check cached image
         if let cachedImage = imageCache.object(forKey: urlString as NSString) as? UIImage {
@@ -26,14 +25,15 @@ extension UIImageView {
         // if not, download image from url
         URLSession.shared.dataTask(with: url!, completionHandler: { (data, response, error) in
             if error != nil {
-                print(error!)
+                fail?(error!)
             }
-            
-            DispatchQueue.main.async {
-                if let image = UIImage(data: data!) {
+            if let image = UIImage(data: data!) {
+                DispatchQueue.main.async {
                     imageCache.setObject(image, forKey: urlString as NSString)
                     self.image = image
                 }
+            } else {
+                fail?(nil)
             }
             
         }).resume()

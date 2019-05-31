@@ -11,29 +11,25 @@ import Foundation
 struct TransactionResponse: Codable {
     var currency: String = "g1"
     var pubkey: String? = nil
-    var sources: [Transaction] = []
+    var history: History?
+}
+
+struct History: Codable {
+    var sent: [Transaction] = []
+    var received: [Transaction] = []
+    var sending: [Transaction] = []
+    var receiving: [Transaction] = []
 }
 
 struct Transaction: Codable {
-    var type: String? = nil
-    var noffset: Int = 0
-    var identifier: String? = nil
-    var amount: Int
-    var base: Int
-    var conditions: String? = nil
+    var version: Int
+    var received: Int? = nil
+    var hash: String? = nil
+    var block_number: Int? = nil
+    var time: Int? = nil
+    var comment: String? = nil
+    var issuers: [String] = []
+    var inputs: [String] = []
+    var outputs: [String] = []
+    var signatures: [String] = []
 }
-
-//        {
-//            "currency": "g1",
-//            "pubkey": "EEdwxSkAuWyHuYMt4eX5V81srJWVy7kUaEkft3CWLEiq",
-//            "sources": [
-//            {
-//            "type": "T",
-//            "noffset": 0,
-//            "identifier": "A888D00A7085DD1EEBABCD55A9B2F189FBD7E838E3776DB175857758FCE8AFB2",
-//            "amount": 500,
-//            "base": 0,
-//            "conditions": "SIG(EEdwxSkAuWyHuYMt4eX5V81srJWVy7kUaEkft3CWLEiq)"
-//            }
-//            ]
-//        }
