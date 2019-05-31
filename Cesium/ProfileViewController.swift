@@ -13,7 +13,7 @@ import CryptoSwift
 
 struct TransactionSection : Comparable {
     var type : String
-    var transactions : [Transaction]
+    var transactions : [ParsedTransaction]
     
     static func < (lhs: TransactionSection, rhs: TransactionSection) -> Bool {
         return lhs.type < rhs.type
@@ -123,8 +123,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             }
             
             let transaction = sects[indexPath[0]].transactions[indexPath[1]]
-
-            let pk = transaction.issuers.count > 0 ? transaction.issuers[0] : ""
+            print(transaction)
+            let pk = transaction.pubKey
             cell.name?.text = ""
             cell.publickey?.text = pk
             let imgurl = String(format: "%@/user/profile/%@/_image/avatar.png", "default_data_host".localized(), pk)
@@ -175,10 +175,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             
             if let history = transactionResponse.history {
                 self.sections = [
-                    TransactionSection.init(type: "sent", transactions: history.sent),
-                     TransactionSection.init(type: "received", transactions: history.received),
-                      TransactionSection.init(type: "sending", transactions: history.sending),
-                       TransactionSection.init(type: "receiving", transactions: history.receiving),
+                    TransactionSection.init(type: "sent", transactions: history.sent.map{ return ParsedTransaction(tx: $0, pubKey: pubKey) }),
+                     TransactionSection.init(type: "received", transactions: history.received.map{ return ParsedTransaction(tx: $0, pubKey: pubKey) }),
+                      TransactionSection.init(type: "sending", transactions: history.sending.map{ return ParsedTransaction(tx: $0, pubKey: pubKey) }),
+                       TransactionSection.init(type: "receiving", transactions: history.receiving.map{ return ParsedTransaction(tx: $0, pubKey: pubKey) }),
                 ]
                 
                 DispatchQueue.main.async { self.tableView?.reloadData() }

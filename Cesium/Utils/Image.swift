@@ -18,7 +18,9 @@ extension UIImageView {
         
         // check cached image
         if let cachedImage = imageCache.object(forKey: urlString as NSString) as? UIImage {
-            self.image = cachedImage
+            DispatchQueue.main.async {
+                self.image = cachedImage
+            }
             return
         }
         
