@@ -15,9 +15,9 @@ import CryptoSwift
 
 class LoginViewController: UIViewController {
     
-    var secret: UITextField = UITextField(frame: CGRect(x: 30, y: 300, width: UIScreen.main.bounds.width - 60, height: 40))
-    
-    var password: UITextField = UITextField(frame: CGRect(x: 30, y: 380, width: UIScreen.main.bounds.width - 60, height: 40))
+    @IBOutlet weak var secret: UITextField!
+    @IBOutlet weak var password: UITextField!
+    @IBOutlet weak var loginButton: UIButton!
     
     weak var delegate: LoginDelegate?
     
@@ -29,8 +29,13 @@ class LoginViewController: UIViewController {
     
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.view.frame.origin.y == 0 && UIScreen.main.bounds.height - 420 < keyboardSize.height {
-                self.view.frame.origin.y -= keyboardSize.height - 100
+            if self.view.frame.origin.y == 0 /*&& UIScreen.main.bounds.height - 420 < keyboardSize.height*/ {
+                var val = CGFloat(100.0)
+                if let frame = self.loginButton?.frame {
+                    val = CGFloat(UIScreen.main.bounds.height - frame.origin.y) - frame.height - 10
+                }
+                self.view.frame.origin.y -= CGFloat(keyboardSize.height) - val
+                
             }
         }
     }
@@ -48,7 +53,7 @@ class LoginViewController: UIViewController {
         let imageView = UIImageView(image: image!)
         imageView.frame = CGRect(x: 0, y: 100, width: 150, height: 150)
         imageView.center.x = self.view.center.x
-        self.view.addSubview(imageView)
+        //self.view.addSubview(imageView)
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "logout_button_label".localized(), style: .plain, target: nil, action: nil)
         self.secret.font = UIFont.systemFont(ofSize: 15)
         self.secret.borderStyle = UITextField.BorderStyle.roundedRect
@@ -73,17 +78,13 @@ class LoginViewController: UIViewController {
         self.password.isSecureTextEntry = true
         self.password.addTarget(self, action: #selector(onReturn), for: UIControl.Event.editingDidEndOnExit)
         //sampleTextField.delegate = self
-        self.view.addSubview(self.secret)
-        self.view.addSubview(self.password)
+        //self.view.addSubview(self.secret)
+        //self.view.addSubview(self.password)
+
+        self.loginButton.setTitle("login_button_label".localized(), for: .normal)
+        self.loginButton.layer.cornerRadius = 6
         
-        let button = UIButton(type: UIButton.ButtonType.system)
-        button.frame = CGRect(x: 30, y: UIScreen.main.bounds.height - 180, width:UIScreen.main.bounds.width - 60, height: 60)
-        button.tag = 100
-        button.setTitle("login_button_label".localized(), for: .normal)
-        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-        button.layer.cornerRadius = 6
-        
-        self.view.addSubview(button)
+        //self.view.addSubview(button)
     }
     
     @IBAction func onReturn() {
@@ -93,7 +94,7 @@ class LoginViewController: UIViewController {
         self.buttonAction(sender: nil)
     }
     
-    @objc func buttonAction(sender: UIButton?) {
+    @IBAction func buttonAction(sender: UIButton?) {
         let id: String = self.secret.text!
         let pass: String = self.password.text!
         
