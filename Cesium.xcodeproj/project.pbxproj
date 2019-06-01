@@ -69,7 +69,6 @@
 		AB04BF49229F539600B1111E /* CesiumUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CesiumUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB04BF4D229F539600B1111E /* CesiumUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CesiumUITests.swift; sourceTree = "<group>"; };
 		AB04BF4F229F539600B1111E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AB04BF5C229F583D00B1111E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		AB1AC3BB22A05F1100CDEEB7 /* Base58.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Base58.swift; path = ../Base58.swift; sourceTree = "<group>"; };
 		AB1AC3C022A060EB00CDEEB7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AB1AC3C222A060EF00CDEEB7 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -78,7 +77,6 @@
 		AB1AC3CB22A1600700CDEEB7 /* Identity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identity.swift; sourceTree = "<group>"; };
 		AB1AC3CD22A1686F00CDEEB7 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		AB1AC3CF22A17FD700CDEEB7 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
-		AB33BE61229FF6150003EEA3 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
 		AB33BE62229FF6150003EEA3 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		AB996F1722A06E02005966E2 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		AB996F1B22A08452005966E2 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -496,8 +494,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				AB04BF32229F539400B1111E /* Base */,
-				AB04BF5C229F583D00B1111E /* en */,
-				AB33BE61229FF6150003EEA3 /* fr */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
