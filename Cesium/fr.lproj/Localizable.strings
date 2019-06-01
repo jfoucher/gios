@@ -29,3 +29,4 @@
 "confirm_label"="Déconnexion";
 "cancel_label"="Rester connecté·e";
 "transaction_view_date_format"="Le %@ à %@";
+"transfer_button_label"="Virement";

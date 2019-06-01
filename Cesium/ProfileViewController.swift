@@ -43,6 +43,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var keyImage: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var avatar: UIImageView!
+    @IBOutlet weak var createTransaction: UIButton!
+    
     
     var profile: Profile? {
         didSet {
@@ -71,15 +73,26 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.avatar.clipsToBounds = true
             
             profile.getAvatar(imageView: self.avatar)
-            
+            // make key image white
             self.keyImage.tintColor = .white
             self.keyImage.image = UIImage(named: "key")?.withRenderingMode(.alwaysTemplate)
             
+            // Add image to send button
+            let imv = UIImage(named: "check")?.withRenderingMode(.alwaysTemplate)
+            
+            self.createTransaction.setImage(imv?.resize(width: 24), for: .normal)
+            self.createTransaction.setTitle("transfer_button_label".localized(), for: .normal)
+            let ctrl = self.navigationController as! FirstViewController
+            if (self.profile?.issuer == ctrl.profile?.issuer) {
+                self.createTransaction.removeFromSuperview()
+            }
+            // Make back button white
             let backItem = UIBarButtonItem()
             backItem.title = profile.title != nil ? profile.title : profile.uid
             backItem.tintColor = .white
             self.navigationItem.backBarButtonItem = backItem
             
+            // Make checkmark image white
             self.check.tintColor = .white
             self.check.image = UIImage(named: "check")?.withRenderingMode(.alwaysTemplate)
             
@@ -125,6 +138,11 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
 
     }
+    
+    @IBAction func createTransaction(_ sender: UIButton) {
+        
+    }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         if let sections = self.sections {
             //Only display sections with transactions
@@ -159,7 +177,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             if let tx = cell.transaction {
                 transactionView.transaction = tx
                 transactionView.currency = self.currency
-                self.navigationController?.pushViewController(transactionView, animated: true)
+                transactionView.isModalInPopover = true
+                
+                self.navigationController?.present(transactionView, animated: true, completion: nil)
+                //self.navigationController?.pushViewController(transactionView, animated: true)
             }
         //}
     }

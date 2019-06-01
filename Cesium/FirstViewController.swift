@@ -15,7 +15,7 @@ class FirstViewController: UINavigationController, UINavigationBarDelegate {
     var loggedOut: Bool = false
 
     var selectedProfile: Profile?
-    
+    var profile: Profile?
     
     
     override func viewDidLoad() {
@@ -36,6 +36,7 @@ class FirstViewController: UINavigationController, UINavigationBarDelegate {
             let profileView = storyBoard.instantiateViewController(withIdentifier: "ProfileView") as! ProfileViewController
             self.pushViewController(profileView, animated:true)
             profile.save()
+            self.profile = profile
             profileView.changeUserDelegate = self
             profileView.profile = profile
         }
@@ -60,6 +61,7 @@ class FirstViewController: UINavigationController, UINavigationBarDelegate {
             self.loggedOut = true
             print("removing profile")
             Profile.remove()
+            self.profile = nil
         }))
         
         alert.addAction(UIAlertAction(title: "cancel_label".localized(), style: .cancel, handler: nil))
