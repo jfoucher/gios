@@ -20,7 +20,7 @@ class Request {
         let task = session.dataTask(with: self.url, completionHandler: { data, response, error in
             if let type = response?.mimeType {
                 guard type == "application/json" else {
-                    print("Not JSON " + String(self.url.absoluteString) + type)
+                    print("Not JSON " + String(self.url.absoluteString) + " " + type)
                     fail?()
                     return
                 }

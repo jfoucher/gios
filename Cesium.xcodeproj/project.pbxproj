@@ -12,7 +12,6 @@
 		423EEC6332CFFBAC7BE0EA55 /* Pods_CesiumTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F9F18C04C898676C44F4926 /* Pods_CesiumTests.framework */; };
 		AB04BF2C229F539400B1111E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB04BF2B229F539400B1111E /* AppDelegate.swift */; };
 		AB04BF2E229F539400B1111E /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB04BF2D229F539400B1111E /* FirstViewController.swift */; };
-		AB04BF30229F539400B1111E /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB04BF2F229F539400B1111E /* SecondViewController.swift */; };
 		AB04BF33229F539400B1111E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB04BF31229F539400B1111E /* Main.storyboard */; };
 		AB04BF38229F539500B1111E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB04BF36229F539500B1111E /* LaunchScreen.storyboard */; };
 		AB04BF43229F539600B1111E /* CesiumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB04BF42229F539600B1111E /* CesiumTests.swift */; };
@@ -24,8 +23,6 @@
 		AB1AC3CC22A1600700CDEEB7 /* Identity.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1AC3CB22A1600700CDEEB7 /* Identity.swift */; };
 		AB1AC3CE22A1686F00CDEEB7 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1AC3CD22A1686F00CDEEB7 /* Image.swift */; };
 		AB1AC3D022A17FD700CDEEB7 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1AC3CF22A17FD700CDEEB7 /* Transaction.swift */; };
-		AB33BE5E229FF24E0003EEA3 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33BE5D229FF24E0003EEA3 /* CustomTabBarController.swift */; };
-		AB33BE60229FF2BC0003EEA3 /* ThirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33BE5F229FF2BC0003EEA3 /* ThirdViewController.swift */; };
 		AB996F1822A06E02005966E2 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB996F1722A06E02005966E2 /* Profile.swift */; };
 		AB996F1C22A08452005966E2 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB996F1B22A08452005966E2 /* LoginViewController.swift */; };
 		AB996F1E22A0847B005966E2 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB996F1D22A0847B005966E2 /* ProfileViewController.swift */; };
@@ -63,7 +60,6 @@
 		AB04BF28229F539400B1111E /* Cesium.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cesium.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB04BF2B229F539400B1111E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AB04BF2D229F539400B1111E /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
-		AB04BF2F229F539400B1111E /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		AB04BF32229F539400B1111E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AB04BF37229F539500B1111E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AB04BF39229F539500B1111E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -74,7 +70,7 @@
 		AB04BF4D229F539600B1111E /* CesiumUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CesiumUITests.swift; sourceTree = "<group>"; };
 		AB04BF4F229F539600B1111E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB04BF5C229F583D00B1111E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
-		AB1AC3BB22A05F1100CDEEB7 /* Base58.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base58.swift; sourceTree = "<group>"; };
+		AB1AC3BB22A05F1100CDEEB7 /* Base58.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Base58.swift; path = ../Base58.swift; sourceTree = "<group>"; };
 		AB1AC3C022A060EB00CDEEB7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AB1AC3C222A060EF00CDEEB7 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AB1AC3C522A1490B00CDEEB7 /* Source.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Source.swift; sourceTree = "<group>"; };
@@ -82,8 +78,6 @@
 		AB1AC3CB22A1600700CDEEB7 /* Identity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identity.swift; sourceTree = "<group>"; };
 		AB1AC3CD22A1686F00CDEEB7 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		AB1AC3CF22A17FD700CDEEB7 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
-		AB33BE5D229FF24E0003EEA3 /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
-		AB33BE5F229FF2BC0003EEA3 /* ThirdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
 		AB33BE61229FF6150003EEA3 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
 		AB33BE62229FF6150003EEA3 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		AB996F1722A06E02005966E2 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
@@ -179,13 +173,9 @@
 				AB996F1B22A08452005966E2 /* LoginViewController.swift */,
 				AB996F1D22A0847B005966E2 /* ProfileViewController.swift */,
 				ABD781B322A00AFE00574458 /* Assets.xcassets */,
-				AB04BF2F229F539400B1111E /* SecondViewController.swift */,
 				AB04BF31229F539400B1111E /* Main.storyboard */,
 				AB04BF36229F539500B1111E /* LaunchScreen.storyboard */,
 				AB04BF39229F539500B1111E /* Info.plist */,
-				AB33BE5D229FF24E0003EEA3 /* CustomTabBarController.swift */,
-				AB33BE5F229FF2BC0003EEA3 /* ThirdViewController.swift */,
-				AB1AC3BB22A05F1100CDEEB7 /* Base58.swift */,
 				AB1AC3C122A060EB00CDEEB7 /* Localizable.strings */,
 			);
 			path = Cesium;
@@ -212,6 +202,7 @@
 		AB1AC3C822A1574E00CDEEB7 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				AB1AC3BB22A05F1100CDEEB7 /* Base58.swift */,
 				AB1AC3C922A1575E00CDEEB7 /* Request.swift */,
 				AB1AC3CD22A1686F00CDEEB7 /* Image.swift */,
 				ABE007D122A2CDA10077C9C3 /* Currency.swift */,
@@ -454,9 +445,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB1AC3D022A17FD700CDEEB7 /* Transaction.swift in Sources */,
-				AB04BF30229F539400B1111E /* SecondViewController.swift in Sources */,
 				AB1AC3BC22A05F1100CDEEB7 /* Base58.swift in Sources */,
-				AB33BE5E229FF24E0003EEA3 /* CustomTabBarController.swift in Sources */,
 				ABE007D222A2CDA10077C9C3 /* Currency.swift in Sources */,
 				AB996F1822A06E02005966E2 /* Profile.swift in Sources */,
 				AB1AC3CA22A1575E00CDEEB7 /* Request.swift in Sources */,
@@ -465,7 +454,6 @@
 				AB996F1C22A08452005966E2 /* LoginViewController.swift in Sources */,
 				AB1AC3CC22A1600700CDEEB7 /* Identity.swift in Sources */,
 				ABE007D022A28D820077C9C3 /* TransactionViewController.swift in Sources */,
-				AB33BE60229FF2BC0003EEA3 /* ThirdViewController.swift in Sources */,
 				AB996F1E22A0847B005966E2 /* ProfileViewController.swift in Sources */,
 				AB04BF2C229F539400B1111E /* AppDelegate.swift in Sources */,
 				AB04BF2E229F539400B1111E /* FirstViewController.swift in Sources */,

@@ -24,8 +24,12 @@ class TransactionViewController: UIViewController {
     
     var sender: Profile? {
         didSet {
-            print("sender loaded")
+            print("got sender")
             DispatchQueue.main.async {
+                if ( self.sender?.title == nil || self.sender?.uid == nil) {
+                    print(self.sender)
+                }
+                
                 self.sender?.getAvatar(imageView: self.senderAvatar)
                 self.senderName.text = self.sender?.title != nil ?  self.sender?.title :  self.sender?.uid
             }
@@ -33,8 +37,11 @@ class TransactionViewController: UIViewController {
     }
     var receiver: Profile? {
         didSet {
-            print("receiver loaded")
+            print("got receiver")
             DispatchQueue.main.async {
+                if ( self.receiver?.title == nil || self.receiver?.uid == nil) {
+                    print(self.receiver)
+                }
                 self.receiver?.getAvatar(imageView: self.receiverAvatar)
                 self.receiverName.text = self.receiver?.title != nil ?  self.receiver?.title :  self.receiver?.uid
             }
@@ -79,7 +86,7 @@ class TransactionViewController: UIViewController {
             dateFormatter.dateFormat = "HH:mm:ss"
             let t = dateFormatter.string(from: date)
             self.date?.text = String(format: "transaction_view_date_format".localized(), d, t)
-            print(tx.comment)
+
             self.comment.text = tx.comment
             self.getSender(pubKey: tx.pubKey)
             if (tx.to.count > 0) {
@@ -93,8 +100,14 @@ class TransactionViewController: UIViewController {
     }
     
     func getSender(pubKey: String) {
+        print("getting sender for " + pubKey)
         Profile.getRequirements(publicKey: pubKey, callback: { identity in
-            Profile.getProfile(publicKey: pubKey, identity: identity, callback: { profile in
+            // Force getting profile from public key
+            var ident = identity
+            if (identity == nil) {
+                ident = Identity(pubkey: pubKey, uid: "", sig: nil, meta: nil, certifications: nil)
+            }
+            Profile.getProfile(publicKey: pubKey, identity: ident, callback: { profile in
                 if let prof = profile, let am = self.transaction?.amount {
                     //Reverse display if amount is negative
                     if (am < 0) {
@@ -102,21 +115,30 @@ class TransactionViewController: UIViewController {
                     } else {
                         self.sender = prof
                     }
-                    
+                } else {
+                   print("no profile for " + pubKey)
                 }
             })
         })
     }
     
     func getReceiver(pubKey: String) {
+        print("getting receiver for " + pubKey)
         Profile.getRequirements(publicKey: pubKey, callback: { identity in
-            Profile.getProfile(publicKey: pubKey, identity: identity, callback: { profile in
+            // Force getting profile from public key
+            var ident = identity
+            if (identity == nil) {
+                ident = Identity(pubkey: pubKey, uid: "", sig: nil, meta: nil, certifications: nil)
+            }
+            Profile.getProfile(publicKey: pubKey, identity: ident, callback: { profile in
                 if let prof = profile, let am = self.transaction?.amount {
                     if (am < 0) {
                         self.sender = prof
                     } else {
                         self.receiver = prof
                     }
+                } else {
+                    print("no profile for " + pubKey)
                 }
             })
         })
