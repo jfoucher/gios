@@ -85,8 +85,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             
             self.check.isHidden = true
             if let ident = profile.identity {
-                if (ident.certifications.count >= 5) {
-                    self.check.isHidden = false
+                if let certs = ident.certifications {
+                    if (certs.count >= 5) {
+                        self.check.isHidden = false
+                    }
                 }
             }
             
@@ -199,11 +201,12 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             
             // This is two requests per cell, maybe we should get all the users and work with that instead
             Profile.getRequirements(publicKey: pk, callback: { identity in
+                var ident = identity
                 if (identity == nil) {
-                    print(pk)
+                    ident = Identity(pubkey: pk, uid: "", sig: nil, meta: nil, certifications: nil)
                 }
 
-                Profile.getProfile(publicKey: pk, identity: identity, callback: { profile in
+                Profile.getProfile(publicKey: pk, identity: ident, callback: { profile in
                     if let prof = profile {
                         cell.profile = prof
                         prof.getAvatar(imageView: cell.avatar)

@@ -15,9 +15,9 @@ struct IdentityResponse: Codable {
 struct Identity: Codable {
     var pubkey: String
     var uid: String
-    var sig: String
-    var meta: Meta
-    var certifications: [Certification]
+    var sig: String?
+    var meta: Meta?
+    var certifications: [Certification]?
 }
 
 struct Certification: Codable {
