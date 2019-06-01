@@ -17,7 +17,7 @@ class NewTransactionViewController: UIViewController {
     @IBOutlet weak var senderAvatar: UIImageView!
     @IBOutlet weak var receiverAvatar: UIImageView!
     @IBOutlet weak var arrow: UIImageView!
-    @IBOutlet weak var transferTo: UILabel!
+
     @IBOutlet weak var senderBalance: UILabel!
     @IBOutlet weak var receiverName: UILabel!
     @IBOutlet weak var senderName: UILabel!
@@ -63,5 +63,26 @@ class NewTransactionViewController: UIViewController {
             })
         }
         
+    }
+    
+    @IBAction func cancel(sender: UIButton) {
+        print("cancel")
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func send(sender: UIButton) {
+        
+        guard let title = self.receiver?.title else { return  }
+        let msg = String(format: "transaction_confirm_message".localized(), "**montant**", title)
+        let alert = UIAlertController(title: "transaction_confirm_prompt".localized(), message: msg, preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: "transaction_confirm_button_label".localized(), style: .default, handler: {ac in
+            print("send")
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "transaction_cancel_button_label".localized(), style: .cancel, handler: nil))
+        
+        self.present(alert, animated: true)
     }
 }
