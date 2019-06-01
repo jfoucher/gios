@@ -28,3 +28,4 @@
 "logout_confirm_prompt"="Are you sure you want to logout?";
 "confirm_label"="Logout";
 "cancel_label"="Stay logged in";
+"transaction_view_date_format"="On the %@ at %@";

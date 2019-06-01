@@ -28,3 +28,4 @@
 "logout_confirm_prompt"="Êtes-vous sur·e de vouloir vous déconnecter ?";
 "confirm_label"="Déconnexion";
 "cancel_label"="Rester connecté·e";
+"transaction_view_date_format"="Le %@ à %@";

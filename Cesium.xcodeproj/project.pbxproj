@@ -31,6 +31,7 @@
 		AB996F1E22A0847B005966E2 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB996F1D22A0847B005966E2 /* ProfileViewController.swift */; };
 		ABD781B422A00AFE00574458 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABD781B322A00AFE00574458 /* Assets.xcassets */; };
 		ABE007D022A28D820077C9C3 /* TransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE007CE22A281370077C9C3 /* TransactionViewController.swift */; };
+		ABE007D222A2CDA10077C9C3 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE007D122A2CDA10077C9C3 /* Currency.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +91,7 @@
 		AB996F1D22A0847B005966E2 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		ABD781B322A00AFE00574458 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ABE007CE22A281370077C9C3 /* TransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewController.swift; sourceTree = "<group>"; };
+		ABE007D122A2CDA10077C9C3 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		B4A9576E045C516D7255FFE2 /* Pods_Cesium.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Cesium.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -212,6 +214,7 @@
 			children = (
 				AB1AC3C922A1575E00CDEEB7 /* Request.swift */,
 				AB1AC3CD22A1686F00CDEEB7 /* Image.swift */,
+				ABE007D122A2CDA10077C9C3 /* Currency.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -454,6 +457,7 @@
 				AB04BF30229F539400B1111E /* SecondViewController.swift in Sources */,
 				AB1AC3BC22A05F1100CDEEB7 /* Base58.swift in Sources */,
 				AB33BE5E229FF24E0003EEA3 /* CustomTabBarController.swift in Sources */,
+				ABE007D222A2CDA10077C9C3 /* Currency.swift in Sources */,
 				AB996F1822A06E02005966E2 /* Profile.swift in Sources */,
 				AB1AC3CA22A1575E00CDEEB7 /* Request.swift in Sources */,
 				AB1AC3C622A1490B00CDEEB7 /* Source.swift in Sources */,

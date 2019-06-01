@@ -43,9 +43,9 @@ struct Transaction: Codable, Comparable {
 
 
 struct ParsedTransaction: Comparable {
-    
     var transaction: Transaction
     var amount: Decimal
+
     var time: Int
     var inputs: [String] = []
     var sources: [String] = []

@@ -158,6 +158,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             
             if let tx = cell.transaction {
                 transactionView.transaction = tx
+                transactionView.currency = self.currency
                 self.navigationController?.pushViewController(transactionView, animated: true)
             }
         //}
@@ -184,7 +185,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             cell.date?.text = dateFormatter.string(from: date)
             
             let am = Double(truncating: transaction.amount as NSNumber)
-            let currency = self.formattedCurrency(currency: self.currency)
+            let currency = Currency.formattedCurrency(currency: self.currency)
             cell.amount?.setTitle(String(format: "%.2f \(currency)", am / 100), for: .normal)
             if (am <= 0) {
                 cell.amount?.backgroundColor = .none
@@ -295,7 +296,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         request.jsonDecodeWithCallback(type: SourceResponse.self, callback: { sourceResponse in
             let sources = sourceResponse.sources
-            let currency = self.formattedCurrency(currency: sourceResponse.currency)
+            let currency = Currency.formattedCurrency(currency: sourceResponse.currency)
             
             let amounts = sources.map {$0.amount}
             let total = amounts.reduce(0, +)
@@ -304,16 +305,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         }, fail: nil)
     }
     
-    func formattedCurrency(currency: String) -> String {
-        switch currency {
-        case "g1":
-            return "Ğ1"
-        case "g1du":
-            return "Ğ1DU"
-        default:
-            return currency
-        }
-    }
+    
     
 
 }
