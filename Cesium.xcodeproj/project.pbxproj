@@ -30,6 +30,7 @@
 		AB996F1C22A08452005966E2 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB996F1B22A08452005966E2 /* LoginViewController.swift */; };
 		AB996F1E22A0847B005966E2 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB996F1D22A0847B005966E2 /* ProfileViewController.swift */; };
 		ABD781B422A00AFE00574458 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABD781B322A00AFE00574458 /* Assets.xcassets */; };
+		ABE007D022A28D820077C9C3 /* TransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE007CE22A281370077C9C3 /* TransactionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +89,7 @@
 		AB996F1B22A08452005966E2 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		AB996F1D22A0847B005966E2 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		ABD781B322A00AFE00574458 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		ABE007CE22A281370077C9C3 /* TransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewController.swift; sourceTree = "<group>"; };
 		B4A9576E045C516D7255FFE2 /* Pods_Cesium.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Cesium.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -171,6 +173,7 @@
 				AB996F1622A06D9A005966E2 /* Models */,
 				AB04BF2B229F539400B1111E /* AppDelegate.swift */,
 				AB04BF2D229F539400B1111E /* FirstViewController.swift */,
+				ABE007CE22A281370077C9C3 /* TransactionViewController.swift */,
 				AB996F1B22A08452005966E2 /* LoginViewController.swift */,
 				AB996F1D22A0847B005966E2 /* ProfileViewController.swift */,
 				ABD781B322A00AFE00574458 /* Assets.xcassets */,
@@ -457,6 +460,7 @@
 				AB1AC3CE22A1686F00CDEEB7 /* Image.swift in Sources */,
 				AB996F1C22A08452005966E2 /* LoginViewController.swift in Sources */,
 				AB1AC3CC22A1600700CDEEB7 /* Identity.swift in Sources */,
+				ABE007D022A28D820077C9C3 /* TransactionViewController.swift in Sources */,
 				AB33BE60229FF2BC0003EEA3 /* ThirdViewController.swift in Sources */,
 				AB996F1E22A0847B005966E2 /* ProfileViewController.swift in Sources */,
 				AB04BF2C229F539400B1111E /* AppDelegate.swift in Sources */,

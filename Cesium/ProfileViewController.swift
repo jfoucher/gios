@@ -30,6 +30,7 @@ class TransactionTableViewCell: UITableViewCell {
     @IBOutlet weak var amount: UIButton!
     @IBOutlet weak var avatar: UIImageView!
     var profile: Profile?
+    var transaction: ParsedTransaction?
 }
 
 class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -63,6 +64,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.getAvatar(pubKey: profile.issuer)
             self.keyImage.tintColor = .white
             self.keyImage.image = UIImage(named: "key")?.withRenderingMode(.alwaysTemplate)
+            
+            let backItem = UIBarButtonItem()
+            backItem.title = profile.title != nil ? profile.title : profile.uid
+            self.navigationItem.backBarButtonItem = backItem
             
             self.check.tintColor = .white
             self.check.image = UIImage(named: "check")?.withRenderingMode(.alwaysTemplate)
@@ -131,6 +136,22 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
     }
     
+    func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        let cell = self.tableView.cellForRow(at: indexPath) as! TransactionTableViewCell
+        //DispatchQueue.main.async {
+            //let transactionView = self.storyboard!.instantiateViewController(withIdentifier: "MyTransactionView")
+            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let transactionView = storyBoard.instantiateViewController(withIdentifier: "MyTransactionView") as! TransactionViewController
+            
+            //if let tx = cell.transaction {
+                //transactionView.transaction = tx
+                //transactionView.isModalInPopover = true
+                transactionView.modalPresentationStyle = .currentContext
+                self.navigationController?.pushViewController(transactionView, animated:true)
+            //}
+        //}
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PrototypeCell", for: indexPath) as! TransactionTableViewCell
 
@@ -141,7 +162,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             }
             
             let transaction = sects[indexPath[0]].transactions[indexPath[1]]
-
+            cell.transaction = transaction
             let pk = transaction.pubKey
             cell.name?.text = ""
             
@@ -153,6 +174,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             
             let am = Double(truncating: transaction.amount as NSNumber)
             let currency = self.formattedCurrency(currency: self.currency)
+            cell.amount?.setTitle(String(format: "%.2f \(currency)", am / 100), for: .normal)
             if (am <= 0) {
                 cell.amount?.backgroundColor = .none
                 cell.amount?.tintColor = .lightGray
@@ -163,9 +185,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                     cell.amount?.layer.cornerRadius = frame.height / 2
                 }
                 
-                cell.amount?.titleEdgeInsets = UIEdgeInsets(top: 3, left: 6, bottom: 3, right: 6)
+                //cell.amount?.titleEdgeInsets = UIEdgeInsets(top: 3, left: 6, bottom: 3, right: 6)
             }
-            cell.amount?.setTitle(String(format: "%.2f \(currency)", am / 100), for: .normal)
+            
             
             let imgurl = String(format: "%@/user/profile/%@/_image/avatar.png", "default_data_host".localized(), pk)
             let defaultAvatarUrl = String(format: "https://api.adorable.io/avatars/%d/%@", Int(128 * UIScreen.main.scale), pk)
