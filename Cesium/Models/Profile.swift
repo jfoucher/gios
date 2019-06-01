@@ -23,7 +23,7 @@ struct Profile: Codable {
     var signature: String? = nil
     var hash: String? = nil
     var socials: [Social]? = []
-    
+    var identity: Identity?
     init(issuer: String) {
         self.issuer = issuer
     }
@@ -68,27 +68,36 @@ struct Profile: Codable {
                 // display error message
                 callback?(nil)
             }
+        }, fail: {
+            callback?(nil)
         })
     }
     
-    static func getProfile(publicKey: String, identity: Identity, callback: ((Profile?) -> Void)?) {
+    static func getProfile(publicKey: String, identity: Identity?, callback: ((Profile?) -> Void)?) {
         let url = String(format: "%@/user/profile/%@?_source_exclude=avatar._content", "default_data_host".localized(), publicKey)
         
         let request = Request(url: url)
+        var profile = Profile(issuer: publicKey)
+        if let ident = identity {
+            profile.uid = ident.uid
+            profile.signature = ident.sig
+            profile.identity = ident
+        }
+        
         
         request.jsonDecodeWithCallback(type: ProfileResponse.self, callback: { profileResponse in
-            var profile = Profile(issuer: publicKey)
-            profile.uid = identity.uid
-            profile.signature = identity.sig
-            
-            
-            
             if let fullProfile = profileResponse._source {
                 //We have the profile data, save and display
                 profile = fullProfile
-                profile.uid = identity.uid
+                if let id = identity {
+                    profile.uid = id.uid
+                    profile.signature = id.sig
+                    profile.identity = id
+                }
             }
             
+            callback?(profile)
+        }, fail: {
             callback?(profile)
         })
     }

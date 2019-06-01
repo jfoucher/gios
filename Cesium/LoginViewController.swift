@@ -138,23 +138,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
         
         Profile.getRequirements(publicKey: pubK, callback: { identity in
-            if let ident = identity {
-                Profile.getProfile(publicKey: pubK, identity: ident, callback: { profile in
-
-                    DispatchQueue.main.async {
-                        self.password.text = ""
-                        self.secret.text = ""
-                        self.publicKey.text = ""
-                        self.keyImage.image = nil
-                    }
-                    if let prof = profile {
-                        self.loginDelegate?.login(profile: prof)
-                    }
-                })
-            } else {
-                self.error(message: "Could not log you in", code: 12)
-            }
-            
+            Profile.getProfile(publicKey: pubK, identity: identity, callback: { profile in
+                DispatchQueue.main.async {
+                    self.password.text = ""
+                    self.secret.text = ""
+                    self.publicKey.text = ""
+                    self.keyImage.image = nil
+                }
+                
+                if let prof = profile {
+                    self.loginDelegate?.login(profile: prof)
+                }
+            })
         })
         // TODO this checks if the user is in the API, but they could be only on the nodes
         // Should we let them in even if the api is not aware ?

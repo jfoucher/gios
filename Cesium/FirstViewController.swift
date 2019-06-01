@@ -22,6 +22,7 @@ class FirstViewController: UINavigationController {
         let vc = self.viewControllers.first as! LoginViewController
         vc.loginDelegate = self
         vc.loginFailedDelegate = self
+        
         if let profile = Profile.load() {
             self.login(profile: profile)
         }
@@ -32,13 +33,30 @@ class FirstViewController: UINavigationController {
             let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
             let profileView = storyBoard.instantiateViewController(withIdentifier: "ProfileView") as! ProfileViewController
             profileView.delegate = self.logoutdelegate
+            profileView.changeUserDelegate = self
             profileView.profile = profile
             self.pushViewController(profileView, animated:true)
-            
         }
-        
     }
     
+}
+
+
+protocol ViewUserDelegate: class {
+    func viewUser(profile: Profile)
+}
+
+extension FirstViewController: ViewUserDelegate {
+    func viewUser(profile: Profile) {
+        print("in ViewUserDelegate")
+        DispatchQueue.main.async {
+            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+            let profileView = storyBoard.instantiateViewController(withIdentifier: "ProfileView") as! ProfileViewController
+            profileView.profile = profile
+            profileView.changeUserDelegate = self
+            self.pushViewController(profileView, animated:true)
+        }
+    }
 }
 
 protocol LoginFailedDelegate: class {

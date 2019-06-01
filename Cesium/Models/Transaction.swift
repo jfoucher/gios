@@ -21,12 +21,12 @@ struct History: Codable {
     var receiving: [Transaction] = []
 }
 
-struct Transaction: Codable {
+struct Transaction: Codable, Comparable {
     var version: Int
     var received: Int? = nil
     var hash: String? = nil
     var block_number: Int? = nil
-    var time: Int? = nil
+    var time: Int?
     var comment: String? = nil
     var issuers: [String] = []
     var inputs: [String] = []
@@ -35,10 +35,16 @@ struct Transaction: Codable {
     var blockstampTime: Int
     var blockstamp: String
     var locktime: Int = 0
+    
+    static func < (lhs: Transaction, rhs: Transaction) -> Bool {
+        return lhs.time! < rhs.time!
+    }
 }
 
 
-struct ParsedTransaction {
+struct ParsedTransaction: Comparable {
+    
+    
     var amount: Decimal
     var time: Int
     var inputs: [String] = []
@@ -48,7 +54,11 @@ struct ParsedTransaction {
     var isUD: Bool = false
     var hash: String
     var locktime: Int = 0
-    var block_number: Int
+    var block_number: Int?
+    
+    static func < (lhs: ParsedTransaction, rhs: ParsedTransaction) -> Bool {
+        return lhs.time < rhs.time
+    }
     
     init(tx: Transaction, pubKey: String) {
         var walletIsIssuer = false;
@@ -68,7 +78,7 @@ struct ParsedTransaction {
         self.comment = tx.comment!
         self.hash = tx.hash!
         self.locktime = tx.locktime
-        self.block_number = tx.block_number!
+        self.block_number = tx.block_number
         
         let total = tx.outputs.reduce(0) {
             (sum: Decimal, output: String) -> Decimal in

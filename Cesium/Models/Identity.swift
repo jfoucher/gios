@@ -17,6 +17,15 @@ struct Identity: Codable {
     var uid: String
     var sig: String
     var meta: Meta
+    var certifications: [Certification]
+}
+
+struct Certification: Codable {
+    var from: String
+    var to: String
+    var sig: String
+    var timestamp: Int
+    var expiresIn: Int
 }
 
 struct Meta: Codable {

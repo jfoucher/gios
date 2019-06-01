@@ -26,27 +26,35 @@ struct TransactionSection : Comparable {
 
 class TransactionTableViewCell: UITableViewCell {
     @IBOutlet weak var name: UILabel!
-    @IBOutlet weak var publickey: UILabel!
+    @IBOutlet weak var date: UILabel!
+    @IBOutlet weak var amount: UIButton!
     @IBOutlet weak var avatar: UIImageView!
+    var profile: Profile?
 }
 
 class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
     weak var delegate: LogoutDelegate?
+    weak var changeUserDelegate: ViewUserDelegate?
+
+    @IBOutlet weak var check: UIImageView!
     @IBOutlet weak var name: UILabel!
-    @IBOutlet weak var publicKey: UILabel!
     @IBOutlet weak var balance: UILabel!
+    @IBOutlet weak var publicKey: UILabel!
     @IBOutlet weak var keyImage: UIImageView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var avatar: UIImageView!
     
     var profile: Profile?
     var sections: [TransactionSection]? = []
+    var currency: String = ""
     
-    @IBOutlet weak var avatar: UIImageView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tableView.rowHeight = 64.0
         // Do any additional setup after loading the view.
         if let profile = self.profile {
             self.name.text = profile.title != nil ? profile.title : profile.uid
@@ -55,6 +63,16 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.getAvatar(pubKey: profile.issuer)
             self.keyImage.tintColor = .white
             self.keyImage.image = UIImage(named: "key")?.withRenderingMode(.alwaysTemplate)
+            
+            self.check.tintColor = .white
+            self.check.image = UIImage(named: "check")?.withRenderingMode(.alwaysTemplate)
+            
+            self.check.isHidden = true
+            if let ident = profile.identity {
+                if (ident.certifications.count >= 5) {
+                    self.check.isHidden = false
+                }
+            }
             
             self.getBalance(pubKey: profile.issuer, callback: { str in
                 DispatchQueue.main.async {
@@ -126,7 +144,29 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
 
             let pk = transaction.pubKey
             cell.name?.text = ""
-            cell.publickey?.text = pk
+            
+            let date = Date(timeIntervalSince1970: Double(transaction.time))
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = NSLocale.current
+            dateFormatter.dateFormat = "dd/MM/YYYY HH:mm:ss"
+            cell.date?.text = dateFormatter.string(from: date)
+            
+            let am = Double(truncating: transaction.amount as NSNumber)
+            let currency = self.formattedCurrency(currency: self.currency)
+            if (am <= 0) {
+                cell.amount?.backgroundColor = .none
+                cell.amount?.tintColor = .lightGray
+            } else {
+                cell.amount?.backgroundColor = .init(red: 0, green: 132/255.0, blue: 100/255.0, alpha: 1)
+                cell.amount?.tintColor = .white
+                if let frame = cell.amount?.frame {
+                    cell.amount?.layer.cornerRadius = frame.height / 2
+                }
+                
+                cell.amount?.titleEdgeInsets = UIEdgeInsets(top: 3, left: 6, bottom: 3, right: 6)
+            }
+            cell.amount?.setTitle(String(format: "%.2f \(currency)", am / 100), for: .normal)
+            
             let imgurl = String(format: "%@/user/profile/%@/_image/avatar.png", "default_data_host".localized(), pk)
             let defaultAvatarUrl = String(format: "https://api.adorable.io/avatars/%d/%@", Int(128 * UIScreen.main.scale), pk)
             
@@ -136,19 +176,31 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             
             // This is two requests per cell, maybe we should get all the users and work with that instead
             Profile.getRequirements(publicKey: pk, callback: { identity in
-                if let ident = identity {
-                    Profile.getProfile(publicKey: pk, identity: ident, callback: { profile in
-                        if let prof = profile {
-                            DispatchQueue.main.async {
-                                cell.name?.text = prof.title != nil ? prof.title : prof.uid
-                            }
-                        }
-                    })
+                if (identity == nil) {
+                    print(pk)
                 }
+
+                Profile.getProfile(publicKey: pk, identity: identity, callback: { profile in
+                    if let prof = profile {
+                        cell.profile = prof
+
+                        DispatchQueue.main.async {
+                            cell.name?.text = prof.title != nil ? prof.title : prof.uid
+                        }
+                    }
+                })
             })
         }
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = self.tableView.cellForRow(at: indexPath) as! TransactionTableViewCell
+
+        if let profile = cell.profile {
+            self.changeUserDelegate?.viewUser(profile: profile)
+        }
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -168,24 +220,46 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     func getTransactions(pubKey: String) {
         //https://g1.nordstrom.duniter.org/tx/history/EEdwxSkAuWyHuYMt4eX5V81srJWVy7kUaEkft3CWLEiq
         let url = String(format: "%@/tx/history/%@", "default_node".localized(), pubKey)
-        print(url)
+
         let transactionRequest = Request(url: url)
         
         transactionRequest.jsonDecodeWithCallback(type: TransactionResponse.self, callback: { transactionResponse in
+            self.currency = transactionResponse.currency
             
             if let history = transactionResponse.history {
-                self.sections = [
-                    TransactionSection.init(type: "sent", transactions: history.sent.map{ return ParsedTransaction(tx: $0, pubKey: pubKey) }),
-                     TransactionSection.init(type: "received", transactions: history.received.map{ return ParsedTransaction(tx: $0, pubKey: pubKey) }),
-                      TransactionSection.init(type: "sending", transactions: history.sending.map{ return ParsedTransaction(tx: $0, pubKey: pubKey) }),
-                       TransactionSection.init(type: "receiving", transactions: history.receiving.map{ return ParsedTransaction(tx: $0, pubKey: pubKey) }),
-                ]
+                self.sections = self.parseHistory(history: history, pubKey: pubKey)
                 
                 DispatchQueue.main.async { self.tableView?.reloadData() }
             }
             
             
-        })
+        }, fail: nil)
+    }
+    
+    func parseHistory(history: History, pubKey: String) -> [TransactionSection] {
+        var sent = history.sent.map{ return ParsedTransaction(tx: $0, pubKey: pubKey) }.filter { return $0.amount <= 0 }
+        var received = history.received.map{ return ParsedTransaction(tx: $0, pubKey: pubKey) }.filter { return $0.amount > 0 }
+        var sending = history.sending.map{ return ParsedTransaction(tx: $0, pubKey: pubKey) }.filter { return $0.amount <= 0 }
+        var receiving = history.receiving.map{ return ParsedTransaction(tx: $0, pubKey: pubKey) }.filter { return $0.amount > 0 }
+        
+        sent.sort { (tr1, tr2) -> Bool in
+            return tr1.time > tr2.time
+        }
+        received.sort { (tr1, tr2) -> Bool in
+            return tr1.time > tr2.time
+        }
+        sending.sort { (tr1, tr2) -> Bool in
+            return tr1.time > tr2.time
+        }
+        receiving.sort { (tr1, tr2) -> Bool in
+            return tr1.time > tr2.time
+        }
+        return [
+            TransactionSection.init(type: "sent", transactions: sent),
+            TransactionSection.init(type: "received", transactions: received),
+            TransactionSection.init(type: "sending", transactions: sending),
+            TransactionSection.init(type: "receiving", transactions: receiving)
+        ]
     }
     
     func getAvatar(pubKey: String) {
@@ -193,7 +267,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         self.avatar.layer.borderWidth = 1
         self.avatar.layer.masksToBounds = false
-        self.avatar.layer.borderColor = UIColor.black.cgColor
+        self.avatar.layer.borderColor = UIColor.white.cgColor
         self.avatar.layer.cornerRadius = avatar.frame.width/2
         self.avatar.clipsToBounds = true
         
@@ -210,21 +284,24 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         request.jsonDecodeWithCallback(type: SourceResponse.self, callback: { sourceResponse in
             let sources = sourceResponse.sources
-            var currency = "Ğ1"
-            switch sourceResponse.currency {
-            case "g1":
-                currency = "Ğ1"
-            case "g1du":
-                currency = "Ğ1DU"
-            default:
-                currency = sourceResponse.currency
-            }
-
+            let currency = self.formattedCurrency(currency: sourceResponse.currency)
+            
             let amounts = sources.map {$0.amount}
             let total = amounts.reduce(0, +)
             let str = String(format:"%@ %.2f %@", "balance_label".localized(), Double(total) / 100, currency)
             callback?(str)
-        })
+        }, fail: nil)
+    }
+    
+    func formattedCurrency(currency: String) -> String {
+        switch currency {
+        case "g1":
+            return "Ğ1"
+        case "g1du":
+            return "Ğ1DU"
+        default:
+            return currency
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {

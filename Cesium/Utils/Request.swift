@@ -15,17 +15,19 @@ class Request {
         self.url = URL(string: url)!
     }
     
-    func jsonDecodeWithCallback<T>(type: T.Type, callback: ((T) -> Void)?) where T : Decodable {
+    func jsonDecodeWithCallback<T>(type: T.Type, callback: ((T) -> Void)?, fail: (() -> Void)?) where T : Decodable {
         let session = URLSession.shared
         let task = session.dataTask(with: self.url, completionHandler: { data, response, error in
             if let type = response?.mimeType {
                 guard type == "application/json" else {
-                    print("Not JSON " + String(self.url.absoluteString))
+                    print("Not JSON " + String(self.url.absoluteString) + type)
+                    fail?()
                     return
                 }
             }
             guard let responseData = data else {
                 print("no data")
+                fail?()
                 return
             }
             
@@ -35,6 +37,7 @@ class Request {
                 //We have the response data, do callback
                 callback?(decodedResponse)
             } catch {
+                fail?()
                 print("Error trying to convert data to JSON")
             }
         })
