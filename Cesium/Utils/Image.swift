@@ -11,6 +11,18 @@ import UIKit
 
 let imageCache = NSCache<NSString, AnyObject>()
 
+extension UIImage {
+    func resize(width: CGFloat) -> UIImage {
+        let scale = width / self.size.width
+        let newHeight = self.size.height * scale
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: width, height: newHeight), false, UIScreen.main.scale)
+        self.draw(in: CGRect(x: 0, y: 0, width: width, height: newHeight))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage!
+    }
+}
 
 extension UIImageView {
     func loadImageUsingCache(withUrl urlString : String, fail: ((Error?) -> Void)?) {
