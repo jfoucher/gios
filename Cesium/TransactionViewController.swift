@@ -21,6 +21,7 @@ class TransactionViewController: UIViewController {
     @IBOutlet weak var receiverName: UILabel!
     @IBOutlet weak var date: UILabel!
     @IBOutlet weak var comment: UITextView!
+    @IBOutlet weak var closeButton: UIButton!
     
     var sender: Profile? {
         didSet {
@@ -62,8 +63,12 @@ class TransactionViewController: UIViewController {
         self.receiverAvatar.layer.cornerRadius = self.receiverAvatar.frame.width/2
         self.receiverAvatar.clipsToBounds = true
         
+        // set arrow to white
         self.arrow.tintColor = .white
         self.arrow.image = UIImage(named: "arrow-right")?.withRenderingMode(.alwaysTemplate)
+        // set close button to green
+        self.closeButton.tintColor = .init(red: 0, green: 132/255.0, blue: 100/255.0, alpha: 1)
+        self.closeButton.setImage(UIImage(named: "close")?.withRenderingMode(.alwaysTemplate), for:.normal)
         
         if let am = self.transaction?.amount {
             let currency = Currency.formattedCurrency(currency: self.currency)
@@ -97,6 +102,11 @@ class TransactionViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         self.comment.setContentOffset(.zero, animated: false)
+    }
+    
+    @IBAction func close(sender: UIButton?) {
+        print("dismiss")
+        self.dismiss(animated: true, completion: nil)
     }
     
     func getSender(pubKey: String) {
