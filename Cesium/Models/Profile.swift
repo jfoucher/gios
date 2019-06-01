@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct ProfileResponse: Codable {
     var _source: Profile? = nil
@@ -60,16 +61,22 @@ struct Profile: Codable {
                 // TODO think about how to handle multiple identities
                 if let ident = identities.first {
                     callback?(ident)
-                    
                 }
-                
-                
             } else {
                 // display error message
                 callback?(nil)
             }
         }, fail: {
             callback?(nil)
+        })
+    }
+    
+    func getAvatar(imageView: UIImageView) {
+        let imgurl = String(format: "%@/user/profile/%@/_image/avatar.png", "default_data_host".localized(), self.issuer)
+        let defaultAvatarUrl = String(format: "https://api.adorable.io/avatars/%d/%@", Int(128 * UIScreen.main.scale), self.issuer)
+        
+        imageView.loadImageUsingCache(withUrl: imgurl, fail: { error in
+            imageView.loadImageUsingCache(withUrl: defaultAvatarUrl, fail: nil)
         })
     }
     
@@ -82,6 +89,9 @@ struct Profile: Codable {
             profile.uid = ident.uid
             profile.signature = ident.sig
             profile.identity = ident
+        } else {
+            callback?(nil)
+            return
         }
         
         

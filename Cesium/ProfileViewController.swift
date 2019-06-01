@@ -34,9 +34,6 @@ class TransactionTableViewCell: UITableViewCell {
 }
 
 class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
-    
-    weak var delegate: LogoutDelegate?
     weak var changeUserDelegate: ViewUserDelegate?
 
     @IBOutlet weak var check: UIImageView!
@@ -47,7 +44,12 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var avatar: UIImageView!
     
-    var profile: Profile?
+    var profile: Profile? {
+        didSet {
+            let nav = self.navigationController as! FirstViewController
+            nav.selectedProfile = profile
+        }
+    }
     var sections: [TransactionSection]? = []
     var currency: String = ""
     
@@ -61,12 +63,21 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.name.text = profile.title != nil ? profile.title : profile.uid
             self.balance.text = "balance_label".localized()
             self.publicKey.text = profile.issuer
-            self.getAvatar(pubKey: profile.issuer)
+            
+            self.avatar.layer.borderWidth = 1
+            self.avatar.layer.masksToBounds = false
+            self.avatar.layer.borderColor = UIColor.white.cgColor
+            self.avatar.layer.cornerRadius = avatar.frame.width/2
+            self.avatar.clipsToBounds = true
+            
+            profile.getAvatar(imageView: self.avatar)
+            
             self.keyImage.tintColor = .white
             self.keyImage.image = UIImage(named: "key")?.withRenderingMode(.alwaysTemplate)
             
             let backItem = UIBarButtonItem()
             backItem.title = profile.title != nil ? profile.title : profile.uid
+            backItem.tintColor = .white
             self.navigationItem.backBarButtonItem = backItem
             
             self.check.tintColor = .white
@@ -143,12 +154,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let transactionView = storyBoard.instantiateViewController(withIdentifier: "MyTransactionView") as! TransactionViewController
             
-            //if let tx = cell.transaction {
-                //transactionView.transaction = tx
-                //transactionView.isModalInPopover = true
-                transactionView.modalPresentationStyle = .currentContext
-                self.navigationController?.pushViewController(transactionView, animated:true)
-            //}
+            if let tx = cell.transaction {
+                transactionView.transaction = tx
+                self.navigationController?.pushViewController(transactionView, animated: true)
+            }
         //}
     }
     
@@ -188,14 +197,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                 //cell.amount?.titleEdgeInsets = UIEdgeInsets(top: 3, left: 6, bottom: 3, right: 6)
             }
             
-            
-            let imgurl = String(format: "%@/user/profile/%@/_image/avatar.png", "default_data_host".localized(), pk)
-            let defaultAvatarUrl = String(format: "https://api.adorable.io/avatars/%d/%@", Int(128 * UIScreen.main.scale), pk)
-            
-            cell.avatar?.loadImageUsingCache(withUrl: imgurl, fail: { error in
-                cell.avatar?.loadImageUsingCache(withUrl: defaultAvatarUrl, fail: nil)
-            })
-            
             // This is two requests per cell, maybe we should get all the users and work with that instead
             Profile.getRequirements(publicKey: pk, callback: { identity in
                 if (identity == nil) {
@@ -205,7 +206,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                 Profile.getProfile(publicKey: pk, identity: identity, callback: { profile in
                     if let prof = profile {
                         cell.profile = prof
-
+                        prof.getAvatar(imageView: cell.avatar)
                         DispatchQueue.main.async {
                             cell.name?.text = prof.title != nil ? prof.title : prof.uid
                         }
@@ -284,21 +285,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         ]
     }
     
-    func getAvatar(pubKey: String) {
-        let imgurl = String(format: "%@/user/profile/%@/_image/avatar.png", "default_data_host".localized(), pubKey)
-        
-        self.avatar.layer.borderWidth = 1
-        self.avatar.layer.masksToBounds = false
-        self.avatar.layer.borderColor = UIColor.white.cgColor
-        self.avatar.layer.cornerRadius = avatar.frame.width/2
-        self.avatar.clipsToBounds = true
-        
-        self.avatar.loadImageUsingCache(withUrl: imgurl, fail: { error in
-            self.avatar.loadImageUsingCache(withUrl: String(format: "https://api.adorable.io/avatars/%d/%@", Int(128 * UIScreen.main.scale), pubKey), fail: nil)
-        })
-
-    }
-    
     func getBalance(pubKey: String, callback: ((String) -> Void)?) {
         let url = String(format: "%@/tx/sources/%@", "default_node".localized(), pubKey)
         
@@ -326,12 +312,5 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        if self.isMovingFromParent {
-            print ("back")
-            self.delegate?.logout()
-        }
-    }
+
 }

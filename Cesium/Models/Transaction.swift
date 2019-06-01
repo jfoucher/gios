@@ -55,6 +55,7 @@ struct ParsedTransaction: Comparable {
     var hash: String
     var locktime: Int = 0
     var block_number: Int?
+    var to: [String] = []
     
     static func < (lhs: ParsedTransaction, rhs: ParsedTransaction) -> Bool {
         return lhs.time < rhs.time
@@ -81,6 +82,7 @@ struct ParsedTransaction: Comparable {
         self.locktime = tx.locktime
         self.block_number = tx.block_number
         
+        
         let total = tx.outputs.reduce(0) {
             (sum: Decimal, output: String) -> Decimal in
             let outputArray = output.components(separatedBy: ":")
@@ -92,20 +94,9 @@ struct ParsedTransaction: Comparable {
             let pattern = "SIG\\(([0-9a-zA-Z]+)\\)"
 
             var sigMatches:[String] = []
-            guard let regex = try? NSRegularExpression(pattern: pattern) else { return 0 }
             
-            let range = NSRange(location: 0, length: outputCondition.utf16.count)
-            let m = regex.matches(in: outputCondition, options: [], range: range)
+            let res = self.matchAll(string: outputCondition, pattern: pattern)
             
-            let res =  m.map { match in
-                return (0..<match.numberOfRanges).map { (a) -> String in
-                    let rangeBounds = match.range(at: a)
-                    guard let range = Range(rangeBounds, in: outputCondition) else {
-                        return ""
-                    }
-                    return String(outputCondition[range])
-                }
-            }
             if (res.count > 0) {
                 sigMatches = res[0]
             }
@@ -142,8 +133,27 @@ struct ParsedTransaction: Comparable {
             }
             return sum
         }
+    
+        self.to = tx.outputs.map { out -> String in
+            let outputArray = out.components(separatedBy: ":")
+            let pattern = "SIG\\(([0-9a-zA-Z]+)\\)"
+            let res = self.matchAll(string: outputArray[2], pattern: pattern)
+            
+            if (res.count > 0) {
+                let matches = res[0]
+                if (matches.count > 1) {
+                    return matches[1]
+                }
+            }
+            return ""
+            }.filter { $0 == pubKey }
+//            .filter { out in
+//            return !out.contains("SIG("+pubKey+")")
+//        }
+
         
         let txPubkey = total > 0 ? otherIssuer : otherReceiver;
+
         
         let time = tx.time != nil ? tx.time : tx.blockstampTime;
         self.time = time!
@@ -166,6 +176,23 @@ struct ParsedTransaction: Comparable {
     
     func powBase(amount: Decimal, base: Int) -> Decimal {
         return base <= 0 ? amount : amount * pow(10, base);
+    }
+    
+    func matchAll(string: String, pattern: String) -> [[String]] {
+        guard let regex = try? NSRegularExpression(pattern: pattern) else { return [] }
+        
+        let range = NSRange(location: 0, length: string.utf16.count)
+        let m = regex.matches(in: string, options: [], range: range)
+        
+        return  m.map { match in
+            return (0..<match.numberOfRanges).map { (a) -> String in
+                let rangeBounds = match.range(at: a)
+                guard let range = Range(rangeBounds, in: string) else {
+                    return ""
+                }
+                return String(string[range])
+            }
+        }
     }
 }
 

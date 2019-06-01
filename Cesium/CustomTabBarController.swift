@@ -12,8 +12,21 @@ import SwipeableTabBarController
 
 class CustomTabBarController: SwipeableTabBarController {
     
+    var selectedProfile: Profile? {
+        didSet {
+            print(self.selectedProfile)
+            self.viewControllers?.forEach({ (cont) in
+                if (NSStringFromClass(type(of: cont)) == "Cesium.SecondViewController") {
+                    let sec = cont as! SecondViewController
+                    sec.profile = self.selectedProfile
+                }
+            })
+        }
+    }
+    
     override func viewDidLoad(){
         super.viewDidLoad()
+        
         self.swipeAnimatedTransitioning?.animationType = SwipeAnimationType.push
         self.viewControllers?.forEach({ (cont) in
             if (NSStringFromClass(type(of: cont)) == "Cesium.FirstViewController") {
@@ -35,7 +48,6 @@ class CustomTabBarController: SwipeableTabBarController {
         
         
     }
-    
 
 }
 
@@ -71,8 +83,9 @@ extension CustomTabBarController: LoginDelegate {
 
 extension CustomTabBarController: LogoutDelegate {
     func logout() {
+        print("removing profile")
+        Profile.remove()
         DispatchQueue.main.async {
-            Profile.remove()
             self.isSwipeEnabled = false
             let tabBarControllerItems = self.tabBar.items
             if let tabArray = tabBarControllerItems {

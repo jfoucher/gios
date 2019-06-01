@@ -25,3 +25,6 @@
 "sending"="Sending";
 "received"="Received";
 "receiving"="Receiving";
+"logout_confirm_prompt"="Are you sure you want to logout?";
+"confirm_label"="Logout";
+"cancel_label"="Stay logged in";

@@ -11,10 +11,51 @@ import Sodium
 import CryptoSwift
 
 
-class FirstViewController: UINavigationController {
-    
+class FirstViewController: UINavigationController, UINavigationBarDelegate {
+    var loggedOut: Bool = false
     weak var logindelegate: LoginDelegate?
     weak var logoutdelegate: LogoutDelegate?
+    var selectedProfile: Profile? {
+        didSet {
+                let nav = self.tabBarController as! CustomTabBarController
+                nav.selectedProfile = self.selectedProfile
+        }
+    }
+    
+    func navigationBar(_ navigationBar: UINavigationBar, shouldPop item: UINavigationItem) -> Bool {
+        if let cur = item.backBarButtonItem?.title {
+            print("current " + cur)
+        } else {
+            print("current is nil")
+        }
+        if let prev = navigationBar.backItem?.backBarButtonItem?.title {
+            print("previous " + prev)
+        } else {
+            print("previous is nil")
+        }
+        // Very ugly but works for now
+        if ((item.backBarButtonItem?.title == nil || navigationBar.backItem?.backBarButtonItem?.title == "logout_button_label".localized()) && self.loggedOut == false) {
+            self.logout()
+            return false
+        }
+        self.popViewController(animated: true)
+        return true
+    }
+    
+    func logout() {
+        print ("logout")
+        let alert = UIAlertController(title: "logout_confirm_prompt".localized(), message: "", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "confirm_label".localized(), style: .default, handler: {ac in
+            self.popViewController(animated: true)
+            self.loggedOut = true
+            self.logoutdelegate?.logout()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "cancel_label".localized(), style: .cancel, handler: nil))
+        
+        self.present(alert, animated: true)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,10 +73,11 @@ class FirstViewController: UINavigationController {
         DispatchQueue.main.async {
             let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
             let profileView = storyBoard.instantiateViewController(withIdentifier: "ProfileView") as! ProfileViewController
-            profileView.delegate = self.logoutdelegate
+            self.pushViewController(profileView, animated:true)
+
             profileView.changeUserDelegate = self
             profileView.profile = profile
-            self.pushViewController(profileView, animated:true)
+            
         }
     }
     
@@ -52,9 +94,10 @@ extension FirstViewController: ViewUserDelegate {
         DispatchQueue.main.async {
             let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
             let profileView = storyBoard.instantiateViewController(withIdentifier: "ProfileView") as! ProfileViewController
+            self.pushViewController(profileView, animated:true)
             profileView.profile = profile
             profileView.changeUserDelegate = self
-            self.pushViewController(profileView, animated:true)
+            
         }
     }
 }
@@ -66,16 +109,9 @@ protocol LoginFailedDelegate: class {
 extension FirstViewController: LoginDelegate {
     func login(profile: Profile) {
         print("in delegate 1")
+        self.loggedOut = false
         self.handleLogin(profile: profile)
         self.logindelegate?.login(profile: profile)
-    }
-}
-
-
-extension FirstViewController: LogoutDelegate {
-    func logout() {
-        print("logging out")
-        self.logoutdelegate?.logout()
     }
 }
 

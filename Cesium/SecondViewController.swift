@@ -10,9 +10,17 @@ import UIKit
 
 class SecondViewController: UIViewController {
 
+    var profile: Profile? {
+        didSet {
+            print(self.profile?.title)
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        if let profile = self.profile {
+            print(profile.title)
+        }
     }
 
 

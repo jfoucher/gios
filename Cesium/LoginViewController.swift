@@ -63,7 +63,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         imageView.frame = CGRect(x: 0, y: 100, width: 150, height: 150)
         imageView.center.x = self.view.center.x
         //self.view.addSubview(imageView)
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "logout_button_label".localized(), style: .plain, target: nil, action: nil)
+        let backItem = UIBarButtonItem()
+        backItem.title = "logout_button_label".localized()
+        backItem.tintColor = .white
+        self.navigationItem.backBarButtonItem = backItem
         
         
         
@@ -138,6 +141,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
         
         Profile.getRequirements(publicKey: pubK, callback: { identity in
+            if (identity == nil) {
+                self.error(message: "no identity", code: 12)
+            }
+            
             Profile.getProfile(publicKey: pubK, identity: identity, callback: { profile in
                 DispatchQueue.main.async {
                     self.password.text = ""
@@ -163,4 +170,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             self.loginFailedDelegate?.loginFailed(error: message)
         }
     }
+    
+    
+    
 }
