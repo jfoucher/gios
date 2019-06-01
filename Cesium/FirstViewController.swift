@@ -34,7 +34,7 @@ class FirstViewController: UINavigationController, UINavigationBarDelegate {
             print("previous is nil")
         }
         // Very ugly but works for now
-        if ((item.backBarButtonItem?.title == nil || navigationBar.backItem?.backBarButtonItem?.title == "logout_button_label".localized()) && self.loggedOut == false) {
+        if ((navigationBar.backItem?.backBarButtonItem?.title == nil || navigationBar.backItem?.backBarButtonItem?.title == "logout_button_label".localized()) && self.loggedOut == false) {
             self.logout()
             return false
         }
