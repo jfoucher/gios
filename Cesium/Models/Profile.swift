@@ -50,6 +50,32 @@ struct Profile: Codable {
         return nil
     }
     
+    func getBalance(callback: ((String) -> Void)?) {
+        let pubKey = self.issuer
+        let url = String(format: "%@/tx/sources/%@", "default_node".localized(), pubKey)
+        
+        let request = Request(url: url)
+        
+        request.jsonDecodeWithCallback(type: SourceResponse.self, callback: { sourceResponse in
+            let sources = sourceResponse.sources
+            let currency = Currency.formattedCurrency(currency: sourceResponse.currency)
+            
+            let amounts = sources.map {$0.amount}
+            let total = amounts.reduce(0, +)
+            let str = String(format:"%@ %.2f %@", "balance_label".localized(), Double(total) / 100, currency)
+            callback?(str)
+        }, fail: nil)
+    }
+    
+    func getAvatar(imageView: UIImageView) {
+        let imgurl = String(format: "%@/user/profile/%@/_image/avatar.png", "default_data_host".localized(), self.issuer)
+        let defaultAvatarUrl = String(format: "https://api.adorable.io/avatars/%d/%@", Int(128 * UIScreen.main.scale), self.issuer)
+        
+        imageView.loadImageUsingCache(withUrl: imgurl, fail: { error in
+            imageView.loadImageUsingCache(withUrl: defaultAvatarUrl, fail: nil)
+        })
+    }
+    
     
     static func getRequirements(publicKey: String, callback: ((Identity?) -> Void)?) {
         let url = String(format: "%@/wot/requirements/%@", "default_node".localized(), publicKey)
@@ -71,14 +97,7 @@ struct Profile: Codable {
         })
     }
     
-    func getAvatar(imageView: UIImageView) {
-        let imgurl = String(format: "%@/user/profile/%@/_image/avatar.png", "default_data_host".localized(), self.issuer)
-        let defaultAvatarUrl = String(format: "https://api.adorable.io/avatars/%d/%@", Int(128 * UIScreen.main.scale), self.issuer)
-        
-        imageView.loadImageUsingCache(withUrl: imgurl, fail: { error in
-            imageView.loadImageUsingCache(withUrl: defaultAvatarUrl, fail: nil)
-        })
-    }
+
     
     static func getProfile(publicKey: String, identity: Identity?, callback: ((Profile?) -> Void)?) {
         let url = String(format: "%@/user/profile/%@?_source_exclude=avatar._content", "default_data_host".localized(), publicKey)

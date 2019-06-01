@@ -77,6 +77,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.keyImage.tintColor = .white
             self.keyImage.image = UIImage(named: "key")?.withRenderingMode(.alwaysTemplate)
             
+            // Make checkmark image white
+            self.check.tintColor = .white
+            self.check.image = UIImage(named: "check")?.withRenderingMode(.alwaysTemplate)
+            
             // Add image to send button
             let imv = UIImage(named: "check")?.withRenderingMode(.alwaysTemplate)
             
@@ -92,9 +96,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             backItem.tintColor = .white
             self.navigationItem.backBarButtonItem = backItem
             
-            // Make checkmark image white
-            self.check.tintColor = .white
-            self.check.image = UIImage(named: "check")?.withRenderingMode(.alwaysTemplate)
+            
             
             self.check.isHidden = true
             if let ident = profile.identity {
@@ -105,7 +107,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                 }
             }
             
-            self.getBalance(pubKey: profile.issuer, callback: { str in
+            profile.getBalance(callback: { str in
                 DispatchQueue.main.async {
                     self.balance.text = str
                 }
@@ -140,6 +142,17 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     @IBAction func createTransaction(_ sender: UIButton) {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let newTransactionView = storyBoard.instantiateViewController(withIdentifier: "NewTransactionView") as! NewTransactionViewController
+
+        newTransactionView.receiver = self.profile
+        let ctrl = self.navigationController as! FirstViewController
+        newTransactionView.sender = ctrl.profile
+        newTransactionView.isModalInPopover = true
+        
+        self.navigationController?.present(newTransactionView, animated: true, completion: nil)
+        //self.navigationController?.pushViewController(transactionView, animated: true)
         
     }
     
@@ -310,21 +323,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         ]
     }
     
-    func getBalance(pubKey: String, callback: ((String) -> Void)?) {
-        let url = String(format: "%@/tx/sources/%@", "default_node".localized(), pubKey)
-        
-        let request = Request(url: url)
-        
-        request.jsonDecodeWithCallback(type: SourceResponse.self, callback: { sourceResponse in
-            let sources = sourceResponse.sources
-            let currency = Currency.formattedCurrency(currency: sourceResponse.currency)
-            
-            let amounts = sources.map {$0.amount}
-            let total = amounts.reduce(0, +)
-            let str = String(format:"%@ %.2f %@", "balance_label".localized(), Double(total) / 100, currency)
-            callback?(str)
-        }, fail: nil)
-    }
+
     
     
     

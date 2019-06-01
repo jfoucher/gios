@@ -30,3 +30,4 @@
 "cancel_label"="Stay logged in";
 "transaction_view_date_format"="On the %@ at %@";
 "transfer_button_label"="Transfer";
+"transfer_to_label"="Transfer to ";
