@@ -149,6 +149,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         newTransactionView.receiver = self.profile
         let ctrl = self.navigationController as! FirstViewController
         newTransactionView.sender = ctrl.profile
+        newTransactionView.currency = self.currency
         newTransactionView.isModalInPopover = true
         
         self.navigationController?.present(newTransactionView, animated: true, completion: nil)

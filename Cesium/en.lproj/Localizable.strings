@@ -35,3 +35,4 @@
 "transaction_confirm_message"="If you would really like to send %@ to %@ now, tap Send, otherwise tap Cancel";
 "transaction_confirm_button_label"="Send";
 "transaction_cancel_button_label"="Cancel";
+"comment_placeholder"="Comment";

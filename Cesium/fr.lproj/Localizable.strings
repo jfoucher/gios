@@ -35,3 +35,4 @@
 "transaction_confirm_message"="Pour envoyer %@ à %@ maintenant, appuyez sur Envoyer, sinon appuyez sur Annuler.";
 "transaction_confirm_button_label"="Envoyer";
 "transaction_cancel_button_label"="Annuler";
+"comment_placeholder"="Commentaire";
