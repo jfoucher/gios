@@ -42,3 +42,6 @@
 "transaction_success_message"="Vous pouvez maintenant fermer cette page, ou alors envoyer une autre transaction";
 "no_internet_message"="Veuillez réessayer une fois que votre connexion internet sera rétablie";
 "no_internet_title"="Réseau non diponible";
+"close_label"="Fermer";
+"no_amount"="Aucun montant";
+"no_amount_message"="Veuillez choisir un montant pour cette transaction";

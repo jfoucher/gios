@@ -107,7 +107,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                 }
             }
             
-            profile.getBalance(callback: { str in
+            profile.getBalance(callback: { total in
+                let str = String(format:"%@ %.2f %@", "balance_label".localized(), Double(total) / 100, self.currency)
+                self.profile?.balance = total
                 DispatchQueue.main.async {
                     self.balance.text = str
                 }

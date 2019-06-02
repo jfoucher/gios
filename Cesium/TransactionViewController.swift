@@ -19,6 +19,7 @@ class TransactionViewController: UIViewController {
     @IBOutlet weak var amount: UILabel!
     @IBOutlet weak var senderName: UILabel!
     @IBOutlet weak var receiverName: UILabel!
+    @IBOutlet weak var txHash: UILabel!
     @IBOutlet weak var date: UILabel!
     @IBOutlet weak var comment: UITextView!
     @IBOutlet weak var closeButton: UIButton!
@@ -63,6 +64,8 @@ class TransactionViewController: UIViewController {
         self.receiverAvatar.layer.cornerRadius = self.receiverAvatar.frame.width/2
         self.receiverAvatar.clipsToBounds = true
         
+        self.txHash.text = self.transaction?.hash
+        
         // set arrow to white
         self.arrow.tintColor = .white
         self.arrow.image = UIImage(named: "arrow-right")?.withRenderingMode(.alwaysTemplate)
@@ -76,6 +79,8 @@ class TransactionViewController: UIViewController {
             if (a < 0) {
                 a *= -1
             }
+
+            
             self.amount.text = String(format: "%.2f %@", a / 100, currency)
             
             

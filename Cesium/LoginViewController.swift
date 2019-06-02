@@ -167,8 +167,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             }
             
             Profile.getProfile(publicKey: pubK, identity: identity, callback: { profile in
-                
-                
                 if var prof = profile {
                     // Keep the secret key in memory for the duration of the session
                     if let kp = try? self.calculateKeyPair(id: id, pass: pass) {

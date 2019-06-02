@@ -24,15 +24,27 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var senderName: UILabel!
     @IBOutlet weak var receiverPubKey: UILabel!
     @IBOutlet weak var senderPubKey: UILabel!
+    @IBOutlet weak var close: UILabel!
     @IBOutlet weak var amount: UITextField!
     @IBOutlet weak var comment: UITextView!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var progress: UIProgressView!
-    
+    @IBOutlet weak var topBarHeight: NSLayoutConstraint!
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        if let navigationController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController {
+            print("found")
+            self.topBarHeight.constant = navigationController.navigationBar.frame.height
+            self.view.layoutIfNeeded()
+                
+            
+        }
+        self.close.text = "close_label".localized()
+        //UIApplication.shared.statusBarStyle = .lightContent
         // set arrow to white
         self.arrow.tintColor = .white
         self.arrow.image = UIImage(named: "arrow-right")?.withRenderingMode(.alwaysTemplate)
@@ -56,7 +68,7 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
         }
         
         
-        if let sender = self.sender {
+        if var sender = self.sender {
             self.senderAvatar.layer.borderWidth = 1
             self.senderAvatar.layer.masksToBounds = false
             self.senderAvatar.layer.borderColor = UIColor.white.cgColor
@@ -67,11 +79,18 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
             
             self.senderName.text = sender.title != nil ? sender.title : sender.uid
             
-            sender.getBalance(callback: { str in
-                DispatchQueue.main.async {
-                    self.senderBalance.text = str
-                }
-            })
+            if let bal = sender.balance {
+                let str = String(format:"%@ %.2f %@", "balance_label".localized(), Double(bal) / 100, self.currency!)
+                 self.senderBalance.text = str
+            } else {
+                sender.getBalance(callback: { total in
+                    let str = String(format:"%@ %.2f %@", "balance_label".localized(), Double(total) / 100, self.currency!)
+                    sender.balance = total
+                    DispatchQueue.main.async {
+                        self.senderBalance.text = str
+                    }
+                })
+            }
         }
         
     }
@@ -143,6 +162,11 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
         numberFormatter.locale = Locale.current
 
         let am = numberFormatter.number(from: amstring) ?? 0
+        
+        if (am.floatValue <= 0.0) {
+            self.alert(title: "no_amount".localized(), message: "no_amount_message".localized())
+            return
+        }
 
         let amountString = String(format: "%.2f %@", Float(truncating: am), Currency.formattedCurrency(currency: currency))
         
@@ -239,13 +263,15 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
             })
         }))
         
-        alert.addAction(UIAlertAction(title: "transaction_cancel_button_label".localized(), style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "transaction_cancel_button_label".localized(), style: .cancel, handler: self.finish))
         print("willpresent alert")
         self.present(alert, animated: true)
     }
     
     func finish(action: UIAlertAction) {
         DispatchQueue.main.async {
+            self.cancelButton.isEnabled = true
+            self.sendButton.isEnabled = true
             self.progress.progress = 0.0
         }
     }
@@ -264,6 +290,16 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
         }
     }
 
+    
+    func alert(title: String, message: String?) {
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: "transaction_fail_title".localized(), message: message, preferredStyle: .actionSheet)
+            
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: self.finish))
+            
+            self.present(alert, animated: true)
+        }
+    }
     
     @IBAction func changeReceiver(sender: UIButton) {
         print("change")

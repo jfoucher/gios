@@ -42,3 +42,6 @@
 "transaction_success_message"="You can now close this page, or maybe send another transaction to someone else";
 "no_internet_message"="Please try again once you have regained connectivity";
 "no_internet_title"="Network unavailable";
+"close_label"="Close";
+"no_amount"="No amount";
+"no_amount_message"="Please choose an amount for your transaction";
