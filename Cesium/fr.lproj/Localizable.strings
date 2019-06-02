@@ -36,3 +36,9 @@
 "transaction_confirm_button_label"="Envoyer";
 "transaction_cancel_button_label"="Annuler";
 "comment_placeholder"="Commentaire";
+"transaction_fail_title"="Impossible d'envoyer la transaction transaction";
+"transaction_fail_text"="Le message d'erreur complet est le suivant : %@";
+"transaction_success_title"="Votre transaction a été envoyée";
+"transaction_success_message"="Vous pouvez maintenant fermer cette page, ou alors envoyer une autre transaction";
+"no_internet_message"="Veuillez réessayer une fois que votre connexion internet sera rétablie";
+"no_internet_title"="Réseau non diponible";

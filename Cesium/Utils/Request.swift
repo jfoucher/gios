@@ -12,10 +12,17 @@ struct TransactionRequest: Codable {
     var transaction: String
 }
 
-enum RequestError: Error {
-    case nodata
-    case encodingFailed
-    case decodingFailed
+struct RequestError: Error {
+    enum ErrorKind {
+        case nodata
+        case encodingFailed
+        case decodingFailed
+        case notJson
+    }
+    
+    var requestData: Data? = nil
+    var responseData: Data? = nil
+    var kind: ErrorKind
 }
 
 class Request {
@@ -25,18 +32,20 @@ class Request {
         self.url = URL(string: url)!
     }
     
-    func postRaw<T>(data: String, type: T.Type, callback: ((Error?, T?) -> Void)?) where T : Decodable {
+    func postRaw<T>(rawTx: String, type: T.Type, callback: ((Error?, T?) -> Void)?) where T : Decodable {
         let session = URLSession.shared
         var request = URLRequest(url: self.url)
-        let tRequest = TransactionRequest(transaction: data)
+        print("raw transaction", rawTx)
+        let tRequest = TransactionRequest(transaction: rawTx)
         guard let jsonData = try? JSONEncoder().encode(tRequest) else {
-            callback?(RequestError.encodingFailed, nil)
+            let er = RequestError(requestData: nil, responseData: nil, kind: .encodingFailed)
+            callback?(er, nil)
             print("could not encode transaction")
             return
         }
-        print(jsonData)
+
         let jsonString = String(data: jsonData, encoding: .utf8)!
-        print(jsonString)
+
         request.httpMethod = "POST"
         request.httpBody = Data(jsonData)
         request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
@@ -49,7 +58,7 @@ class Request {
             }
             
             guard let data = data else {
-                callback?(RequestError.nodata, nil)
+                callback?(RequestError(requestData: nil, responseData: nil, kind: .nodata), nil)
                 print("no data")
                 return
             }
@@ -61,28 +70,29 @@ class Request {
                 let decodedResponse = try decoder.decode(type, from: data)
                 //We have the response data, do callback
                 callback?(nil, decodedResponse)
-            } catch {
-                callback?(RequestError.decodingFailed, nil)
-                print("Error trying to convert data to JSON")
+            } catch let err {
+                
+                callback?(RequestError(requestData: nil, responseData: data, kind: .decodingFailed), nil)
+                print("Error trying to convert data to JSON", String(data: data, encoding: .utf8)!, err)
             }
 
         })
         task.resume()
     }
     
-    func jsonDecodeWithCallback<T>(type: T.Type, callback: ((T) -> Void)?, fail: (() -> Void)?) where T : Decodable {
+    func jsonDecodeWithCallback<T>(type: T.Type, callback: ((Error?, T?) -> Void)?) where T : Decodable {
         let session = URLSession.shared
         let task = session.dataTask(with: self.url, completionHandler: { data, response, error in
             if let type = response?.mimeType {
                 guard type == "application/json" else {
                     print("Not JSON " + String(self.url.absoluteString) + " " + type)
-                    fail?()
+                    callback?(RequestError(requestData: nil, responseData: data, kind: .notJson), nil)
                     return
                 }
             }
             guard let responseData = data else {
                 print("no data")
-                fail?()
+                callback?(RequestError(requestData: nil, responseData: data, kind: .nodata), nil)
                 return
             }
             
@@ -90,9 +100,9 @@ class Request {
             do {
                 let decodedResponse = try decoder.decode(type, from: responseData)
                 //We have the response data, do callback
-                callback?(decodedResponse)
+                callback?(nil, decodedResponse)
             } catch {
-                fail?()
+                callback?(RequestError(requestData: nil, responseData: responseData, kind: .decodingFailed), nil)
                 print("Error trying to convert data to JSON")
             }
         })

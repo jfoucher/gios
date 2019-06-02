@@ -27,6 +27,8 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var amount: UITextField!
     @IBOutlet weak var comment: UITextView!
     @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var sendButton: UIButton!
+    @IBOutlet weak var progress: UIProgressView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +36,7 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
         // set arrow to white
         self.arrow.tintColor = .white
         self.arrow.image = UIImage(named: "arrow-right")?.withRenderingMode(.alwaysTemplate)
-        
+        self.progress.progress = 0.0
         self.amount.addDoneButtonToKeyboard(myAction:  #selector(self.amount.resignFirstResponder))
         self.comment.addDoneButtonToKeyboard(myAction:  #selector(self.comment.resignFirstResponder))
         
@@ -109,10 +111,33 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
     }
     
     @IBAction func send(sender: UIButton) {
-        print("send")
-        guard let title = self.receiver?.title else { return  }
-        guard let currency = self.currency else { return  }
-        guard let amstring = self.amount.text else { return  }
+        
+        // Set buttons disabled
+        self.cancelButton.isEnabled = false;
+        self.sendButton.isEnabled = false;
+        
+        
+        print("will send")
+        guard let receiver = self.receiver else {
+            print("no receiver")
+            return
+            
+        }
+        let title = receiver.title != nil ? receiver.title : receiver.uid
+        guard let currency = self.currency else {
+            print("no currency")
+            return
+            
+        }
+        guard let amstring = self.amount.text else {
+            print("no amount")
+            return
+            
+        }
+        guard let profile = self.sender else {
+            print("no sender")
+            return
+        }
         
         let numberFormatter = NumberFormatter()
         numberFormatter.locale = Locale.current
@@ -121,45 +146,93 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
 
         let amountString = String(format: "%.2f %@", Float(truncating: am), Currency.formattedCurrency(currency: currency))
         
-        let msg = String(format: "transaction_confirm_message".localized(), amountString, title)
+        let msg = String(format: "transaction_confirm_message".localized(), amountString, title ?? "")
         let alert = UIAlertController(title: "transaction_confirm_prompt".localized(), message: msg, preferredStyle: .actionSheet)
-        
+        print("preparing action")
         alert.addAction(UIAlertAction(title: "transaction_confirm_button_label".localized(), style: .default, handler: {ac in
             print("send")
-            let text = self.comment?.text ?? ""
-            //TODO validate amount, etc...
             
-            self.sender?.getSources(callback: { (response: SourceResponse) in
-                print("source response", response)
-                if let pk = self.receiver?.issuer {
+            var text = self.comment?.text ?? ""
+            if (self.comment?.text == "comment_placeholder".localized() && self.comment?.textColor == .lightGray)
+            {
+                text = ""
+            }
+            
+            //TODO validate amount, etc...
+            self.progress.progress = 0.1
+            self.sender?.getSources(callback: { (error: Error?, resp: SourceResponse?) in
+                print("source response", resp)
+                if let pk = self.receiver?.issuer, let response = resp {
                     print("issuer", pk)
                     let intAmount = Int(truncating: NSNumber(value: Float(truncating: am) * 100))
                     let url = String(format: "%@/blockchain/current", "default_node".localized())
                     let request = Request(url: url)
-                    
-                    request.jsonDecodeWithCallback(type: Block.self, callback: { (block: Block) in
+                    DispatchQueue.main.async {
+                        self.progress.progress = 0.3
+                    }
+                    request.jsonDecodeWithCallback(type: Block.self, callback: { (err: Error?, block: Block?) in
                         print("block", block)
-                        guard let signedTx = try? Transactions.createTransaction(response: response, receiverPubKey: pk, amount: intAmount, block: block, comment: text) else {
+                        guard let blk = block else {
                             return
                         }
+                        DispatchQueue.main.async {
+                            self.progress.progress = 0.6
+                        }
+                        do {
+                            let signedTx = try Transactions.createTransaction(response: response, receiverPubKey: pk, amount: intAmount, block: blk, comment: text, profile: profile)
+                            DispatchQueue.main.async {
+                                self.progress.progress = 0.7
+                            }
+                            let processUrl = String(format: "%@/tx/process", "default_node".localized())
+                            print("processUrl", processUrl)
+                            let processRequest = Request(url: processUrl)
+                            processRequest.postRaw(rawTx: signedTx, type: Transaction.self, callback: { (error, res) in
+                                print(error, res)
+                                if let er = error as? RequestError {
+                                    print("ERROR")
+                                    if let resp = er.responseData {
+                                        print("RESPONSE STRING", String(data: resp, encoding: .utf8)!)
+                                        if let jsonDict = try! JSONSerialization.jsonObject(with: resp) as? NSDictionary {
+                                            print("JSONDICT", jsonDict)
+                                            if let msg = jsonDict["message"] as? String {
+                                                DispatchQueue.main.async {
+                                                    self.errorAlert(message: String(format:"transaction_fail_text".localized(), msg))
+                                                }
+                                            }
+                                        }
+                                    }
+                                    
+                                }
+                                if let tx = res {
+                                    print("TRANSACTION")
+                                    print(tx)
+                                    
+                                    DispatchQueue.main.async {
+                                        self.progress.progress = 1.0
+                                        self.cancelButton.isEnabled = true;
+                                        self.sendButton.isEnabled = true;
+                                        let alert = UIAlertController(title: "transaction_success_title".localized(), message: "transaction_success_message".localized(), preferredStyle: .actionSheet)
+                                        
+                                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: self.finish))
+                                        
+                                        self.present(alert, animated: true)
+                                    }
+                                }
+                            })
+                            
+                        } catch TransactionCreationError.insufficientFunds {
+                            self.errorAlert(message: String(format:"transaction_fail_text".localized(), "insuficient funds"))
+                            print("insuficient funds")
+                        } catch TransactionCreationError.couldNotSignTransaction {
+                            print("could not sign transaction")
+                            self.errorAlert(message: String(format:"transaction_fail_text".localized(), "could not sign transaction"))
+                        } catch {
+                            self.errorAlert(message: String(format:"transaction_fail_text".localized(), "unknown error"))
+                        }
                         
-                        let processUrl = String(format: "%@/tx/process", "default_node".localized())
-                        print("processUrl", processUrl)
-                        let processRequest = Request(url: processUrl)
-                        processRequest.postRaw(data: signedTx, type: Transaction.self, callback: { (error, res) in
-                            print(error, res)
-                            if let er = error {
-                                print("ERROR")
-                                print(er)
-                            }
-                            if let tx = res {
-                                print("TRANSACTION")
-                                print(tx)
-                            }
-                        })
                         // send transaction
                         
-                    }, fail: nil)
+                    })
                     
                 }
                 
@@ -167,10 +240,29 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
         }))
         
         alert.addAction(UIAlertAction(title: "transaction_cancel_button_label".localized(), style: .cancel, handler: nil))
-        
+        print("willpresent alert")
         self.present(alert, animated: true)
     }
     
+    func finish(action: UIAlertAction) {
+        DispatchQueue.main.async {
+            self.progress.progress = 0.0
+        }
+    }
+    
+    func errorAlert(message: String) {
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: "transaction_fail_title".localized(), message: message, preferredStyle: .actionSheet)
+
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: self.finish))
+
+            self.present(alert, animated: true)
+            self.cancelButton.isEnabled = true;
+            self.sendButton.isEnabled = true;
+        
+            self.progress.progress = 1.0
+        }
+    }
 
     
     @IBAction func changeReceiver(sender: UIButton) {

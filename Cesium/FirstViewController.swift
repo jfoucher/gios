@@ -35,7 +35,10 @@ class FirstViewController: UINavigationController, UINavigationBarDelegate {
             let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
             let profileView = storyBoard.instantiateViewController(withIdentifier: "ProfileView") as! ProfileViewController
             self.pushViewController(profileView, animated:true)
-            profile.save()
+            // Do not save secret key to phone
+            var saving = profile
+            saving.kp = nil
+            saving.save()
             self.profile = profile
             profileView.changeUserDelegate = self
             profileView.profile = profile

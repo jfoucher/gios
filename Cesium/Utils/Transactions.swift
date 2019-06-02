@@ -13,11 +13,16 @@ import Sodium
 enum TransactionCreationError: Error {
     case couldNotSignTransaction
     case insufficientFunds
+    case wrongPublicKey
 }
 
 class Transactions {
     
-    static func createTransaction(response: SourceResponse, receiverPubKey: String, amount: Int, block: Block, comment: String) throws -> String {
+    static func createTransaction(response: SourceResponse, receiverPubKey: String, amount: Int, block: Block, comment: String, profile: Profile) throws -> String {
+        
+        guard profile.issuer == response.pubkey else {
+            throw TransactionCreationError.wrongPublicKey
+        }
         
         var tx = """
 Version: 10
@@ -26,7 +31,7 @@ Currency: \(block.currency)
 Blockstamp: \(block.number)-\(block.hash)
 Locktime: 0
 Issuers:
-\(response.pubkey)
+\(profile.issuer)
 Inputs:
 
 """
@@ -43,20 +48,20 @@ Inputs:
         }
         
         tx += "Outputs:\n"
-        guard let outputs = try calculateOutputs(sources: response.sources, amountToSend: amount, pubKey: receiverPubKey, myPubKey: response.pubkey) else {
+        guard let outputs = try calculateOutputs(sources: response.sources, amountToSend: amount, pubKey: receiverPubKey, myPubKey: profile.issuer) else {
             throw TransactionCreationError.insufficientFunds
         }
         
         tx += outputs
         tx += "Comment: \(comment)\n"
         
-        guard let signature = try? Transactions.signTransaction(transaction: tx) else {
+        guard let signature = try? Transactions.signTransaction(transaction: tx, profile: profile) else {
             throw TransactionCreationError.couldNotSignTransaction
         }
 
         //return tx
         let signedTx = tx + signature + "\n"
-        print(signedTx)
+
         return signedTx
     }
     
@@ -96,19 +101,18 @@ Inputs:
         throw TransactionCreationError.insufficientFunds
     }
     
-    static func signTransaction(transaction: String) throws -> String {
-        let password: Array<UInt8> = Array("*".utf8)
-        let salt: Array<UInt8> = Array("*".utf8)
-        guard let seed = try? Scrypt(password: password, salt: salt, dkLen: 32, N: 4096, r: 16, p: 1).calculate() else {
+    static func signTransaction(transaction: String, profile: Profile) throws -> String {
+        
+        guard let kp = profile.kp else {
             throw TransactionCreationError.couldNotSignTransaction
         }
+
         let sodium = Sodium()
-        let k = sodium.sign.keyPair(seed: seed)
-        if let key = k {
-            if let signature = sodium.sign.signature(message: Array(transaction.utf8), secretKey: key.secretKey) {
-                return signature.toBase64() ?? ""
-            }
+
+        if let signature = sodium.sign.signature(message: Array(transaction.utf8), secretKey: Base58.bytesFromBase58(kp)) {
+            return signature.toBase64() ?? ""
         }
+        
         throw TransactionCreationError.couldNotSignTransaction
     }
     

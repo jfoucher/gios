@@ -16,8 +16,12 @@ enum PublicKeyError: Error {
     case couldNotCalculate
 }
 
+struct KeyPair {
+    var publicKey: Bytes
+    var secretKey: Bytes
+}
+
 class LoginViewController: UIViewController, UITextFieldDelegate {
-    
     @IBOutlet weak var secret: UITextField!
     @IBOutlet weak var password: UITextField!
     @IBOutlet weak var loginButton: UIButton!
@@ -133,8 +137,25 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         throw PublicKeyError.couldNotCalculate
     }
     
+    func calculateKeyPair(id: String, pass: String) throws -> KeyPair {
+        
+        
+        let password: Array<UInt8> = Array(pass.utf8)
+        let salt: Array<UInt8> = Array(id.utf8)
+        guard let seed = try? Scrypt(password: password, salt: salt, dkLen: 32, N: 4096, r: 16, p: 1).calculate() else {
+            throw PublicKeyError.couldNotCalculate
+        }
+        let sodium = Sodium()
+        let k = sodium.sign.keyPair(seed: seed)
+        if let key = k {
+            return KeyPair(publicKey: key.publicKey, secretKey: key.secretKey)
+        }
+        throw PublicKeyError.couldNotCalculate
+    }
+    
     @IBAction func buttonAction() {
-
+        let id: String = self.secret.text!
+        let pass: String = self.password.text!
         // We have the public key, make a request
         guard let pubK = try? self.calculatePublicKey() else {
             return
@@ -146,15 +167,20 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             }
             
             Profile.getProfile(publicKey: pubK, identity: identity, callback: { profile in
+                
+                
+                if var prof = profile {
+                    // Keep the secret key in memory for the duration of the session
+                    if let kp = try? self.calculateKeyPair(id: id, pass: pass) {
+                        prof.kp = Base58.base58FromBytes(kp.secretKey)
+                    }
+                    self.loginDelegate?.login(profile: prof)
+                }
                 DispatchQueue.main.async {
                     self.password.text = ""
                     self.secret.text = ""
                     self.publicKey.text = ""
                     self.keyImage.image = nil
-                }
-                
-                if let prof = profile {
-                    self.loginDelegate?.login(profile: prof)
                 }
             })
         })

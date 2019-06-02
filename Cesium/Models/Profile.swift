@@ -20,6 +20,7 @@ struct Profile: Codable {
     var address: String? = nil
     var city: String? = nil
     var title: String? = nil
+    var kp: String? = nil
     var issuer: String
     var signature: String? = nil
     var hash: String? = nil
@@ -57,27 +58,29 @@ struct Profile: Codable {
         
         let request = Request(url: url)
         
-        request.jsonDecodeWithCallback(type: SourceResponse.self, callback: { sourceResponse in
+        request.jsonDecodeWithCallback(type: SourceResponse.self, callback: { err, sourceResponse in
             
-            let sources = sourceResponse.sources
-            let currency = Currency.formattedCurrency(currency: sourceResponse.currency)
+            if let sources = sourceResponse?.sources, let currency = sourceResponse?.currency {
+                let currency = Currency.formattedCurrency(currency: currency)
+                
+                let amounts = sources.map {$0.amount}
+                let total = amounts.reduce(0, +)
+                let str = String(format:"%@ %.2f %@", "balance_label".localized(), Double(total) / 100, currency)
+                callback?(str)
+            }
             
-            let amounts = sources.map {$0.amount}
-            let total = amounts.reduce(0, +)
-            let str = String(format:"%@ %.2f %@", "balance_label".localized(), Double(total) / 100, currency)
-            callback?(str)
-        }, fail: nil)
+        })
     }
     
-    func getSources(callback: ((SourceResponse) -> Void)?) {
+    func getSources(callback: ((Error?, SourceResponse?) -> Void)?) {
         let pubKey = self.issuer
         let url = String(format: "%@/tx/sources/%@", "default_node".localized(), pubKey)
         
         let request = Request(url: url)
         
-        request.jsonDecodeWithCallback(type: SourceResponse.self, callback: { sourceResponse in
-            callback?(sourceResponse)
-        }, fail: nil)
+        request.jsonDecodeWithCallback(type: SourceResponse.self, callback: { err, sourceResponse in
+            callback?(err, sourceResponse)
+        })
     }
     
     func getAvatar(imageView: UIImageView) {
@@ -95,8 +98,8 @@ struct Profile: Codable {
         
         let request = Request(url: url)
         
-        request.jsonDecodeWithCallback(type: IdentityResponse.self, callback: { identityResponse in
-            if let identities = identityResponse.identities {
+        request.jsonDecodeWithCallback(type: IdentityResponse.self, callback: { err, identityResponse in
+            if let identities = identityResponse?.identities {
                 // TODO think about how to handle multiple identities
                 if let ident = identities.first {
                     callback?(ident)
@@ -105,8 +108,6 @@ struct Profile: Codable {
                 // display error message
                 callback?(nil)
             }
-        }, fail: {
-            callback?(nil)
         })
     }
     
@@ -127,8 +128,8 @@ struct Profile: Codable {
         }
         
         
-        request.jsonDecodeWithCallback(type: ProfileResponse.self, callback: { profileResponse in
-            if let fullProfile = profileResponse._source {
+        request.jsonDecodeWithCallback(type: ProfileResponse.self, callback: { err, profileResponse in
+            if let fullProfile = profileResponse?._source {
                 //We have the profile data, save and display
                 profile = fullProfile
                 if let id = identity {
@@ -138,8 +139,6 @@ struct Profile: Codable {
                 }
             }
             
-            callback?(profile)
-        }, fail: {
             callback?(profile)
         })
     }

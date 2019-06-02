@@ -41,14 +41,19 @@ extension UIImageView {
             if error != nil {
                 fail?(error!)
             }
-            if let image = UIImage(data: data!) {
-                DispatchQueue.main.async {
-                    imageCache.setObject(image, forKey: urlString as NSString)
-                    self.image = image
+            if (data != nil) {
+                if let image = UIImage(data: data!) {
+                    DispatchQueue.main.async {
+                        imageCache.setObject(image, forKey: urlString as NSString)
+                        self.image = image
+                    }
+                } else {
+                    fail?(nil)
                 }
             } else {
                 fail?(nil)
             }
+            
             
         }).resume()
     }

@@ -36,3 +36,9 @@
 "transaction_confirm_button_label"="Send";
 "transaction_cancel_button_label"="Cancel";
 "comment_placeholder"="Comment";
+"transaction_fail_title"="Failed to send your transaction";
+"transaction_fail_text"="The complete error message is as follows: %@";
+"transaction_success_title"="Your transaction was sent";
+"transaction_success_message"="You can now close this page, or maybe send another transaction to someone else";
+"no_internet_message"="Please try again once you have regained connectivity";
+"no_internet_title"="Network unavailable";

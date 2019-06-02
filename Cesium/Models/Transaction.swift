@@ -24,9 +24,11 @@ struct History: Codable {
 }
 
 struct Transaction: Codable, Comparable {
-    var version: Int
+    // https://git.duniter.org/nodes/typescript/duniter/issues/1382
+    //var version: Int?
     var received: Int? = nil
     var hash: String? = nil
+    var currency: String? = nil
     var block_number: Int? = nil
     var time: Int?
     var comment: String? = nil

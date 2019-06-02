@@ -285,17 +285,26 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
 
         let transactionRequest = Request(url: url)
         
-        transactionRequest.jsonDecodeWithCallback(type: TransactionResponse.self, callback: { transactionResponse in
-            self.currency = transactionResponse.currency
-            
-            if let history = transactionResponse.history {
+        transactionRequest.jsonDecodeWithCallback(type: TransactionResponse.self, callback: { err, transactionResponse in
+            if let currency = transactionResponse?.currency, let history = transactionResponse?.history {
+                self.currency = currency
                 self.sections = self.parseHistory(history: history, pubKey: pubKey)
                 
                 DispatchQueue.main.async { self.tableView?.reloadData() }
+            } else if (err != nil) {
+                self.errorAlert(title: "no_internet_title".localized(), message: "no_internet_message".localized())
             }
+        })
+    }
+    
+    func errorAlert(title: String, message: String) {
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
             
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
             
-        }, fail: nil)
+            self.present(alert, animated: true)
+        }
     }
     
     func parseHistory(history: History, pubKey: String) -> [TransactionSection] {

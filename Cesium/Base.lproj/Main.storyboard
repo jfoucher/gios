@@ -176,17 +176,27 @@
                                             <constraint firstItem="9Di-Ns-K3U" firstAttribute="centerY" secondItem="S45-Et-FWW" secondAttribute="centerY" constant="0.5" id="emG-Xq-cp5"/>
                                         </constraints>
                                     </view>
+                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P5f-HI-cml">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="5"/>
+                                        <color key="tintColor" red="0.78586837177764512" green="0.44329970738714669" blue="0.0" alpha="0.84705882352941175" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="5" id="fiA-lx-BSa"/>
+                                        </constraints>
+                                    </progressView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="15J-YC-a3o" firstAttribute="leading" secondItem="S45-Et-FWW" secondAttribute="trailing" id="4mG-f6-Knt"/>
                                     <constraint firstItem="S45-Et-FWW" firstAttribute="leading" secondItem="Pku-cx-w8V" secondAttribute="leading" id="6Jb-Ay-u5P"/>
+                                    <constraint firstItem="P5f-HI-cml" firstAttribute="leading" secondItem="Pku-cx-w8V" secondAttribute="leading" id="BK6-Nx-Axn"/>
                                     <constraint firstAttribute="trailing" secondItem="M2g-RL-IE3" secondAttribute="trailing" constant="8" id="Wbp-PX-N2l"/>
                                     <constraint firstItem="M2g-RL-IE3" firstAttribute="top" secondItem="Pku-cx-w8V" secondAttribute="top" constant="8" id="X1f-7U-s1V"/>
                                     <constraint firstItem="15J-YC-a3o" firstAttribute="centerY" secondItem="S45-Et-FWW" secondAttribute="centerY" id="Zg0-Hd-jzw"/>
                                     <constraint firstItem="15J-YC-a3o" firstAttribute="top" secondItem="S45-Et-FWW" secondAttribute="top" id="cFM-Af-k0n"/>
                                     <constraint firstItem="S45-Et-FWW" firstAttribute="top" secondItem="M2g-RL-IE3" secondAttribute="bottom" id="dV7-1k-aG0"/>
                                     <constraint firstAttribute="trailing" secondItem="15J-YC-a3o" secondAttribute="trailing" id="fMd-2c-mCs"/>
+                                    <constraint firstAttribute="trailing" secondItem="P5f-HI-cml" secondAttribute="trailing" id="nsG-Ns-dWx"/>
+                                    <constraint firstItem="P5f-HI-cml" firstAttribute="top" secondItem="Pku-cx-w8V" secondAttribute="top" id="oD4-iI-R4n"/>
                                     <constraint firstItem="15J-YC-a3o" firstAttribute="width" secondItem="S45-Et-FWW" secondAttribute="width" id="tDf-lt-3dA"/>
                                     <constraint firstAttribute="bottomMargin" secondItem="S45-Et-FWW" secondAttribute="bottom" constant="20" id="vJp-4s-Fb7"/>
                                     <constraint firstItem="M2g-RL-IE3" firstAttribute="leading" secondItem="Pku-cx-w8V" secondAttribute="leading" constant="8" id="vKx-pq-lVz"/>
@@ -230,8 +240,10 @@
                         <outlet property="arrow" destination="ri3-QF-OkB" id="nWC-hO-U7R"/>
                         <outlet property="cancelButton" destination="9Di-Ns-K3U" id="by9-AE-3Eo"/>
                         <outlet property="comment" destination="M2g-RL-IE3" id="djw-5V-ZZN"/>
+                        <outlet property="progress" destination="P5f-HI-cml" id="Egz-8b-nRC"/>
                         <outlet property="receiverAvatar" destination="ImW-VJ-Ujl" id="rSq-tL-zIq"/>
                         <outlet property="receiverName" destination="OFu-oL-EbG" id="NoZ-U7-24u"/>
+                        <outlet property="sendButton" destination="Y1m-kc-Yrc" id="UsG-wn-COY"/>
                         <outlet property="senderAvatar" destination="JqE-yj-kYt" id="Fau-BQ-XQm"/>
                         <outlet property="senderBalance" destination="bHe-Kd-HVU" id="J6d-h5-Rcp"/>
                         <outlet property="senderName" destination="g8z-kr-5pv" id="HGt-O4-3Tw"/>
@@ -625,6 +637,9 @@
                                 <rect key="frame" x="30" y="725" width="354" height="38"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                 <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="buttonAction" destination="9pv-A4-QxB" eventType="touchUpInside" id="ilD-87-LwT"/>
+                                </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="identifiant" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="oPp-by-Wl6">
                                 <rect key="frame" x="30" y="548" width="354" height="40"/>
