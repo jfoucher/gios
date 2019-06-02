@@ -8,6 +8,10 @@
 
 import Foundation
 
-struct Block {
-    
+struct Block: Codable {
+    var version: Int
+    var currency: String
+    var time: Int
+    var hash: String
+    var number: Int
 }

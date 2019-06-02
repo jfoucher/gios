@@ -126,8 +126,43 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
         
         alert.addAction(UIAlertAction(title: "transaction_confirm_button_label".localized(), style: .default, handler: {ac in
             print("send")
+            let text = self.comment?.text ?? ""
+            //TODO validate amount, etc...
+            
             self.sender?.getSources(callback: { (response: SourceResponse) in
-                Transactions.createTransaction(response: response)
+                print("source response", response)
+                if let pk = self.receiver?.issuer {
+                    print("issuer", pk)
+                    let intAmount = Int(truncating: NSNumber(value: Float(truncating: am) * 100))
+                    let url = String(format: "%@/blockchain/current", "default_node".localized())
+                    let request = Request(url: url)
+                    
+                    request.jsonDecodeWithCallback(type: Block.self, callback: { (block: Block) in
+                        print("block", block)
+                        guard let signedTx = try? Transactions.createTransaction(response: response, receiverPubKey: pk, amount: intAmount, block: block, comment: text) else {
+                            return
+                        }
+                        
+                        let processUrl = String(format: "%@/tx/process", "default_node".localized())
+                        print("processUrl", processUrl)
+                        let processRequest = Request(url: processUrl)
+                        processRequest.postRaw(data: signedTx, type: Transaction.self, callback: { (error, res) in
+                            print(error, res)
+                            if let er = error {
+                                print("ERROR")
+                                print(er)
+                            }
+                            if let tx = res {
+                                print("TRANSACTION")
+                                print(tx)
+                            }
+                        })
+                        // send transaction
+                        
+                    }, fail: nil)
+                    
+                }
+                
             })
         }))
         
