@@ -90,7 +90,10 @@
                                             <constraint firstAttribute="width" secondItem="p3p-e6-IPx" secondAttribute="height" multiplier="43:33" id="q6R-U9-P2b"/>
                                         </constraints>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" title="Button" image="change"/>
+                                        <size key="titleShadowOffset" width="2" height="2"/>
+                                        <state key="normal" title="Button" image="change">
+                                            <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
                                         <connections>
                                             <action selector="changeReceiverWithSender:" destination="2fi-Sn-62l" eventType="touchUpInside" id="82I-zu-HVQ"/>
                                         </connections>
@@ -206,6 +209,7 @@
                             <constraint firstItem="Pku-cx-w8V" firstAttribute="top" secondItem="bHe-Kd-HVU" secondAttribute="bottom" constant="16" id="4cf-hI-1pe"/>
                             <constraint firstItem="PzM-tN-j0c" firstAttribute="centerX" secondItem="QVB-l5-Bi3" secondAttribute="centerX" id="EOR-v0-AvX"/>
                             <constraint firstItem="AhG-Xz-HhB" firstAttribute="bottom" secondItem="Pku-cx-w8V" secondAttribute="bottom" constant="-35" id="MV1-2O-xUb"/>
+                            <constraint firstItem="AhG-Xz-HhB" firstAttribute="trailing" secondItem="OVn-xH-Qlc" secondAttribute="trailing" constant="12" id="NwS-Ru-RFl"/>
                             <constraint firstItem="AhG-Xz-HhB" firstAttribute="trailing" secondItem="eio-ke-Rhg" secondAttribute="trailing" constant="20" id="SO6-zJ-SyT"/>
                             <constraint firstItem="PzM-tN-j0c" firstAttribute="top" secondItem="AhG-Xz-HhB" secondAttribute="top" constant="20" id="XRC-90-6Jy"/>
                             <constraint firstItem="ggf-wH-L3w" firstAttribute="centerY" secondItem="PzM-tN-j0c" secondAttribute="centerY" id="auw-Kw-Bzm"/>

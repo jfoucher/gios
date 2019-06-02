@@ -109,14 +109,17 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
     }
     
     @IBAction func send(sender: UIButton) {
-        
+        print("send")
         guard let title = self.receiver?.title else { return  }
         guard let currency = self.currency else { return  }
         guard let amstring = self.amount.text else { return  }
-        print(amstring)
-        let am = Float(amstring) ?? 0
-        print(am)
-        let amountString = String(format: "%.2f %@", am, Currency.formattedCurrency(currency: currency))
+        
+        let numberFormatter = NumberFormatter()
+        numberFormatter.locale = Locale.current
+
+        let am = numberFormatter.number(from: amstring) ?? 0
+
+        let amountString = String(format: "%.2f %@", Float(truncating: am), Currency.formattedCurrency(currency: currency))
         
         let msg = String(format: "transaction_confirm_message".localized(), amountString, title)
         let alert = UIAlertController(title: "transaction_confirm_prompt".localized(), message: msg, preferredStyle: .actionSheet)

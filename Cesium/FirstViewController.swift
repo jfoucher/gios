@@ -54,7 +54,7 @@ class FirstViewController: UINavigationController, UINavigationBarDelegate {
     
     func logout() {
         print ("logout")
-        let alert = UIAlertController(title: "logout_confirm_prompt".localized(), message: "", preferredStyle: .alert)
+        let alert = UIAlertController(title: "logout_confirm_prompt".localized(), message: "", preferredStyle: .actionSheet)
         
         alert.addAction(UIAlertAction(title: "confirm_label".localized(), style: .default, handler: {ac in
             self.popViewController(animated: true)
