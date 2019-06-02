@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import CryptoSwift
+import Sodium
 
 struct TransactionResponse: Codable {
     var currency: String = "g1"
@@ -32,8 +34,9 @@ struct Transaction: Codable, Comparable {
     var inputs: [String] = []
     var outputs: [String] = []
     var signatures: [String] = []
-    var blockstampTime: Int
-    var blockstamp: String
+    var blockstampTime: Int?
+    var blockstamp: String?
+    
     var locktime: Int = 0
     
     static func < (lhs: Transaction, rhs: Transaction) -> Bool {
@@ -195,4 +198,6 @@ struct ParsedTransaction: Comparable {
         }
     }
 }
+
+
 

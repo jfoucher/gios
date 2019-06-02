@@ -25,6 +25,7 @@ struct Profile: Codable {
     var hash: String? = nil
     var socials: [Social]? = []
     var identity: Identity?
+    var sourceResponse: SourceResponse?
     init(issuer: String) {
         self.issuer = issuer
     }
@@ -57,6 +58,7 @@ struct Profile: Codable {
         let request = Request(url: url)
         
         request.jsonDecodeWithCallback(type: SourceResponse.self, callback: { sourceResponse in
+            
             let sources = sourceResponse.sources
             let currency = Currency.formattedCurrency(currency: sourceResponse.currency)
             
@@ -64,6 +66,17 @@ struct Profile: Codable {
             let total = amounts.reduce(0, +)
             let str = String(format:"%@ %.2f %@", "balance_label".localized(), Double(total) / 100, currency)
             callback?(str)
+        }, fail: nil)
+    }
+    
+    func getSources(callback: ((SourceResponse) -> Void)?) {
+        let pubKey = self.issuer
+        let url = String(format: "%@/tx/sources/%@", "default_node".localized(), pubKey)
+        
+        let request = Request(url: url)
+        
+        request.jsonDecodeWithCallback(type: SourceResponse.self, callback: { sourceResponse in
+            callback?(sourceResponse)
         }, fail: nil)
     }
     

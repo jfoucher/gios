@@ -25,6 +25,8 @@
 		AB1AC3CC22A1600700CDEEB7 /* Identity.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1AC3CB22A1600700CDEEB7 /* Identity.swift */; };
 		AB1AC3CE22A1686F00CDEEB7 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1AC3CD22A1686F00CDEEB7 /* Image.swift */; };
 		AB1AC3D022A17FD700CDEEB7 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1AC3CF22A17FD700CDEEB7 /* Transaction.swift */; };
+		AB38A65922A37B24008D7215 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB38A65822A37B24008D7215 /* Block.swift */; };
+		AB38A65B22A38309008D7215 /* Transactions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB38A65A22A38309008D7215 /* Transactions.swift */; };
 		AB996F1822A06E02005966E2 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB996F1722A06E02005966E2 /* Profile.swift */; };
 		AB996F1C22A08452005966E2 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB996F1B22A08452005966E2 /* LoginViewController.swift */; };
 		AB996F1E22A0847B005966E2 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB996F1D22A0847B005966E2 /* ProfileViewController.swift */; };
@@ -82,6 +84,8 @@
 		AB1AC3CD22A1686F00CDEEB7 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		AB1AC3CF22A17FD700CDEEB7 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		AB33BE62229FF6150003EEA3 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		AB38A65822A37B24008D7215 /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
+		AB38A65A22A38309008D7215 /* Transactions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transactions.swift; sourceTree = "<group>"; };
 		AB996F1722A06E02005966E2 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		AB996F1B22A08452005966E2 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		AB996F1D22A0847B005966E2 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -210,6 +214,7 @@
 				AB1AC3CD22A1686F00CDEEB7 /* Image.swift */,
 				ABE007D122A2CDA10077C9C3 /* Currency.swift */,
 				AB168A7222A341A900952DDE /* TextField.swift */,
+				AB38A65A22A38309008D7215 /* Transactions.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -221,6 +226,7 @@
 				AB1AC3C522A1490B00CDEEB7 /* Source.swift */,
 				AB1AC3CB22A1600700CDEEB7 /* Identity.swift */,
 				AB1AC3CF22A17FD700CDEEB7 /* Transaction.swift */,
+				AB38A65822A37B24008D7215 /* Block.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -449,6 +455,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB1AC3D022A17FD700CDEEB7 /* Transaction.swift in Sources */,
+				AB38A65922A37B24008D7215 /* Block.swift in Sources */,
 				AB1AC3BC22A05F1100CDEEB7 /* Base58.swift in Sources */,
 				ABE007D222A2CDA10077C9C3 /* Currency.swift in Sources */,
 				AB168A7322A341A900952DDE /* TextField.swift in Sources */,
@@ -457,6 +464,7 @@
 				AB1AC3C622A1490B00CDEEB7 /* Source.swift in Sources */,
 				AB1AC3CE22A1686F00CDEEB7 /* Image.swift in Sources */,
 				AB996F1C22A08452005966E2 /* LoginViewController.swift in Sources */,
+				AB38A65B22A38309008D7215 /* Transactions.swift in Sources */,
 				AB1AC3CC22A1600700CDEEB7 /* Identity.swift in Sources */,
 				ABE007D022A28D820077C9C3 /* TransactionViewController.swift in Sources */,
 				AB168A7122A3219E00952DDE /* NewTransactionViewController.swift in Sources */,

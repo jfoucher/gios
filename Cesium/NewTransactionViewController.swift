@@ -126,13 +126,17 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
         
         alert.addAction(UIAlertAction(title: "transaction_confirm_button_label".localized(), style: .default, handler: {ac in
             print("send")
-            
+            self.sender?.getSources(callback: { (response: SourceResponse) in
+                Transactions.createTransaction(response: response)
+            })
         }))
         
         alert.addAction(UIAlertAction(title: "transaction_cancel_button_label".localized(), style: .cancel, handler: nil))
         
         self.present(alert, animated: true)
     }
+    
+
     
     @IBAction func changeReceiver(sender: UIButton) {
         print("change")

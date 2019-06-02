@@ -10,17 +10,17 @@ import Foundation
 
 struct SourceResponse: Codable {
     var currency: String = "g1"
-    var pubkey: String? = nil
+    var pubkey: String
     var sources: [Source] = []
 }
 
 struct Source: Codable {
-    var type: String? = nil
-    var noffset: Int = 0
-    var identifier: String? = nil
+    var type: String
+    var noffset: Int
+    var identifier: String
     var amount: Int
     var base: Int
-    var conditions: String? = nil
+    var conditions: String
 }
 
 //        {
