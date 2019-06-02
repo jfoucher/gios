@@ -45,3 +45,5 @@
 "close_label"="Close";
 "no_amount"="No amount";
 "no_amount_message"="Please choose an amount for your transaction";
+"insufficient_funds"="Insufficient funds";
+"insufficient_funds_message"="Sorry, you do not have sufficient funds for this transaction at this time. Please input a lower number and try again";

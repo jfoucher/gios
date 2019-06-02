@@ -78,14 +78,14 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
             sender.getAvatar(imageView: self.senderAvatar)
             
             self.senderName.text = sender.title != nil ? sender.title : sender.uid
-            
+            let cur = Currency.formattedCurrency(currency: self.currency!)
             if let bal = sender.balance {
-                let str = String(format:"%@ %.2f %@", "balance_label".localized(), Double(bal) / 100, self.currency!)
+                let str = String(format:"%@ %.2f %@", "balance_label".localized(), Double(bal) / 100, cur)
                  self.senderBalance.text = str
             } else {
                 sender.getBalance(callback: { total in
-                    let str = String(format:"%@ %.2f %@", "balance_label".localized(), Double(total) / 100, self.currency!)
-                    sender.balance = total
+                    let str = String(format:"%@ %.2f %@", "balance_label".localized(), Double(total) / 100, cur)
+                    self.sender?.balance = total
                     DispatchQueue.main.async {
                         self.senderBalance.text = str
                     }
@@ -166,6 +166,14 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
         if (am.floatValue <= 0.0) {
             self.alert(title: "no_amount".localized(), message: "no_amount_message".localized())
             return
+        }
+
+        if let bal = self.sender?.balance {
+            if bal < Int(am.floatValue * 100) {
+                print(bal, am)
+                self.alert(title: "insufficient_funds".localized(), message: "insufficient_funds_message".localized())
+                return
+            }
         }
 
         let amountString = String(format: "%.2f %@", Float(truncating: am), Currency.formattedCurrency(currency: currency))
@@ -293,7 +301,7 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
     
     func alert(title: String, message: String?) {
         DispatchQueue.main.async {
-            let alert = UIAlertController(title: "transaction_fail_title".localized(), message: message, preferredStyle: .actionSheet)
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
             
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: self.finish))
             

@@ -45,3 +45,5 @@
 "close_label"="Fermer";
 "no_amount"="Aucun montant";
 "no_amount_message"="Veuillez choisir un montant pour cette transaction";
+"insufficient_funds"="Solde insuffisant";
+"insufficient_funds_message"="Désolé, vous n'avez pas les fonds nécéssaires pour procéder à cette transacation. veuillez réessayer en entrant un nombre plus petit.";
