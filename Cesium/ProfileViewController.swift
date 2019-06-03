@@ -153,6 +153,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         newTransactionView.sender = ctrl.profile
         newTransactionView.currency = self.currency
         newTransactionView.isModalInPopover = true
+        newTransactionView.searchUserDelegate = self
         
         self.navigationController?.present(newTransactionView, animated: true, completion: nil)
         //self.navigationController?.pushViewController(transactionView, animated: true)
@@ -334,10 +335,28 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             TransactionSection.init(type: "receiving", transactions: receiving)
         ]
     }
-    
+}
 
-    
-    
-    
+protocol SearchUserDelegate: class {
+    func searchUser()
+}
 
+extension ProfileViewController: SearchUserDelegate {
+    func searchUser() {
+        print("in SearchUserDelegate")
+        DispatchQueue.main.async {
+            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            
+            let changeUserView = storyBoard.instantiateViewController(withIdentifier: "ChangeUserView") as! ChangeReceiverViewController
+            
+            changeUserView.isModalInPopover = true
+
+            
+            //if let ctrl = self.navigationController {
+                self.present(changeUserView, animated: true, completion: nil)
+           // } else {
+            //    print("no navigation controller")
+            //}
+        }
+    }
 }

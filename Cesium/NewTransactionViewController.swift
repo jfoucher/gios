@@ -31,6 +31,9 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var progress: UIProgressView!
     @IBOutlet weak var topBarHeight: NSLayoutConstraint!
+    
+    weak var searchUserDelegate: SearchUserDelegate?
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -310,8 +313,27 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
     }
     
     @IBAction func changeReceiver(sender: UIButton) {
-        print("change")
+        DispatchQueue.main.async {
+            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            
+            let changeUserView = storyBoard.instantiateViewController(withIdentifier: "ChangeUserView") as! ChangeReceiverViewController
+            
+            changeUserView.isModalInPopover = true
+
+            self.present(changeUserView, animated: true, completion: nil)
+        }
+        
     }
     
     
+}
+
+protocol ChangeReceiver: class {
+    func changeReceiver(receiver: Profile)
+}
+
+extension NewTransactionViewController: ChangeReceiver {
+    func changeReceiver(receiver: Profile) {
+        self.receiver = receiver
+    }
 }

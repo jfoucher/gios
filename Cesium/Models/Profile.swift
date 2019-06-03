@@ -9,9 +9,22 @@
 import Foundation
 import UIKit
 
+
+struct ProfileSearchResponse: Codable {
+    var hits: Hits
+
+}
+
+struct Hits: Codable {
+    var total: Int? = 0
+    var hits: [ProfileResponse]
+}
+ 
+
 struct ProfileResponse: Codable {
     var _source: Profile? = nil
     var _id: String? = nil
+    var _type: String? = nil
     var found: Bool? = nil
 }
 
@@ -20,6 +33,7 @@ struct Profile: Codable {
     var address: String? = nil
     var city: String? = nil
     var title: String? = nil
+    var time: Int? = nil
     var kp: String? = nil
     var issuer: String
     var signature: String? = nil

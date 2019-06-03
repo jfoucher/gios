@@ -27,10 +27,12 @@ struct RequestError: Error {
 
 class Request {
     var url: URL
+    var task: URLSessionDataTask?
     
     init(url: String) {
         self.url = URL(string: url)!
     }
+    
     
     func postRaw<T>(rawTx: String, type: T.Type, callback: ((Error?, T?) -> Void)?) where T : Decodable {
         let session = URLSession.shared
@@ -44,12 +46,10 @@ class Request {
             return
         }
 
-        let jsonString = String(data: jsonData, encoding: .utf8)!
-
         request.httpMethod = "POST"
         request.httpBody = Data(jsonData)
         request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
-        let task = session.dataTask(with: request as URLRequest, completionHandler: { data, response, error in
+        self.task = session.dataTask(with: request as URLRequest, completionHandler: { data, response, error in
             
             guard error == nil else {
                 print("error")
@@ -77,12 +77,12 @@ class Request {
             }
 
         })
-        task.resume()
+        self.task?.resume()
     }
     
     func jsonDecodeWithCallback<T>(type: T.Type, callback: ((Error?, T?) -> Void)?) where T : Decodable {
         let session = URLSession.shared
-        let task = session.dataTask(with: self.url, completionHandler: { data, response, error in
+        self.task = session.dataTask(with: self.url, completionHandler: { data, response, error in
             if let type = response?.mimeType {
                 guard type == "application/json" else {
                     print("Not JSON " + String(self.url.absoluteString) + " " + type)
@@ -107,6 +107,9 @@ class Request {
             }
         })
         
-        task.resume()
+        self.task?.resume()
+    }
+    func cancel() {
+        self.task?.cancel()
     }
 }
