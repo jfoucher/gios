@@ -48,8 +48,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     var profile: Profile? {
         didSet {
-            let nav = self.navigationController as! FirstViewController
-            nav.selectedProfile = profile
+            if let nav = self.navigationController as? FirstViewController {
+                nav.selectedProfile = profile
+            }
         }
     }
     var sections: [TransactionSection]? = []
@@ -88,7 +89,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.createTransaction.setTitle("transfer_button_label".localized(), for: .normal)
             let ctrl = self.navigationController as! FirstViewController
             if (self.profile?.issuer == ctrl.profile?.issuer) {
-                self.createTransaction.removeFromSuperview()
+                //self.createTransaction.removeFromSuperview()
             }
             // Make back button white
             let backItem = UIBarButtonItem()
@@ -108,7 +109,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             }
             
             profile.getBalance(callback: { total in
-                let str = String(format:"%@ %.2f %@", "balance_label".localized(), Double(total) / 100, self.currency)
+                let str = String(format:"%@ %.2f %@", "balance_label".localized(), Double(total) / 100, Currency.formattedCurrency(currency: self.currency))
                 self.profile?.balance = total
                 DispatchQueue.main.async {
                     self.balance.text = str
@@ -153,7 +154,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         newTransactionView.sender = ctrl.profile
         newTransactionView.currency = self.currency
         newTransactionView.isModalInPopover = true
-        newTransactionView.searchUserDelegate = self
         
         self.navigationController?.present(newTransactionView, animated: true, completion: nil)
         //self.navigationController?.pushViewController(transactionView, animated: true)
@@ -337,26 +337,3 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
 }
 
-protocol SearchUserDelegate: class {
-    func searchUser()
-}
-
-extension ProfileViewController: SearchUserDelegate {
-    func searchUser() {
-        print("in SearchUserDelegate")
-        DispatchQueue.main.async {
-            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            
-            let changeUserView = storyBoard.instantiateViewController(withIdentifier: "ChangeUserView") as! ChangeReceiverViewController
-            
-            changeUserView.isModalInPopover = true
-
-            
-            //if let ctrl = self.navigationController {
-                self.present(changeUserView, animated: true, completion: nil)
-           // } else {
-            //    print("no navigation controller")
-            //}
-        }
-    }
-}

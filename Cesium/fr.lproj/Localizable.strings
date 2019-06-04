@@ -9,7 +9,7 @@
 "password_placeholder"="Mot de passe";
 "identifier_placeholder" = "Identifiant secret";
 "login_button_label"="Connexion";
-"default_node"="https://g1.g1.nordstrom.duniter.org";
+"default_node"="https://g1.jfoucher.com";
 "default_data_host"="https://g1.data.duniter.fr";
 "logout_button_label"="Déconnexion";
 "account_tab_label"="Compte";
@@ -47,3 +47,5 @@
 "no_amount_message"="Veuillez choisir un montant pour cette transaction";
 "insufficient_funds"="Solde insuffisant";
 "insufficient_funds_message"="Désolé, vous n'avez pas les fonds nécéssaires pour procéder à cette transacation. veuillez réessayer en entrant un nombre plus petit.";
+"end_results"="Fin des résultats";
+"search_placeholder"="Recherche d'utilisateurs";

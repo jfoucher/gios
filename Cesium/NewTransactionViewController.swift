@@ -32,10 +32,20 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var progress: UIProgressView!
     @IBOutlet weak var topBarHeight: NSLayoutConstraint!
     
-    weak var searchUserDelegate: SearchUserDelegate?
-    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if let sender = self.sender, let receiver = self.receiver {
+            if (sender.issuer == receiver.issuer) {
+                self.receiver = nil
+                self.receiverAvatar.image = nil
+                self.receiverName.text = ""
+                //This is us, show the user choice view
+                self.changeReceiver(sender: nil)
+            }
+        }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,7 +81,8 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
         }
         
         
-        if var sender = self.sender {
+        if let sender = self.sender {
+            
             self.senderAvatar.layer.borderWidth = 1
             self.senderAvatar.layer.masksToBounds = false
             self.senderAvatar.layer.borderColor = UIColor.white.cgColor
@@ -95,6 +106,8 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
                 })
             }
         }
+        
+
         
     }
     
@@ -312,28 +325,29 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
         }
     }
     
-    @IBAction func changeReceiver(sender: UIButton) {
+    @IBAction func changeReceiver(sender: UIButton?) {
         DispatchQueue.main.async {
             let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             
             let changeUserView = storyBoard.instantiateViewController(withIdentifier: "ChangeUserView") as! ChangeReceiverViewController
             
             changeUserView.isModalInPopover = true
+            changeUserView.profileSelectedDelegate = self
 
             self.present(changeUserView, animated: true, completion: nil)
         }
-        
     }
-    
-    
 }
 
-protocol ChangeReceiver: class {
-    func changeReceiver(receiver: Profile)
+protocol ReceiverChangedDelegate: class {
+    func receiverChanged(receiver: Profile)
 }
 
-extension NewTransactionViewController: ChangeReceiver {
-    func changeReceiver(receiver: Profile) {
+extension NewTransactionViewController: ReceiverChangedDelegate {
+    func receiverChanged(receiver: Profile) {
         self.receiver = receiver
+        self.receiver?.getAvatar(imageView: self.receiverAvatar)
+        self.receiverName.text = receiver.title != nil ? receiver.title : receiver.uid
+        print("new receiver")
     }
 }

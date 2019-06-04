@@ -524,7 +524,7 @@
                                 <rect key="frame" x="0.0" y="238" width="414" height="624"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="PrototypeCell" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="gray" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PrototypeCell" id="gy8-Ka-k5m" userLabel="PrototypeCell" customClass="ChangeUserTableViewCell" customModule="Cesium" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="UserPrototypeCell" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="gray" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="UserPrototypeCell" id="gy8-Ka-k5m" userLabel="PrototypeCell" customClass="ChangeUserTableViewCell" customModule="Cesium" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="gy8-Ka-k5m" id="tc9-Sb-VVi">
@@ -568,6 +568,46 @@
                                             <outlet property="name" destination="Dds-d7-ryQ" id="2c4-l2-rF0"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="LoadingCell" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LoadingCell" id="pGh-bd-fGp" userLabel="PrototypeCell" customClass="ChangeUserTableViewCell" customModule="Cesium" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="72" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pGh-bd-fGp" id="18u-Ke-8iM">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="M7a-3c-Q3O">
+                                                    <rect key="frame" x="197" y="12" width="20" height="20"/>
+                                                </activityIndicatorView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="M7a-3c-Q3O" firstAttribute="centerY" secondItem="18u-Ke-8iM" secondAttribute="centerY" id="3hI-9d-B9H"/>
+                                                <constraint firstItem="M7a-3c-Q3O" firstAttribute="centerX" secondItem="18u-Ke-8iM" secondAttribute="centerX" id="zqp-he-qCc"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="EndCell" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="EndCell" id="tEC-Ni-noo" userLabel="PrototypeCell" customClass="ChangeUserTableViewCell" customModule="Cesium" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="116" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tEC-Ni-noo" id="F2q-T8-GcD">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fin des résultats" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MEr-Sh-9Bi">
+                                                    <rect key="frame" x="154" y="13.5" width="106.5" height="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="MEr-Sh-9Bi" firstAttribute="centerX" secondItem="F2q-T8-GcD" secondAttribute="centerX" id="Pks-X1-cbT"/>
+                                                <constraint firstItem="MEr-Sh-9Bi" firstAttribute="centerY" secondItem="F2q-T8-GcD" secondAttribute="centerY" id="l7Y-9z-V4O"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="endResults" destination="MEr-Sh-9Bi" id="u5h-Pk-yhb"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="2sy-to-o3P" id="RtE-fV-hTE"/>
@@ -596,8 +636,8 @@
                     </view>
                     <connections>
                         <outlet property="search" destination="lzt-bR-Jar" id="sEU-9Z-M9N"/>
-                        <outlet property="tableView" destination="X8I-mv-D1X" id="TGZ-nt-DKG"/>
-                        <outlet property="topBarHeight" destination="9tK-mS-ysX" id="LJM-y4-lHW"/>
+                        <outlet property="tableView" destination="X8I-mv-D1X" id="zp4-c8-BLt"/>
+                        <outlet property="topBarHeight" destination="9tK-mS-ysX" id="oeT-Ru-Ftd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u1k-Ym-lsV" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -684,6 +724,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="amount" destination="4gg-9K-ENQ" id="PDC-vF-IHu"/>
                                             <outlet property="avatar" destination="ypA-27-Ejl" id="5Dr-uu-qcM"/>
                                             <outlet property="date" destination="wdP-EG-Uhr" id="8oS-6j-VuB"/>
                                             <outlet property="name" destination="KOQ-1e-jGU" id="BKL-Fa-Lbx"/>
