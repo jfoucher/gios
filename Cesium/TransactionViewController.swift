@@ -119,7 +119,11 @@ class TransactionViewController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         self.comment.setContentOffset(.zero, animated: false)
+        
+        self.senderAvatar.layer.cornerRadius = self.senderAvatar.frame.width/2
+        self.receiverAvatar.layer.cornerRadius = self.receiverAvatar.frame.width/2
     }
     
     @IBAction func close(sender: UIButton?) {

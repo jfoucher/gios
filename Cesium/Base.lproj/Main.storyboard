@@ -356,6 +356,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" priority="750" constant="96" id="3Xa-RW-dtr"/>
                                             <constraint firstAttribute="width" secondItem="f5V-Zk-ahR" secondAttribute="height" multiplier="1:1" id="AMn-hH-Dhx"/>
+                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="96" id="QvJ-AT-RUl"/>
                                         </constraints>
                                     </imageView>
                                 </subviews>
@@ -379,6 +380,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="TFJ-66-9ta" secondAttribute="height" multiplier="1:1" id="I6c-yR-qg6"/>
                                             <constraint firstAttribute="width" priority="750" constant="96" id="Rsb-FV-EUc"/>
+                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="96" id="zCq-du-n8e"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" alpha="0.90000000000000002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nIy-Dv-JOm">
