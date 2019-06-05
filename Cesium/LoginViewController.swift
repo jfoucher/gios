@@ -27,9 +27,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var publicKey: UILabel!
     @IBOutlet weak var keyImage: UIImageView!
+    @IBOutlet weak var topbarHeight: NSLayoutConstraint!
+    @IBOutlet weak var topBar: UIView!
     
     weak var loginDelegate: LoginDelegate?
     weak var loginFailedDelegate: LoginFailedDelegate?
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +44,26 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         self.keyImage.image = nil
         self.publicKey.text = ""
+        
+        if let navigationController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController {
+            print("found")
+            self.topbarHeight.constant = navigationController.navigationBar.frame.height
+            self.view.layoutIfNeeded()
+        }
+        
+        if let p = self.parent {
+            let name = NSStringFromClass(type(of: p))
+            if (name == "Cesium.FirstViewController") {
+                self.topBar.removeFromSuperview()
+            }
+        }
+
+        
+    }
+    
+    @IBAction func close(_ sender: Any) {
+        self.dismiss(animated: true
+            , completion: nil)
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -138,8 +164,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     func calculateKeyPair(id: String, pass: String) throws -> KeyPair {
-        
-        
         let password: Array<UInt8> = Array(pass.utf8)
         let salt: Array<UInt8> = Array(id.utf8)
         guard let seed = try? Scrypt(password: password, salt: salt, dkLen: 32, N: 4096, r: 16, p: 1).calculate() else {

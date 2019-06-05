@@ -32,35 +32,29 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var progress: UIProgressView!
     @IBOutlet weak var topBarHeight: NSLayoutConstraint!
     
+    weak var loginView: LoginViewController?
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        if let sender = self.sender, let receiver = self.receiver {
-            if (sender.issuer == receiver.issuer) {
-                self.receiver = nil
-                self.receiverAvatar.image = nil
-                self.receiverName.text = ""
-                //This is us, show the user choice view
-                self.changeReceiver(sender: nil)
-            }
-        }
-    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         if let navigationController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController {
             print("found")
             self.topBarHeight.constant = navigationController.navigationBar.frame.height
             self.view.layoutIfNeeded()
-                
-            
         }
+        
+        self.sendButton.layer.cornerRadius = 6
+        
         self.close.text = "close_label".localized()
         //UIApplication.shared.statusBarStyle = .lightContent
         // set arrow to white
         self.arrow.tintColor = .white
         self.arrow.image = UIImage(named: "arrow-right")?.withRenderingMode(.alwaysTemplate)
+        
         self.progress.progress = 0.0
         self.amount.addDoneButtonToKeyboard(myAction:  #selector(self.amount.resignFirstResponder))
         self.comment.addDoneButtonToKeyboard(myAction:  #selector(self.comment.resignFirstResponder))
@@ -68,18 +62,32 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
         self.comment.text = "comment_placeholder".localized()
         self.comment.textColor = .lightGray
         
-        if let receiver = self.receiver {
-            self.receiverAvatar.layer.borderWidth = 1
-            self.receiverAvatar.layer.masksToBounds = false
-            self.receiverAvatar.layer.borderColor = UIColor.white.cgColor
-            self.receiverAvatar.layer.cornerRadius = self.receiverAvatar.frame.width/2
-            self.receiverAvatar.clipsToBounds = true
-
-            receiver.getAvatar(imageView: self.receiverAvatar)
-
-            self.receiverName.text = receiver.title != nil ? receiver.title : receiver.uid
+        self.receiverAvatar.layer.borderWidth = 1
+        self.receiverAvatar.layer.masksToBounds = false
+        self.receiverAvatar.layer.borderColor = UIColor.white.cgColor
+        self.receiverAvatar.layer.cornerRadius = self.receiverAvatar.frame.width/2
+        self.receiverAvatar.clipsToBounds = true
+        
+        
+        if let sender = self.sender, let receiver = self.receiver {
+            print(sender.issuer, receiver.issuer)
+            if (sender.issuer == receiver.issuer) {
+                print("setting to nil")
+                self.receiver = nil
+                self.receiverAvatar.image = nil
+                self.receiverName.text = ""
+                //This is us, show the user choice view
+                self.changeReceiver(sender: nil)
+            }
         }
         
+        if let receiver = self.receiver {
+            
+            
+            receiver.getAvatar(imageView: self.receiverAvatar)
+            
+            self.receiverName.text = receiver.title != nil ? receiver.title : receiver.uid
+        }
         
         if let sender = self.sender {
             
@@ -145,19 +153,19 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
         self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func send(sender: UIButton) {
+    @IBAction func send(sender: UIButton?) {
         
         // Set buttons disabled
-        self.cancelButton.isEnabled = false;
-        self.sendButton.isEnabled = false;
+        
+        
         
         
         print("will send")
         guard let receiver = self.receiver else {
-            print("no receiver")
+            self.changeReceiver(sender: nil)
             return
-            
         }
+        
         let title = receiver.title != nil ? receiver.title : receiver.uid
         guard let currency = self.currency else {
             print("no currency")
@@ -174,6 +182,7 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
             return
         }
         
+        //Check amount exists
         let numberFormatter = NumberFormatter()
         numberFormatter.locale = Locale.current
 
@@ -184,10 +193,31 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
             return
         }
 
+        //Check balance
         if let bal = self.sender?.balance {
             if bal < Int(am.floatValue * 100) {
                 print(bal, am)
                 self.alert(title: "insufficient_funds".localized(), message: "insufficient_funds_message".localized())
+                return
+            }
+        }
+        
+        //Show login screen if not logged in
+        if let sender = self.sender {
+            if sender.kp == nil {
+                print("no secret key here")
+                self.sendButton.isEnabled = true;
+                let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                
+                self.loginView = storyBoard.instantiateViewController(withIdentifier: "LoginView") as? LoginViewController
+                
+                self.loginView?.loginDelegate = self
+                //loginView.isModalInPopover = true
+                if let v = self.loginView {
+                    self.present(v, animated: true, completion: nil)
+                }
+                
+                
                 return
             }
         }
@@ -198,8 +228,8 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
         let alert = UIAlertController(title: "transaction_confirm_prompt".localized(), message: msg, preferredStyle: .actionSheet)
         print("preparing action")
         alert.addAction(UIAlertAction(title: "transaction_confirm_button_label".localized(), style: .default, handler: {ac in
-            print("send")
-            
+
+            self.sendButton.isEnabled = false;
             var text = self.comment?.text ?? ""
             if (self.comment?.text == "comment_placeholder".localized() && self.comment?.textColor == .lightGray)
             {
@@ -349,5 +379,24 @@ extension NewTransactionViewController: ReceiverChangedDelegate {
         self.receiver?.getAvatar(imageView: self.receiverAvatar)
         self.receiverName.text = receiver.title != nil ? receiver.title : receiver.uid
         print("new receiver")
+    }
+}
+
+extension NewTransactionViewController: LoginDelegate {
+    func login(profile: Profile) {
+        self.sender = profile
+        print("in login delegate")
+        DispatchQueue.main.async {
+            
+            if let v = self.loginView {
+                v.dismiss(animated: true, completion: {
+                    DispatchQueue.main.async {
+                        self.send(sender: nil)
+                    }
+                })
+            }
+            
+        }
+        
     }
 }

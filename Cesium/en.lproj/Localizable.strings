@@ -9,7 +9,7 @@
 "password_placeholder"="Password";
 "identifier_placeholder" = "Secret Identifier";
 "login_button_label"="Login";
-"default_node"="https://g1.jfoucher.com";
+"default_node"="https://g1.nordstrom.duniter.org";
 "default_data_host"="https://g1.data.duniter.fr";
 "logout_button_label"="Logout";
 "account_tab_label"="Account";
