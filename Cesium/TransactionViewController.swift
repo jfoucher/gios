@@ -23,6 +23,7 @@ class TransactionViewController: UIViewController {
     @IBOutlet weak var date: UILabel!
     @IBOutlet weak var comment: UITextView!
     @IBOutlet weak var closeButton: UIButton!
+    @IBOutlet weak var topBarHeight: NSLayoutConstraint!
     
     var sender: Profile? {
         didSet {
@@ -50,40 +51,46 @@ class TransactionViewController: UIViewController {
         }
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        self.senderAvatar.layer.cornerRadius = self.senderAvatar.frame.width/2
+        self.receiverAvatar.layer.cornerRadius = self.receiverAvatar.frame.width/2
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.senderAvatar.layer.borderWidth = 1
         self.senderAvatar.layer.masksToBounds = false
         self.senderAvatar.layer.borderColor = UIColor.white.cgColor
-        self.senderAvatar.layer.cornerRadius = self.senderAvatar.frame.width/2
+        
         self.senderAvatar.clipsToBounds = true
         
         self.receiverAvatar.layer.borderWidth = 1
         self.receiverAvatar.layer.masksToBounds = false
         self.receiverAvatar.layer.borderColor = UIColor.white.cgColor
-        self.receiverAvatar.layer.cornerRadius = self.receiverAvatar.frame.width/2
+        
         self.receiverAvatar.clipsToBounds = true
         
         self.txHash.text = self.transaction?.hash
         
+        if let navigationController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController {
+            print("found")
+            self.topBarHeight.constant = navigationController.navigationBar.frame.height
+            self.view.layoutIfNeeded()
+        }
+        
         // set arrow to white
         self.arrow.tintColor = .white
         self.arrow.image = UIImage(named: "arrow-right")?.withRenderingMode(.alwaysTemplate)
-        // set close button to green
-        self.closeButton.tintColor = .init(red: 0, green: 132/255.0, blue: 100/255.0, alpha: 1)
-        self.closeButton.setImage(UIImage(named: "close")?.withRenderingMode(.alwaysTemplate), for:.normal)
-        
+
         if let am = self.transaction?.amount {
             let currency = Currency.formattedCurrency(currency: self.currency)
             var a = Double(truncating: am as NSNumber)
             if (a < 0) {
                 a *= -1
             }
-
             
             self.amount.text = String(format: "%.2f %@", a / 100, currency)
-            
-            
         }
         
         
@@ -97,7 +104,13 @@ class TransactionViewController: UIViewController {
             let t = dateFormatter.string(from: date)
             self.date?.text = String(format: "transaction_view_date_format".localized(), d, t)
 
-            self.comment.text = tx.comment
+            if (tx.comment.isEmpty) {
+                self.comment.text = "no_comment_placeholder".localized()
+                self.comment.textColor = .lightGray
+            } else {
+                self.comment.text = tx.comment
+            }
+            
             self.getSender(pubKey: tx.pubKey)
             if (tx.to.count > 0) {
                 self.getReceiver(pubKey: tx.to[0])

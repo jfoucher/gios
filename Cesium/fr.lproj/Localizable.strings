@@ -49,3 +49,4 @@
 "insufficient_funds_message"="Désolé, vous n'avez pas les fonds nécéssaires pour procéder à cette transacation. veuillez réessayer en entrant un nombre plus petit.";
 "end_results"="Fin des résultats";
 "search_placeholder"="Recherche d'utilisateurs";
+"no_comment_placeholder"="Aucun commentaire";

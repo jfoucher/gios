@@ -83,10 +83,12 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.check.image = UIImage(named: "check")?.withRenderingMode(.alwaysTemplate)
             
             // Add image to send button
-            let imv = UIImage(named: "check")?.withRenderingMode(.alwaysTemplate)
+            let imv = UIImage(named: "g1")?.withRenderingMode(.alwaysTemplate)
             
-            self.createTransaction.setImage(imv?.resize(width: 24), for: .normal)
+            self.createTransaction.setImage(imv?.resize(width: 18), for: .normal)
             self.createTransaction.setTitle("transfer_button_label".localized(), for: .normal)
+            self.createTransaction.layer.cornerRadius = 6
+            
             let ctrl = self.navigationController as! FirstViewController
             if (self.profile?.issuer == ctrl.profile?.issuer) {
                 //self.createTransaction.removeFromSuperview()

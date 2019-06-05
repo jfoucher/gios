@@ -49,3 +49,4 @@
 "insufficient_funds_message"="Sorry, you do not have sufficient funds for this transaction at this time. Please input a lower number and try again";
 "end_results"="No more results";
 "search_placeholder"="Search users";
+"no_comment_placeholder"="No comment";
