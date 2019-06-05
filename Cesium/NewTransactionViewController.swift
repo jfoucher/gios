@@ -237,7 +237,7 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
             }
             
             //TODO validate amount, etc...
-            self.progress.progress = 0.1
+            self.progress.setProgress(0.1, animated: true)
             self.sender?.getSources(callback: { (error: Error?, resp: SourceResponse?) in
                 print("source response", resp)
                 if let pk = self.receiver?.issuer, let response = resp {
@@ -246,7 +246,7 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
                     let url = String(format: "%@/blockchain/current", "default_node".localized())
                     let request = Request(url: url)
                     DispatchQueue.main.async {
-                        self.progress.progress = 0.3
+                        self.progress.setProgress(0.3, animated: true)
                     }
                     request.jsonDecodeWithCallback(type: Block.self, callback: { (err: Error?, block: Block?) in
                         print("block", block)
@@ -254,12 +254,12 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
                             return
                         }
                         DispatchQueue.main.async {
-                            self.progress.progress = 0.6
+                            self.progress.setProgress(0.6, animated: true)
                         }
                         do {
                             let signedTx = try Transactions.createTransaction(response: response, receiverPubKey: pk, amount: intAmount, block: blk, comment: text, profile: profile)
                             DispatchQueue.main.async {
-                                self.progress.progress = 0.7
+                                self.progress.setProgress(0.7, animated: true)
                             }
                             let processUrl = String(format: "%@/tx/process", "default_node".localized())
                             print("processUrl", processUrl)
@@ -286,7 +286,7 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
                                     print(tx)
                                     
                                     DispatchQueue.main.async {
-                                        self.progress.progress = 1.0
+                                        self.progress.setProgress(1.0, animated: true)
                                         self.cancelButton.isEnabled = true;
                                         self.sendButton.isEnabled = true;
                                         let alert = UIAlertController(title: "transaction_success_title".localized(), message: "transaction_success_message".localized(), preferredStyle: .actionSheet)
@@ -340,7 +340,7 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
             self.cancelButton.isEnabled = true;
             self.sendButton.isEnabled = true;
         
-            self.progress.progress = 1.0
+            self.progress.setProgress(1.0, animated: true)
         }
     }
 
