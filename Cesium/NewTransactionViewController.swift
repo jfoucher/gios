@@ -243,7 +243,7 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
                 if let pk = self.receiver?.issuer, let response = resp {
                     print("issuer", pk)
                     let intAmount = Int(truncating: NSNumber(value: Float(truncating: am) * 100))
-                    let url = String(format: "%@/blockchain/current", "default_node".localized())
+                    let url = String(format: "%@/blockchain/current", currentNode)
                     let request = Request(url: url)
                     DispatchQueue.main.async {
                         self.progress.setProgress(0.3, animated: true)
@@ -261,7 +261,7 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
                             DispatchQueue.main.async {
                                 self.progress.setProgress(0.7, animated: true)
                             }
-                            let processUrl = String(format: "%@/tx/process", "default_node".localized())
+                            let processUrl = String(format: "%@/tx/process", currentNode)
                             print("processUrl", processUrl)
                             let processRequest = Request(url: processUrl)
                             processRequest.postRaw(rawTx: signedTx, type: Transaction.self, callback: { (error, res) in

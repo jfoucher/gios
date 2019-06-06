@@ -69,7 +69,7 @@ struct Profile: Codable {
     
     func getBalance(callback: ((Int) -> Void)?) {
         let pubKey = self.issuer
-        let url = String(format: "%@/tx/sources/%@", "default_node".localized(), pubKey)
+        let url = String(format: "%@/tx/sources/%@", currentNode, pubKey)
         
         let request = Request(url: url)
         
@@ -87,7 +87,7 @@ struct Profile: Codable {
     
     func getSources(callback: ((Error?, SourceResponse?) -> Void)?) {
         let pubKey = self.issuer
-        let url = String(format: "%@/tx/sources/%@", "default_node".localized(), pubKey)
+        let url = String(format: "%@/tx/sources/%@", currentNode, pubKey)
         
         let request = Request(url: url)
         
@@ -107,7 +107,7 @@ struct Profile: Codable {
     
     
     static func getRequirements(publicKey: String, callback: ((Identity?) -> Void)?) {
-        let url = String(format: "%@/wot/requirements/%@", "default_node".localized(), publicKey)
+        let url = String(format: "%@/wot/requirements/%@", currentNode, publicKey)
         
         let request = Request(url: url)
         

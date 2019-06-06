@@ -8,6 +8,16 @@
 
 import UIKit
 
+let nodes = [
+    "https://g1.nordstrom.duniter.org",
+    "https://g1.duniter.fr",
+    "https://g1.duniter.org",
+    "https://g1.jfoucher.com",
+    "https://g1.presles.fr",
+]
+
+var currentNode = nodes[0];
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

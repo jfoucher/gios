@@ -286,7 +286,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
 
     func getTransactions(pubKey: String) {
         //https://g1.nordstrom.duniter.org/tx/history/EEdwxSkAuWyHuYMt4eX5V81srJWVy7kUaEkft3CWLEiq
-        let url = String(format: "%@/tx/history/%@", "default_node".localized(), pubKey)
+        let url = String(format: "%@/tx/history/%@", currentNode, pubKey)
 
         let transactionRequest = Request(url: url)
         

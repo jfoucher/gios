@@ -85,13 +85,13 @@ class Request {
         self.task = session.dataTask(with: self.url, completionHandler: { data, response, error in
             if let type = response?.mimeType {
                 guard type == "application/json" else {
-                    print("Not JSON " + String(self.url.absoluteString) + " " + type)
+                    //print("Not JSON " + String(self.url.absoluteString) + " " + type)
                     callback?(RequestError(requestData: nil, responseData: data, kind: .notJson), nil)
                     return
                 }
             }
             guard let responseData = data else {
-                print("no data")
+                //print("no data")
                 callback?(RequestError(requestData: nil, responseData: data, kind: .nodata), nil)
                 return
             }
@@ -103,7 +103,8 @@ class Request {
                 callback?(nil, decodedResponse)
             } catch {
                 callback?(RequestError(requestData: nil, responseData: responseData, kind: .decodingFailed), nil)
-                print("Error trying to convert data to JSON")
+                //print( try! JSONSerialization.jsonObject(with: responseData, options: .mutableContainers))
+                //print("Error trying to convert data to JSON")
             }
         })
         

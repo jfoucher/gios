@@ -9,7 +9,6 @@
 "password_placeholder"="Mot de passe";
 "identifier_placeholder" = "Identifiant secret";
 "login_button_label"="Connexion";
-"default_node"="https://g1.nordstrom.duniter.org";
 "default_data_host"="https://g1.data.duniter.fr";
 "logout_button_label"="Déconnexion";
 "account_tab_label"="Compte";

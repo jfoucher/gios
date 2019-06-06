@@ -25,8 +25,24 @@ class FirstViewController: UINavigationController, UINavigationBarDelegate {
         vc.loginDelegate = self
         vc.loginFailedDelegate = self
         
-        if let profile = Profile.load() {
-            self.login(profile: profile)
+        self.checkNode(num: 0, callback: {
+            if let profile = Profile.load() {
+                self.login(profile: profile)
+            }
+        })
+    }
+    
+    func checkNode(num: Int, callback:@escaping () -> Void) {
+        let request = Request(url: nodes[num] + "/")
+        request.jsonDecodeWithCallback(type: DuniterResponse.self) { (error, duniter) in
+            if error != nil {
+                if (nodes.count > num) {
+                    self.checkNode(num: num + 1, callback: callback)
+                }
+            } else {
+                currentNode = nodes[num]
+                callback()
+            }
         }
     }
     
