@@ -181,7 +181,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let id: String = self.secret.text!
         let pass: String = self.password.text!
         // We have the public key, make a request
+        print(id, pass)
         guard let pubK = try? self.calculatePublicKey() else {
+            print("no pubkey")
             return
         }
         

@@ -38,11 +38,23 @@ class FirstViewController: UINavigationController, UINavigationBarDelegate {
             if error != nil {
                 if (nodes.count > num) {
                     self.checkNode(num: num + 1, callback: callback)
+                } else {
+                    self.errorAlert(title: "No internet", message: "Are you sure your are connected ?")
                 }
             } else {
                 currentNode = nodes[num]
                 callback()
             }
+        }
+    }
+    
+    func errorAlert(title: String, message: String) {
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+            
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            
+            self.present(alert, animated: true)
         }
     }
     

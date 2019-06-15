@@ -29,12 +29,8 @@ class TransactionViewController: UIViewController {
         didSet {
             print("got sender")
             DispatchQueue.main.async {
-                if ( self.sender?.title == nil || self.sender?.uid == nil) {
-                    print(self.sender)
-                }
-                
                 self.sender?.getAvatar(imageView: self.senderAvatar)
-                self.senderName.text = self.sender?.title != nil ?  self.sender?.title :  self.sender?.uid
+                self.senderName.text = self.sender?.getName()
             }
         }
     }
@@ -46,7 +42,7 @@ class TransactionViewController: UIViewController {
                     print(self.receiver)
                 }
                 self.receiver?.getAvatar(imageView: self.receiverAvatar)
-                self.receiverName.text = self.receiver?.title != nil ?  self.receiver?.title :  self.receiver?.uid
+                self.receiverName.text = self.receiver?.getName()
             }
         }
     }

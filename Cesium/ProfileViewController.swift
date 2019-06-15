@@ -63,7 +63,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.tableView.rowHeight = 64.0
         // Do any additional setup after loading the view.
         if let profile = self.profile {
-            self.name.text = profile.title != nil ? profile.title : profile.uid
+            self.name.text = profile.getName()
             self.balance.text = "balance_label".localized()
             self.publicKey.text = profile.issuer
             
@@ -95,10 +95,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             }
             // Make back button white
             let backItem = UIBarButtonItem()
-            backItem.title = profile.title != nil ? profile.title : profile.uid
+            backItem.title = profile.getName()
             backItem.tintColor = .white
             self.navigationItem.backBarButtonItem = backItem
-            
             
             
             self.check.isHidden = true
@@ -252,7 +251,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                         cell.profile = prof
                         prof.getAvatar(imageView: cell.avatar)
                         DispatchQueue.main.async {
-                            cell.name?.text = prof.title != nil ? prof.title : prof.uid
+                            cell.name?.text = prof.getName()
                         }
                     }
                 })

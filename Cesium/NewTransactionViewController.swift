@@ -86,7 +86,7 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
             
             receiver.getAvatar(imageView: self.receiverAvatar)
             
-            self.receiverName.text = receiver.title != nil ? receiver.title : receiver.uid
+            self.receiverName.text = receiver.getName()
         }
         
         if let sender = self.sender {
@@ -99,7 +99,7 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
             
             sender.getAvatar(imageView: self.senderAvatar)
             
-            self.senderName.text = sender.title != nil ? sender.title : sender.uid
+            self.senderName.text = sender.getName()
             let cur = Currency.formattedCurrency(currency: self.currency!)
             if let bal = sender.balance {
                 let str = String(format:"%@ %.2f %@", "balance_label".localized(), Double(bal) / 100, cur)
@@ -166,7 +166,7 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
             return
         }
         
-        let title = receiver.title != nil ? receiver.title : receiver.uid
+        let title = receiver.getName()
         guard let currency = self.currency else {
             print("no currency")
             return
@@ -377,7 +377,7 @@ extension NewTransactionViewController: ReceiverChangedDelegate {
     func receiverChanged(receiver: Profile) {
         self.receiver = receiver
         self.receiver?.getAvatar(imageView: self.receiverAvatar)
-        self.receiverName.text = receiver.title != nil ? receiver.title : receiver.uid
+        self.receiverName.text = receiver.getName()
         print("new receiver")
     }
 }

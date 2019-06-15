@@ -85,6 +85,21 @@ struct Profile: Codable {
         })
     }
     
+    func getName() -> String {
+        if let name = self.title {
+            print("name", name)
+            return name
+        }
+        if let uid = self.identity?.uid {
+            if (!uid.isEmpty) {
+                print("uid", uid)
+                return uid
+            }
+        }
+        print("issuer", issuer)
+        return String(self.issuer.prefix(10) + "…")
+    }
+    
     func getSources(callback: ((Error?, SourceResponse?) -> Void)?) {
         let pubKey = self.issuer
         let url = String(format: "%@/tx/sources/%@", currentNode, pubKey)
