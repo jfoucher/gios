@@ -109,7 +109,7 @@ class ChangeReceiverViewController: UIViewController, UITableViewDelegate, UITab
     
     func loadPage(search: String) {
         let count = 20
-        let url = String(format:"%@/user,page,group/profile,record/_search?q=title:*%@*&size=%d&from=%d", currentNode, search, count, self.page * count).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+        let url = String(format:"%@/user,page,group/profile,record/_search?q=title:*%@*&size=%d&from=%d", "default_data_host".localized(), search, count, self.page * count).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         print(url)
         self.request = Request(url: url)
         self.request?.jsonDecodeWithCallback(type: ProfileSearchResponse.self, callback: { error, response in
