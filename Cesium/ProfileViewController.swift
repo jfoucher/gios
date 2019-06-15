@@ -53,7 +53,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             }
         }
     }
-    var sections: [TransactionSection]? = []
+    var sections: [TransactionSection]?
     var currency: String = ""
     
     
@@ -61,7 +61,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.rowHeight = 64.0
-        // Do any additional setup after loading the view.
+
+        
+        
         if let profile = self.profile {
             self.name.text = profile.getName()
             self.balance.text = "balance_label".localized()
@@ -90,8 +92,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.createTransaction.layer.cornerRadius = 6
             
             let ctrl = self.navigationController as! FirstViewController
-            if (self.profile?.issuer == ctrl.profile?.issuer) {
-                //self.createTransaction.removeFromSuperview()
+            if (self.profile?.issuer != ctrl.profile?.issuer) {
+                self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "home_button_label".localized(), style: .plain, target: self, action: #selector(goToStart))
+                self.navigationItem.rightBarButtonItem?.tintColor = .white
             }
             // Make back button white
             let backItem = UIBarButtonItem()
@@ -121,28 +124,17 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             
             self.getTransactions(pubKey: profile.issuer)
         }
+    }
+    
+    @objc func goToStart(){
+        if let cnt = self.navigationController?.viewControllers.count {
+            if (cnt >= 2) {
+                if let secondViewController = self.navigationController?.viewControllers[1] {
+                    self.navigationController?.popToViewController(secondViewController, animated: true)
+                }
+            }
+        }
         
-        // make request to
-        // https://g1.nordstrom.duniter.org/tx/sources/EEdwxSkAuWyHuYMt4eX5V81srJWVy7kUaEkft3CWLEiq
-        // to get account total. We probably have to add all the sources
-        // RESPONSE
-//        {
-//            "currency": "g1",
-//            "pubkey": "EEdwxSkAuWyHuYMt4eX5V81srJWVy7kUaEkft3CWLEiq",
-//            "sources": [
-//            {
-//            "type": "T",
-//            "noffset": 0,
-//            "identifier": "A888D00A7085DD1EEBABCD55A9B2F189FBD7E838E3776DB175857758FCE8AFB2",
-//            "amount": 500,
-//            "base": 0,
-//            "conditions": "SIG(EEdwxSkAuWyHuYMt4eX5V81srJWVy7kUaEkft3CWLEiq)"
-//            }
-//            ]
-//        }
-        
-        
-
     }
     
     @IBAction func createTransaction(_ sender: UIButton) {
@@ -169,7 +161,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             }
             return sects.count
         }
-        return 0
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -181,7 +173,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             return sects[section].transactions.count
             
         }
-        return 0
+        return 1
         
     }
     
@@ -258,9 +250,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                     }
                 })
             })
+            return cell
         }
-        
-        return cell
+        return tableView.dequeueReusableCell(withIdentifier: "LoadingCell", for: indexPath)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -88,16 +88,13 @@ struct Profile: Codable {
     
     func getName() -> String {
         if let name = self.title {
-            print("name", name)
             return name
         }
         if let uid = self.identity?.uid {
             if (!uid.isEmpty) {
-                print("uid", uid)
                 return uid
             }
         }
-        print("issuer", issuer)
         return String(self.issuer.prefix(10) + "…")
     }
     
@@ -164,7 +161,6 @@ struct Profile: Codable {
         if let savedProfile = UserDefaults.standard.object(forKey: "profile-" + publicKey) as? Data {
             let decoder = JSONDecoder()
             if let loadedProfile = try? decoder.decode(Profile.self, from: savedProfile) {
-                print(loadedProfile.updatedAt, Calendar.current.date(byAdding: .day, value: -1, to: Date()))
                 if (loadedProfile.updatedAt != nil && loadedProfile.updatedAt! >= Calendar.current.date(byAdding: .day, value: -1, to: Date())!) {
                     callback?(loadedProfile)
                     return
