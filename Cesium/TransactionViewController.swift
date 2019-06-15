@@ -133,7 +133,7 @@ class TransactionViewController: UIViewController {
             // Force getting profile from public key
             var ident = identity
             if (identity == nil) {
-                ident = Identity(pubkey: pubKey, uid: "", sig: nil, meta: nil, certifications: nil)
+                ident = Identity(pubkey: pubKey, uid: "")
             }
             Profile.getProfile(publicKey: pubKey, identity: ident, callback: { profile in
                 if let prof = profile, let am = self.transaction?.amount {
@@ -156,7 +156,7 @@ class TransactionViewController: UIViewController {
             // Force getting profile from public key
             var ident = identity
             if (identity == nil) {
-                ident = Identity(pubkey: pubKey, uid: "", sig: nil, meta: nil, certifications: nil)
+                ident = Identity(pubkey: pubKey, uid: "")
             }
             Profile.getProfile(publicKey: pubKey, identity: ident, callback: { profile in
                 if let prof = profile, let am = self.transaction?.amount {

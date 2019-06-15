@@ -238,18 +238,20 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                 
                 //cell.amount?.titleEdgeInsets = UIEdgeInsets(top: 3, left: 6, bottom: 3, right: 6)
             }
+            let tmpProfile = Profile(issuer: pk)
+            tmpProfile.getAvatar(imageView: cell.avatar)
             
             // This is two requests per cell, maybe we should get all the users and work with that instead
             Profile.getRequirements(publicKey: pk, callback: { identity in
                 var ident = identity
                 if (identity == nil) {
-                    ident = Identity(pubkey: pk, uid: "", sig: nil, meta: nil, certifications: nil)
+                    ident = Identity(pubkey: pk, uid: "")
                 }
 
                 Profile.getProfile(publicKey: pk, identity: ident, callback: { profile in
                     if let prof = profile {
                         cell.profile = prof
-                        prof.getAvatar(imageView: cell.avatar)
+                        
                         DispatchQueue.main.async {
                             cell.name?.text = prof.getName()
                         }

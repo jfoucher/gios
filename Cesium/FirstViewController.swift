@@ -36,10 +36,11 @@ class FirstViewController: UINavigationController, UINavigationBarDelegate {
         let request = Request(url: nodes[num] + "/")
         request.jsonDecodeWithCallback(type: DuniterResponse.self) { (error, duniter) in
             if error != nil {
-                if (nodes.count > num) {
+                
+                if (num + 1 < nodes.count) {
                     self.checkNode(num: num + 1, callback: callback)
                 } else {
-                    self.errorAlert(title: "No internet", message: "Are you sure your are connected ?")
+                    self.errorAlert(title: "no_internet_title".localized(), message: "no_internet_message".localized())
                 }
             } else {
                 currentNode = nodes[num]

@@ -18,6 +18,10 @@ struct Identity: Codable {
     var sig: String?
     var meta: Meta?
     var certifications: [Certification]?
+    init(pubkey:String, uid: String) {
+        self.pubkey = pubkey
+        self.uid = uid
+    }
 }
 
 struct Certification: Codable {

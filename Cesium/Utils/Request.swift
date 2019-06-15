@@ -82,6 +82,8 @@ class Request {
     
     func jsonDecodeWithCallback<T>(type: T.Type, callback: ((Error?, T?) -> Void)?) where T : Decodable {
         let session = URLSession.shared
+        session.configuration.requestCachePolicy = .returnCacheDataElseLoad
+        print(self.url)
         self.task = session.dataTask(with: self.url, completionHandler: { data, response, error in
             if let type = response?.mimeType {
                 guard type == "application/json" else {

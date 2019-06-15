@@ -75,7 +75,7 @@ struct Profile: Codable {
         
         request.jsonDecodeWithCallback(type: SourceResponse.self, callback: { err, sourceResponse in
             
-            if let sources = sourceResponse?.sources, let currency = sourceResponse?.currency {
+            if let sources = sourceResponse?.sources {
                 let amounts = sources.map {$0.amount}
                 let total = amounts.reduce(0, +)
  
@@ -122,19 +122,33 @@ struct Profile: Codable {
     
     
     static func getRequirements(publicKey: String, callback: ((Identity?) -> Void)?) {
+        //Load identity from userdata if we have it
+        if let savedIdentity = UserDefaults.standard.object(forKey: "identity-" + publicKey) as? Data {
+            let decoder = JSONDecoder()
+            if let loadedIdentity = try? decoder.decode(Identity.self, from: savedIdentity) {
+                callback?(loadedIdentity)
+                return
+            }
+        }
+        
         let url = String(format: "%@/wot/requirements/%@", currentNode, publicKey)
         
         let request = Request(url: url)
-        
+        var ident = Identity(pubkey: publicKey, uid: "")
         request.jsonDecodeWithCallback(type: IdentityResponse.self, callback: { err, identityResponse in
             if let identities = identityResponse?.identities {
                 // TODO think about how to handle multiple identities
-                if let ident = identities.first {
+                if (identities.first != nil) {
+                    ident = identities.first!
                     callback?(ident)
                 }
             } else {
-                // display error message
                 callback?(nil)
+            }
+            
+            let encoder = JSONEncoder()
+            if let encoded = try? encoder.encode(ident) {
+                UserDefaults.standard.set(encoded, forKey: "identity-" + publicKey)
             }
         })
     }
@@ -142,6 +156,15 @@ struct Profile: Codable {
 
     
     static func getProfile(publicKey: String, identity: Identity?, callback: ((Profile?) -> Void)?) {
+        //Load profile from userdata if we have it
+        if let savedProfile = UserDefaults.standard.object(forKey: "profile-" + publicKey) as? Data {
+            let decoder = JSONDecoder()
+            if let loadedProfile = try? decoder.decode(Profile.self, from: savedProfile) {
+                callback?(loadedProfile)
+                return
+            }
+        }
+        
         let url = String(format: "%@/user/profile/%@?_source_exclude=avatar._content", "default_data_host".localized(), publicKey)
         
         let request = Request(url: url)
@@ -165,6 +188,11 @@ struct Profile: Codable {
                     profile.signature = id.sig
                     profile.identity = id
                 }
+            }
+            
+            let encoder = JSONEncoder()
+            if let encoded = try? encoder.encode(profile) {
+                UserDefaults.standard.set(encoded, forKey: "profile-" + publicKey)
             }
             
             callback?(profile)
