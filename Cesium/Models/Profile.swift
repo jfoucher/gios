@@ -41,6 +41,7 @@ struct Profile: Codable {
     var balance: Int?
     var socials: [Social]? = []
     var identity: Identity?
+    var updatedAt: Date?
     var sourceResponse: SourceResponse?
     init(issuer: String) {
         self.issuer = issuer
@@ -126,8 +127,10 @@ struct Profile: Codable {
         if let savedIdentity = UserDefaults.standard.object(forKey: "identity-" + publicKey) as? Data {
             let decoder = JSONDecoder()
             if let loadedIdentity = try? decoder.decode(Identity.self, from: savedIdentity) {
-                callback?(loadedIdentity)
-                return
+                if (loadedIdentity.updatedAt != nil && loadedIdentity.updatedAt! >= Calendar.current.date(byAdding: .day, value: -1, to: Date())!) {
+                    callback?(loadedIdentity)
+                    return
+                }
             }
         }
         
@@ -147,6 +150,7 @@ struct Profile: Codable {
             }
             
             let encoder = JSONEncoder()
+            ident.updatedAt = Date()
             if let encoded = try? encoder.encode(ident) {
                 UserDefaults.standard.set(encoded, forKey: "identity-" + publicKey)
             }
@@ -160,8 +164,11 @@ struct Profile: Codable {
         if let savedProfile = UserDefaults.standard.object(forKey: "profile-" + publicKey) as? Data {
             let decoder = JSONDecoder()
             if let loadedProfile = try? decoder.decode(Profile.self, from: savedProfile) {
-                callback?(loadedProfile)
-                return
+                print(loadedProfile.updatedAt, Calendar.current.date(byAdding: .day, value: -1, to: Date()))
+                if (loadedProfile.updatedAt != nil && loadedProfile.updatedAt! >= Calendar.current.date(byAdding: .day, value: -1, to: Date())!) {
+                    callback?(loadedProfile)
+                    return
+                }
             }
         }
         
@@ -191,6 +198,7 @@ struct Profile: Codable {
             }
             
             let encoder = JSONEncoder()
+            profile.updatedAt = Date()
             if let encoded = try? encoder.encode(profile) {
                 UserDefaults.standard.set(encoded, forKey: "profile-" + publicKey)
             }

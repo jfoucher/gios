@@ -17,6 +17,7 @@ struct Identity: Codable {
     var uid: String
     var sig: String?
     var meta: Meta?
+    var updatedAt: Date?
     var certifications: [Certification]?
     init(pubkey:String, uid: String) {
         self.pubkey = pubkey
