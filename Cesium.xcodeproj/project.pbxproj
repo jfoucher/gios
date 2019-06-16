@@ -36,6 +36,7 @@
 		ABE007D022A28D820077C9C3 /* TransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE007CE22A281370077C9C3 /* TransactionViewController.swift */; };
 		ABE007D222A2CDA10077C9C3 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE007D122A2CDA10077C9C3 /* Currency.swift */; };
 		ABF6251A22B5AA60008D5087 /* KeyChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF6251922B5AA60008D5087 /* KeyChain.swift */; };
+		ABF6252122B5CCCB008D5087 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = ABF6252322B5CCCB008D5087 /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,6 +99,8 @@
 		ABE007CE22A281370077C9C3 /* TransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewController.swift; sourceTree = "<group>"; };
 		ABE007D122A2CDA10077C9C3 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		ABF6251922B5AA60008D5087 /* KeyChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChain.swift; sourceTree = "<group>"; };
+		ABF6252222B5CCCB008D5087 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		ABF6252422B5CCD3008D5087 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B4A9576E045C516D7255FFE2 /* Pods_Cesium.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Cesium.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -190,6 +193,7 @@
 				AB04BF31229F539400B1111E /* Main.storyboard */,
 				AB04BF36229F539500B1111E /* LaunchScreen.storyboard */,
 				AB04BF39229F539500B1111E /* Info.plist */,
+				ABF6252322B5CCCB008D5087 /* InfoPlist.strings */,
 				AB1AC3C122A060EB00CDEEB7 /* Localizable.strings */,
 			);
 			path = Cesium;
@@ -353,6 +357,7 @@
 				AB1AC3BF22A060EB00CDEEB7 /* Localizable.strings in Resources */,
 				ABD781B422A00AFE00574458 /* Assets.xcassets in Resources */,
 				AB04BF33229F539400B1111E /* Main.storyboard in Resources */,
+				ABF6252122B5CCCB008D5087 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -542,6 +547,15 @@
 				AB1AC3C222A060EF00CDEEB7 /* fr */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		ABF6252322B5CCCB008D5087 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				ABF6252222B5CCCB008D5087 /* en */,
+				ABF6252422B5CCD3008D5087 /* fr */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

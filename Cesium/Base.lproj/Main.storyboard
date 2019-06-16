@@ -500,12 +500,15 @@
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lzt-bR-Jar">
                                 <rect key="frame" x="20" y="151" width="374" height="45"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" searchField="YES"/>
+                                </accessibility>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="Wit-gj-6uA"/>
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                 <connections>
                                     <action selector="searchChanged:" destination="2sy-to-o3P" eventType="editingChanged" id="3cm-LC-RFD"/>
                                     <outlet property="delegate" destination="2sy-to-o3P" id="ZsL-TI-0jn"/>
@@ -599,22 +602,25 @@
                                             <outlet property="name" destination="Dds-d7-ryQ" id="2c4-l2-rF0"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="LoadingCell" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LoadingCell" id="pGh-bd-fGp" userLabel="PrototypeCell" customClass="ChangeUserTableViewCell" customModule="Cesium" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="UserLoadingCell" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="UserLoadingCell" id="pGh-bd-fGp" userLabel="PrototypeCell" customClass="LoadingViewCell" customModule="Cesium" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="72" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pGh-bd-fGp" id="18u-Ke-8iM">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="M7a-3c-Q3O">
+                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="K1h-Ow-fi9">
                                                     <rect key="frame" x="197" y="12" width="20" height="20"/>
                                                 </activityIndicatorView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="M7a-3c-Q3O" firstAttribute="centerY" secondItem="18u-Ke-8iM" secondAttribute="centerY" id="3hI-9d-B9H"/>
-                                                <constraint firstItem="M7a-3c-Q3O" firstAttribute="centerX" secondItem="18u-Ke-8iM" secondAttribute="centerX" id="zqp-he-qCc"/>
+                                                <constraint firstItem="K1h-Ow-fi9" firstAttribute="centerX" secondItem="18u-Ke-8iM" secondAttribute="centerX" id="CXT-Z1-rsC"/>
+                                                <constraint firstItem="K1h-Ow-fi9" firstAttribute="centerY" secondItem="18u-Ke-8iM" secondAttribute="centerY" id="swC-5X-MVT"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="activity" destination="K1h-Ow-fi9" id="8oT-6L-Uql"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="EndCell" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="EndCell" id="tEC-Ni-noo" userLabel="PrototypeCell" customClass="ChangeUserTableViewCell" customModule="Cesium" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="116" width="414" height="44"/>
@@ -707,7 +713,7 @@
                                 <rect key="frame" x="0.0" y="231" width="414" height="665"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="LoadingCell" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LoadingCell" id="Ssg-6E-Lx3" userLabel="PrototypeCell" customClass="ChangeUserTableViewCell" customModule="Cesium" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="LoadingCell" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LoadingCell" id="Ssg-6E-Lx3" userLabel="PrototypeCell">
                                         <rect key="frame" x="0.0" y="28" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ssg-6E-Lx3" id="btR-R2-AY2">

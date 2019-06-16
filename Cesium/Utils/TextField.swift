@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 
 extension UITextField{
-    
     func addDoneButtonToKeyboard(myAction:Selector?){
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 300, height: 40))
         doneToolbar.barStyle = UIBarStyle.default

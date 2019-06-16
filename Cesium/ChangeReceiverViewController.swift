@@ -15,19 +15,23 @@ class ChangeUserTableViewCell: UITableViewCell {
     @IBOutlet weak var avatar: UIImageView!
     @IBOutlet weak var endResults: UILabel!
     
+    
     var profile: Profile?
 }
 
+class LoadingViewCell: UITableViewCell {
+    @IBOutlet weak var activity: UIActivityIndicatorView!
+}
+
 class ChangeReceiverViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
-    
-    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var search: UITextField!
     @IBOutlet weak var topBarHeight: NSLayoutConstraint!
     var request: Request?
     var profiles: [Profile?] = []
     var page: Int = 0
-    var end: Bool = false
+    var end: Bool = true
+    var loading: Bool = false
     weak var profileSelectedDelegate: ReceiverChangedDelegate?
     
     override func viewDidLoad() {
@@ -40,6 +44,8 @@ class ChangeReceiverViewController: UIViewController, UITableViewDelegate, UITab
             self.topBarHeight.constant = navigationController.navigationBar.frame.height
             self.view.layoutIfNeeded()
         }
+        
+        self.search.addDoneButtonToKeyboard(myAction:  #selector(self.search.resignFirstResponder))
 
         // get all members
         //https://g1.jfoucher.com/wot/lookup/jon
@@ -61,10 +67,6 @@ class ChangeReceiverViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        print(indexPath.row, self.end)
-
-        
         if (indexPath.count > 0 && self.profiles.count > indexPath.row) {
             if let prof = self.profiles[indexPath.row] {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "UserPrototypeCell", for: indexPath) as! ChangeUserTableViewCell
@@ -82,12 +84,17 @@ class ChangeReceiverViewController: UIViewController, UITableViewDelegate, UITab
             }
         }
         
+        print(self.loading, self.end)
         
-        
-        if (indexPath.row == self.profiles.count && self.end == false && self.profiles.count > 0) {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "LoadingCell", for: indexPath)
+        if (indexPath.row == self.profiles.count && self.end == false) {
             self.page += 1
-            self.loadPage(search: self.search.text ?? "")
+            print("loading page", self.page)
+            if let searchText = self.search.text {
+                self.loadPage(search: searchText)
+            }
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "UserLoadingCell", for: indexPath) as! LoadingViewCell
+            cell.activity.startAnimating()
             return cell
         }
         
@@ -101,20 +108,26 @@ class ChangeReceiverViewController: UIViewController, UITableViewDelegate, UITab
         self.page = 0
         self.end = false
         self.profiles = []
+        self.loading = false
         if let req = self.request {
             req.cancel()
         }
-        self.loadPage(search: sender.text ?? "")
+        if let searchText = self.search.text {
+            print("change", searchText)
+            self.loadPage(search: searchText)
+        }
     }
     
     func loadPage(search: String) {
         let count = 20
-        let url = String(format:"%@/user,page,group/profile,record/_search?q=title:*%@*&size=%d&from=%d", "default_data_host".localized(), search, count, self.page * count).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+        let url = String(format:"%@/user,page,group/profile,record/_search?q=title:%@&size=%d&from=%d&sort=_score:desc", "default_data_host".localized(), search, count, self.page * count).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         print(url)
+        self.loading = true
         self.request = Request(url: url)
         self.request?.jsonDecodeWithCallback(type: ProfileSearchResponse.self, callback: { error, response in
             self.request = nil
-            self.end = true
+
+            self.loading = false
             if let hits = response?.hits {
                 if let total = hits.total {
                     if (total > 0 && hits.hits.count > 0) {
@@ -131,6 +144,8 @@ class ChangeReceiverViewController: UIViewController, UITableViewDelegate, UITab
                         print("total", total)
                         self.end = false
                         
+                    } else if (hits.hits.count == 0) {
+                        self.end = true
                     }
                 }
             }
