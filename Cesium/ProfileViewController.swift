@@ -92,16 +92,18 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.createTransaction.layer.cornerRadius = 6
             
             let ctrl = self.navigationController as! FirstViewController
-            if (self.profile?.issuer != ctrl.profile?.issuer) {
-                self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "home_button_label".localized(), style: .plain, target: self, action: #selector(goToStart))
-                self.navigationItem.rightBarButtonItem?.tintColor = .white
+            if let cnt = self.navigationController?.viewControllers.count {
+                if (cnt > 3) {
+                    self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "home_button_label".localized(), style: .plain, target: self, action: #selector(goToStart))
+                    self.navigationItem.rightBarButtonItem?.tintColor = .white
+                }
             }
+            
             // Make back button white
             let backItem = UIBarButtonItem()
             backItem.title = profile.getName()
             backItem.tintColor = .white
             self.navigationItem.backBarButtonItem = backItem
-            
             
             self.check.isHidden = true
             if let ident = profile.identity {
@@ -134,7 +136,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                 }
             }
         }
-        
     }
     
     @IBAction func createTransaction(_ sender: UIButton) {

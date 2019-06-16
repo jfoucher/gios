@@ -20,16 +20,24 @@ class FirstViewController: UINavigationController, UINavigationBarDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        let vc = self.viewControllers.first as! LoginViewController
-        vc.loginDelegate = self
-        vc.loginFailedDelegate = self
+        self.checkNode(num: 0, callback: {})
         
-        self.checkNode(num: 0, callback: {
-            if let profile = Profile.load() {
-                self.login(profile: profile)
-            }
-        })
+        if let profile = Profile.load() {
+            self.login(profile: profile)
+            
+        } else {
+            self.loadLoginView()
+        }
+        
+        
+    }
+    
+    func loadLoginView() {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        let loginView = storyBoard.instantiateViewController(withIdentifier: "LoginView") as! LoginViewController
+        loginView.loginDelegate = self
+        loginView.loginFailedDelegate = self
+        self.pushViewController(loginView, animated:true)
     }
     
     func checkNode(num: Int, callback:@escaping () -> Void) {
@@ -62,17 +70,31 @@ class FirstViewController: UINavigationController, UINavigationBarDelegate {
     }
     
     func handleLogin(profile: Profile) {
+        if (profile.kp != nil) {
+            let encoder = JSONEncoder()
+            
+            if let encoded = try? encoder.encode(profile) {
+                KeyChain.save(key: "profile", data: encoded)
+                UserDefaults.standard.set(profile.getName(), forKey: "lastUser")
+            }
+        }
+        
         DispatchQueue.main.async {
             let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
             let profileView = storyBoard.instantiateViewController(withIdentifier: "ProfileView") as! ProfileViewController
-            self.pushViewController(profileView, animated:true)
-            // Do not save secret key to phone
+            let backItem = UIBarButtonItem()
+            backItem.title = "logout_button_label".localized()
+            backItem.tintColor = .white
+            backItem.action = #selector(self.logout)
+            profileView.navigationItem.leftBarButtonItem = backItem
+            
             var saving = profile
             saving.kp = nil
             saving.save()
             self.profile = profile
             profileView.changeUserDelegate = self
             profileView.profile = profile
+            self.pushViewController(profileView, animated:true)
         }
     }
     
@@ -86,16 +108,31 @@ class FirstViewController: UINavigationController, UINavigationBarDelegate {
         return true
     }
     
-    func logout() {
+    @objc func logout() {
         print ("logout")
         let alert = UIAlertController(title: "logout_confirm_prompt".localized(), message: "", preferredStyle: .actionSheet)
         
         alert.addAction(UIAlertAction(title: "confirm_label".localized(), style: .default, handler: {ac in
-            self.popViewController(animated: true)
             self.loggedOut = true
             print("removing profile")
             Profile.remove()
             self.profile = nil
+            print(self.viewControllers.count)
+            if (self.viewControllers.count > 1) {
+                self.popViewController(animated: true)
+            } else {
+                let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+                let loginView = storyBoard.instantiateViewController(withIdentifier: "LoginView") as! LoginViewController
+                loginView.loginDelegate = self
+                loginView.loginFailedDelegate = self
+
+                self.viewControllers.insert(loginView, at:0)
+                self.popViewController(animated: true)
+                //self.setViewControllers(vc, animated: true)
+                
+            }
+            
+            
         }))
         
         alert.addAction(UIAlertAction(title: "cancel_label".localized(), style: .cancel, handler: nil))

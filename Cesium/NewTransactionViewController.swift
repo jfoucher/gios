@@ -212,6 +212,7 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
                 self.loginView = storyBoard.instantiateViewController(withIdentifier: "LoginView") as? LoginViewController
                 
                 self.loginView?.loginDelegate = self
+                self.loginView?.sendingTransaction = true
                 //loginView.isModalInPopover = true
                 if let v = self.loginView {
                     self.present(v, animated: true, completion: nil)

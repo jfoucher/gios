@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import Sodium
 import CryptoSwift
+import LocalAuthentication
 
 enum PublicKeyError: Error {
     case emptyFields
@@ -30,6 +31,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var topbarHeight: NSLayoutConstraint!
     @IBOutlet weak var topBar: UIView!
     
+    var sendingTransaction: Bool = false
+    
     weak var loginDelegate: LoginDelegate?
     weak var loginFailedDelegate: LoginFailedDelegate?
     
@@ -39,6 +42,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
+        
+        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
@@ -57,8 +65,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 self.topBar.removeFromSuperview()
             }
         }
-
-        
     }
     
     @IBAction func close(_ sender: Any) {
@@ -119,7 +125,44 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.loginButton.layer.cornerRadius = 6
         self.loginButton.addTarget(self, action: #selector(buttonAction), for: UIControl.Event.touchUpInside)
         
-        //self.view.addSubview(button)
+        let context = LAContext()
+        var error: NSError?
+        let username = UserDefaults.standard.string(forKey: "lastUser")
+        let profile = Profile.load()
+        if username != nil && context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) && (profile == nil || sendingTransaction) {
+
+            let blurEffect = UIBlurEffect(style: .light)
+
+            let blurView = UIVisualEffectView(effect: blurEffect)
+
+            blurView.translatesAutoresizingMaskIntoConstraints = false
+            
+            view.addSubview(blurView)
+            NSLayoutConstraint.activate([
+                blurView.heightAnchor.constraint(equalTo: view.heightAnchor),
+                blurView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            ])
+            
+            
+            
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: String(format:"user_auth_prompt".localized(), username ?? "")) {
+                [unowned self] success, authenticationError in
+                
+                DispatchQueue.main.async {
+                    blurView.removeFromSuperview()
+                    if success {
+                        if let savedProfile = KeyChain.load(key: "profile") {
+                            
+                            let decoder = JSONDecoder()
+                            if let loadedProfile = try? decoder.decode(Profile.self, from: savedProfile) {
+                                print("loadedProfile", loadedProfile)
+                                self.loginDelegate?.login(profile: loadedProfile)
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

@@ -50,3 +50,4 @@
 "search_placeholder"="Search users";
 "no_comment_placeholder"="No comment";
 "home_button_label"="Back";
+"user_auth_prompt"="Authenticate for %@";

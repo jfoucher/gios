@@ -35,6 +35,7 @@
 		ABD781B422A00AFE00574458 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABD781B322A00AFE00574458 /* Assets.xcassets */; };
 		ABE007D022A28D820077C9C3 /* TransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE007CE22A281370077C9C3 /* TransactionViewController.swift */; };
 		ABE007D222A2CDA10077C9C3 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE007D122A2CDA10077C9C3 /* Currency.swift */; };
+		ABF6251A22B5AA60008D5087 /* KeyChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF6251922B5AA60008D5087 /* KeyChain.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +97,7 @@
 		ABD781B322A00AFE00574458 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ABE007CE22A281370077C9C3 /* TransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewController.swift; sourceTree = "<group>"; };
 		ABE007D122A2CDA10077C9C3 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
+		ABF6251922B5AA60008D5087 /* KeyChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChain.swift; sourceTree = "<group>"; };
 		B4A9576E045C516D7255FFE2 /* Pods_Cesium.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Cesium.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -220,6 +222,7 @@
 				ABE007D122A2CDA10077C9C3 /* Currency.swift */,
 				AB168A7222A341A900952DDE /* TextField.swift */,
 				AB38A65A22A38309008D7215 /* Transactions.swift */,
+				ABF6251922B5AA60008D5087 /* KeyChain.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -477,6 +480,7 @@
 				AB168A7122A3219E00952DDE /* NewTransactionViewController.swift in Sources */,
 				ABD2E1E422A9214D001A40CD /* Duniter.swift in Sources */,
 				AB996F1E22A0847B005966E2 /* ProfileViewController.swift in Sources */,
+				ABF6251A22B5AA60008D5087 /* KeyChain.swift in Sources */,
 				AB04BF2C229F539400B1111E /* AppDelegate.swift in Sources */,
 				AB04BF2E229F539400B1111E /* FirstViewController.swift in Sources */,
 			);
