@@ -12,8 +12,8 @@ let nodes = [
     "https://g1.nordstrom.duniter.org",
     "https://g1.duniter.fr",
     "https://g1.duniter.org",
-    "https://g1.jfoucher.com",
     "https://g1.presles.fr",
+    "https://g1.jfoucher.com",
 ]
 
 var currentNode = nodes[0];
