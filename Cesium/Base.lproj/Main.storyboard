@@ -476,6 +476,7 @@
                     <connections>
                         <outlet property="amount" destination="NyZ-RA-Sp4" id="F4l-C4-hv4"/>
                         <outlet property="arrow" destination="hzx-2l-Cpq" id="2gb-8u-LkC"/>
+                        <outlet property="close" destination="RTZ-CJ-jUt" id="KYp-Ea-4Ur"/>
                         <outlet property="comment" destination="ERr-SM-PmZ" id="0nc-sZ-Kii"/>
                         <outlet property="date" destination="uAD-fc-nQe" id="436-8Z-ffW"/>
                         <outlet property="receiverAvatar" destination="TFJ-66-9ta" id="hze-1o-Nqv"/>
@@ -675,6 +676,7 @@
                         <viewLayoutGuide key="safeArea" id="rtO-M5-9sh"/>
                     </view>
                     <connections>
+                        <outlet property="close" destination="qcF-it-S9L" id="tin-Je-ySB"/>
                         <outlet property="search" destination="lzt-bR-Jar" id="sEU-9Z-M9N"/>
                         <outlet property="tableView" destination="X8I-mv-D1X" id="zp4-c8-BLt"/>
                         <outlet property="topBarHeight" destination="9tK-mS-ysX" id="oeT-Ru-Ftd"/>

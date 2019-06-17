@@ -14,6 +14,7 @@ class TransactionViewController: UIViewController {
     var transaction: ParsedTransaction?
     var currency: String = "g1"
     @IBOutlet weak var senderAvatar: UIImageView!
+    @IBOutlet weak var close: UILabel!
     @IBOutlet weak var receiverAvatar: UIImageView!
     @IBOutlet weak var arrow: UIImageView!
     @IBOutlet weak var amount: UILabel!
@@ -58,7 +59,7 @@ class TransactionViewController: UIViewController {
         self.senderAvatar.layer.borderWidth = 1
         self.senderAvatar.layer.masksToBounds = false
         self.senderAvatar.layer.borderColor = UIColor.white.cgColor
-        
+        self.close.text = "close_label".localized()
         self.senderAvatar.clipsToBounds = true
         
         self.receiverAvatar.layer.borderWidth = 1

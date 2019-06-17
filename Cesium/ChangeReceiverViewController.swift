@@ -24,6 +24,7 @@ class LoadingViewCell: UITableViewCell {
 }
 
 class ChangeReceiverViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
+    @IBOutlet weak var close: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var search: UITextField!
     @IBOutlet weak var topBarHeight: NSLayoutConstraint!
@@ -36,6 +37,7 @@ class ChangeReceiverViewController: UIViewController, UITableViewDelegate, UITab
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.close.text = "close_label".localized()
         self.tableView.rowHeight = 64.0
         self.search.becomeFirstResponder()
         self.search.placeholder = "search_placeholder".localized()
