@@ -596,6 +596,7 @@
                                                 <constraint firstAttribute="bottom" secondItem="SEu-GA-qgc" secondAttribute="bottom" id="vfv-Ic-4mk"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
                                             <outlet property="avatar" destination="SEu-GA-qgc" id="kRI-cY-pQ5"/>
                                             <outlet property="date" destination="Mfg-7i-qm3" id="ZSS-bT-EIn"/>
@@ -618,6 +619,7 @@
                                                 <constraint firstItem="K1h-Ow-fi9" firstAttribute="centerY" secondItem="18u-Ke-8iM" secondAttribute="centerY" id="swC-5X-MVT"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
                                             <outlet property="activity" destination="K1h-Ow-fi9" id="8oT-6L-Uql"/>
                                         </connections>
@@ -641,6 +643,7 @@
                                                 <constraint firstItem="MEr-Sh-9Bi" firstAttribute="centerY" secondItem="F2q-T8-GcD" secondAttribute="centerY" id="l7Y-9z-V4O"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
                                             <outlet property="endResults" destination="MEr-Sh-9Bi" id="u5h-Pk-yhb"/>
                                         </connections>
@@ -712,6 +715,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Dqt-5n-9a2">
                                 <rect key="frame" x="0.0" y="231" width="414" height="665"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="sectionIndexBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="LoadingCell" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LoadingCell" id="Ssg-6E-Lx3" userLabel="PrototypeCell">
                                         <rect key="frame" x="0.0" y="28" width="414" height="44"/>
@@ -729,6 +733,7 @@
                                                 <constraint firstItem="rkK-BQ-pNf" firstAttribute="centerY" secondItem="btR-R2-AY2" secondAttribute="centerY" id="vrM-BO-raO"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="PrototypeCell" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="gray" accessoryType="detailDisclosureButton" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PrototypeCell" id="4q0-Ko-UlQ" userLabel="PrototypeCell" customClass="TransactionTableViewCell" customModule="Cesium" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="72" width="414" height="44"/>
@@ -764,6 +769,7 @@
                                                     <state key="normal" title="Button"/>
                                                 </button>
                                             </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="ypA-27-Ejl" secondAttribute="bottom" id="DpE-cX-YgZ"/>
                                                 <constraint firstItem="4gg-9K-ENQ" firstAttribute="leading" secondItem="KOQ-1e-jGU" secondAttribute="trailing" priority="750" constant="4" id="Hqq-7k-oWa"/>
@@ -778,6 +784,7 @@
                                                 <constraint firstItem="4gg-9K-ENQ" firstAttribute="centerY" secondItem="P8Y-Th-XbT" secondAttribute="centerY" id="v3V-lc-EoO"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
                                             <outlet property="amount" destination="4gg-9K-ENQ" id="PDC-vF-IHu"/>
                                             <outlet property="avatar" destination="ypA-27-Ejl" id="5Dr-uu-qcM"/>

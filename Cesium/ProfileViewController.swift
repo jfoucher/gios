@@ -56,13 +56,40 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     var sections: [TransactionSection]?
     var currency: String = ""
     
+    lazy var refreshControl: UIRefreshControl = {
+        
+        let refreshControl = UIRefreshControl()
+        
+        refreshControl.addTarget(self, action: #selector(self.handleRefresh(_:)), for: UIControl.Event.valueChanged)
+        
+        //refreshControl.tintColor = UIColor.red
+        
+        return refreshControl
+    }()
     
+    @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
+        if let pubkey = self.profile?.issuer {
+            self.getTransactions(pubKey: pubkey, callback: {
+                DispatchQueue.main.async {
+                    refreshControl.endRefreshing()
+                }
+            })
+            profile?.getBalance(callback: { total in
+                let str = String(format:"%@ %.2f %@", "balance_label".localized(), Double(total) / 100, Currency.formattedCurrency(currency: self.currency))
+                
+                DispatchQueue.main.async {
+                    self.balance.text = str
+                    self.profile?.balance = total
+                }
+            })
+        }
+        
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.rowHeight = 64.0
-
-        
         
         if let profile = self.profile {
             self.name.text = profile.getName()
@@ -125,6 +152,11 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             // now we can get the history of transactions and show them
             
             self.getTransactions(pubKey: profile.issuer)
+        }
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = refreshControl
+        } else {
+            tableView.addSubview(refreshControl)
         }
     }
     
@@ -278,7 +310,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
 
-    func getTransactions(pubKey: String) {
+    func getTransactions(pubKey: String, callback: @escaping (() -> Void) = {}) {
         //https://g1.nordstrom.duniter.org/tx/history/EEdwxSkAuWyHuYMt4eX5V81srJWVy7kUaEkft3CWLEiq
         let url = String(format: "%@/tx/history/%@", currentNode, pubKey)
 
@@ -293,6 +325,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             } else if (err != nil) {
                 self.errorAlert(title: "no_internet_title".localized(), message: "no_internet_message".localized())
             }
+            callback()
         })
     }
     

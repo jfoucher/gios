@@ -115,7 +115,13 @@ class FirstViewController: UINavigationController, UINavigationBarDelegate {
         alert.addAction(UIAlertAction(title: "confirm_label".localized(), style: .default, handler: {ac in
             self.loggedOut = true
             print("removing profile")
+            
+            if let pk = self.profile?.issuer {
+                UserDefaults.standard.removeObject(forKey: "identity-" + pk)
+            }
+            
             Profile.remove()
+            
             self.profile = nil
             print(self.viewControllers.count)
             if (self.viewControllers.count > 1) {
