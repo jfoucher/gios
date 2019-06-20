@@ -14,6 +14,8 @@ A simple wallet app for the [duniter](https://www.duniter.fr/) network.
 <img alt="User search view displaying a text input and a list of user matching the search terms" src="https://raw.githubusercontent.com/jfoucher/gios/master/Screenshots/iPhone%20Xr/user-search.png" title="Search for the person you want to send the transaction to" width="300px" hspace="30px" />
 
 <img alt="Transaction details view showing the sender avatar and name, the receiver avatar and name, as well as the transaction amount and the comment" src="https://raw.githubusercontent.com/jfoucher/gios/master/Screenshots/iPhone%20Xr/transaction-details.png" title="Viewing the details of a past transaction" width="300px" hspace="30px" />
+
+<img alt="Sending transaction view" src="https://raw.githubusercontent.com/jfoucher/gios/master/Screenshots/iPhone%20Xr/sending-transaction.png" title="Sending a transaction" width="300px" hspace="30px" />
 </p>
 
 # Installation
