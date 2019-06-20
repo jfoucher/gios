@@ -29,6 +29,8 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>We need access to your camera to scan QR codes</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>We use FaceID to authenticate you to your account after your first login</string>
 	<key>UILaunchStoryboardName</key>

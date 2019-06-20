@@ -31,6 +31,7 @@
 		AB996F1822A06E02005966E2 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB996F1722A06E02005966E2 /* Profile.swift */; };
 		AB996F1C22A08452005966E2 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB996F1B22A08452005966E2 /* LoginViewController.swift */; };
 		AB996F1E22A0847B005966E2 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB996F1D22A0847B005966E2 /* ProfileViewController.swift */; };
+		ABB3F0A722BC31F400188D45 /* QRCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB3F0A622BC31F400188D45 /* QRCodeViewController.swift */; };
 		ABD2E1E422A9214D001A40CD /* Duniter.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD2E1E322A9214D001A40CD /* Duniter.swift */; };
 		ABD781B422A00AFE00574458 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABD781B322A00AFE00574458 /* Assets.xcassets */; };
 		ABE007D022A28D820077C9C3 /* TransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE007CE22A281370077C9C3 /* TransactionViewController.swift */; };
@@ -94,6 +95,7 @@
 		AB996F1722A06E02005966E2 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		AB996F1B22A08452005966E2 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		AB996F1D22A0847B005966E2 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		ABB3F0A622BC31F400188D45 /* QRCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeViewController.swift; sourceTree = "<group>"; };
 		ABD2E1E322A9214D001A40CD /* Duniter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Duniter.swift; sourceTree = "<group>"; };
 		ABD781B322A00AFE00574458 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ABE007CE22A281370077C9C3 /* TransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewController.swift; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 				ABE007CE22A281370077C9C3 /* TransactionViewController.swift */,
 				AB996F1B22A08452005966E2 /* LoginViewController.swift */,
 				AB38A65C22A5AE65008D7215 /* ChangeReceiverViewController.swift */,
+				ABB3F0A622BC31F400188D45 /* QRCodeViewController.swift */,
 				AB168A7022A3219E00952DDE /* NewTransactionViewController.swift */,
 				AB996F1D22A0847B005966E2 /* ProfileViewController.swift */,
 				ABD781B322A00AFE00574458 /* Assets.xcassets */,
@@ -480,6 +483,7 @@
 				AB38A65D22A5AE65008D7215 /* ChangeReceiverViewController.swift in Sources */,
 				AB996F1C22A08452005966E2 /* LoginViewController.swift in Sources */,
 				AB38A65B22A38309008D7215 /* Transactions.swift in Sources */,
+				ABB3F0A722BC31F400188D45 /* QRCodeViewController.swift in Sources */,
 				AB1AC3CC22A1600700CDEEB7 /* Identity.swift in Sources */,
 				ABE007D022A28D820077C9C3 /* TransactionViewController.swift in Sources */,
 				AB168A7122A3219E00952DDE /* NewTransactionViewController.swift in Sources */,

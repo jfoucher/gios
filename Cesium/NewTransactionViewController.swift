@@ -379,7 +379,6 @@ extension NewTransactionViewController: ReceiverChangedDelegate {
         self.receiver = receiver
         self.receiver?.getAvatar(imageView: self.receiverAvatar)
         self.receiverName.text = receiver.getName()
-        print("new receiver")
     }
 }
 

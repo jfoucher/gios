@@ -43,10 +43,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
-        
-        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
@@ -103,7 +99,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         backItem.title = "logout_button_label".localized()
         backItem.tintColor = .white
         self.navigationItem.backBarButtonItem = backItem
-        
         
         
         self.secret.borderStyle = UITextField.BorderStyle.roundedRect

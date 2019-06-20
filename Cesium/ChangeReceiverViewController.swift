@@ -120,6 +120,20 @@ class ChangeReceiverViewController: UIViewController, UITableViewDelegate, UITab
         }
     }
     
+    @IBAction func readQR(_ sender: UIButton) {
+        DispatchQueue.main.async {
+            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            
+            let QRCodeView = storyBoard.instantiateViewController(withIdentifier: "QRCodeView") as! QRCodeViewController
+            
+            QRCodeView.isModalInPopover = true
+            QRCodeView.profileSelectedDelegate = self
+            
+            self.present(QRCodeView, animated: true, completion: nil)
+        }
+        
+    }
+    
     func loadPage(search: String) {
         let count = 20
         let url = String(format:"%@/user,page,group/profile,record/_search?q=title:%@&size=%d&from=%d&sort=_score:desc", "default_data_host".localized(), search, count, self.page * count).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
@@ -156,6 +170,13 @@ class ChangeReceiverViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     @IBAction func cancel(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension ChangeReceiverViewController: ReceiverChangedDelegate {
+    func receiverChanged(receiver: Profile) {
+        self.profileSelectedDelegate?.receiverChanged(receiver: receiver)
         self.dismiss(animated: true, completion: nil)
     }
 }
