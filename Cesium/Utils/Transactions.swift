@@ -20,6 +20,19 @@ class Transactions {
     
     static func createTransaction(response: SourceResponse, receiverPubKey: String, amount: Int, block: Block, comment: String, profile: Profile) throws -> String {
         
+        var sources: [Source] = []
+        var total = 0
+        
+        for source in response.sources {
+            if (total < amount) {
+                sources.append(source)
+                total += source.amount * Int(truncating: NSDecimalNumber(decimal: pow(10, source.base)))
+            } else {
+                break
+            }
+            
+        }
+        
         guard profile.issuer == response.pubkey else {
             throw TransactionCreationError.wrongPublicKey
         }
@@ -35,7 +48,7 @@ Issuers:
 Inputs:
 
 """
-        let inputs = response.sources.map {
+        let inputs = sources.map {
             return String(format:"%d:%d:%@:%@:%d", $0.amount, $0.base, $0.type, $0.identifier, $0.noffset)
             }.reduce("") { (res: String, str: String) -> String in
                 return (String(res + str + "\n"))
@@ -43,12 +56,12 @@ Inputs:
         tx += inputs
         tx += "Unlocks:\n"
         
-        for i in 0...response.sources.count-1 {
+        for i in 0...sources.count-1 {
             tx += String(format:"%d:SIG(0)\n", i)
         }
         
         tx += "Outputs:\n"
-        guard let outputs = try calculateOutputs(sources: response.sources, amountToSend: amount, pubKey: receiverPubKey, myPubKey: profile.issuer) else {
+        guard let outputs = try calculateOutputs(sources: sources, amountToSend: amount, pubKey: receiverPubKey, myPubKey: profile.issuer) else {
             throw TransactionCreationError.insufficientFunds
         }
         
@@ -62,6 +75,7 @@ Inputs:
         //return tx
         let signedTx = tx + signature + "\n"
 
+        print(tx)
         return signedTx
     }
     
@@ -76,15 +90,13 @@ Inputs:
         
         for source in sources {
             let sourceAmount = Decimal(sign: FloatingPointSign.plus, exponent: source.base, significand: Decimal(source.amount))
-            print("source amount")
-            print(sourceAmount)
-            print("tosend amount")
-            print(toSend)
+            print("source amount", sourceAmount)
+            print("tosend amount", toSend)
             if (sourceAmount >= rest) {
                 // We have everything we need right here, return now
-                let toMe = sourceAmount - toSend
+                let toMe = sourceAmount - rest
                 
-                ret += String(format: "%d:%d:SIG(%@)\n", Int(truncating: NSDecimalNumber(decimal: toSend)), 0, pubKey)
+                ret += String(format: "%d:%d:SIG(%@)\n", Int(truncating: NSDecimalNumber(decimal: rest)), 0, pubKey)
                 
                 if (toMe > 0) {
                     ret += String(format: "%d:%d:SIG(%@)\n", Int(truncating: NSDecimalNumber(decimal: toMe)), 0, myPubKey)
