@@ -123,7 +123,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let context = LAContext()
         var error: NSError?
         let username = UserDefaults.standard.string(forKey: "lastUser")
+        print("username", username)
         let profile = Profile.load()
+        print("profile", profile)
         if username != nil && context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) && (profile == nil || sendingTransaction) {
 
             let blurEffect = UIBlurEffect(style: .light)
@@ -147,10 +149,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     blurView.removeFromSuperview()
                     if success {
                         if let savedProfile = KeyChain.load(key: "profile") {
-                            
                             let decoder = JSONDecoder()
                             if let loadedProfile = try? decoder.decode(Profile.self, from: savedProfile) {
-                                print("loadedProfile", loadedProfile)
                                 self.loginDelegate?.login(profile: loadedProfile)
                             }
                         }
@@ -186,12 +186,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func calculatePublicKey() throws -> String {
         let id: String = self.secret.text!
         let pass: String = self.password.text!
-        
-        let password: Array<UInt8> = Array(pass.utf8)
-        let salt: Array<UInt8> = Array(id.utf8)
-        guard let seed = try? Scrypt(password: password, salt: salt, dkLen: 32, N: 4096, r: 16, p: 1).calculate() else {
-           throw PublicKeyError.couldNotCalculate
+        guard let seed = try? self.calculateSeed(id: id, pass: pass) else {
+            throw PublicKeyError.couldNotCalculate
         }
+        
         let sodium = Sodium()
         let k = sodium.sign.keyPair(seed: seed)
         if let key = k {
@@ -201,18 +199,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         throw PublicKeyError.couldNotCalculate
     }
     
-    func calculateKeyPair(id: String, pass: String) throws -> KeyPair {
+    func calculateSeed(id: String, pass: String) throws -> Bytes {
         let password: Array<UInt8> = Array(pass.utf8)
         let salt: Array<UInt8> = Array(id.utf8)
         guard let seed = try? Scrypt(password: password, salt: salt, dkLen: 32, N: 4096, r: 16, p: 1).calculate() else {
             throw PublicKeyError.couldNotCalculate
         }
-        let sodium = Sodium()
-        let k = sodium.sign.keyPair(seed: seed)
-        if let key = k {
-            return KeyPair(publicKey: key.publicKey, secretKey: key.secretKey)
-        }
-        throw PublicKeyError.couldNotCalculate
+        return seed
     }
     
     @IBAction func buttonAction() {
@@ -233,8 +226,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             Profile.getProfile(publicKey: pubK, identity: identity, callback: { profile in
                 if var prof = profile {
                     // Keep the secret key in memory for the duration of the session
-                    if let kp = try? self.calculateKeyPair(id: id, pass: pass) {
-                        prof.kp = Base58.base58FromBytes(kp.secretKey)
+                    if let seed = try? self.calculateSeed(id: id, pass: pass) {
+                        prof.kp = Base58.base58FromBytes(seed)
                     }
                     self.loginDelegate?.login(profile: prof)
                 }

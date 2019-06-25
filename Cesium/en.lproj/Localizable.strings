@@ -51,3 +51,8 @@
 "no_comment_placeholder"="No comment";
 "home_button_label"="Back";
 "user_auth_prompt"="Authenticate for %@";
+"encrypt_comment_label"="Encrypt your comment";
+"encrypt_comment_subtext_yes"="Comment readable by the recipient only";
+"encrypt_comment_subtext_no"="Comment readable by all users";
+"comment_encrypt_failed"="Sorry, your comment could not be encrypted. Please make sure you are logged in and try again.";
+"decrypt_comment_button_label"="Decrypt comment";

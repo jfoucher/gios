@@ -102,7 +102,7 @@
                                 <rect key="frame" x="0.0" y="395" width="414" height="502"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" showsHorizontalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="M2g-RL-IE3">
-                                        <rect key="frame" x="8" y="8" width="398" height="302"/>
+                                        <rect key="frame" x="8" y="8" width="398" height="234.5"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -143,17 +143,41 @@
                                             <constraint firstAttribute="height" constant="130" id="re1-TJ-bUv"/>
                                         </constraints>
                                     </view>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ybw-LF-UUp">
+                                        <rect key="frame" x="341" y="262.5" width="51" height="31"/>
+                                        <connections>
+                                            <action selector="encryptCommentChanged:" destination="2fi-Sn-62l" eventType="valueChanged" id="ynY-Zg-eqN"/>
+                                        </connections>
+                                    </switch>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Encrypt comment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YDq-Sh-MzF">
+                                        <rect key="frame" x="24" y="267.5" width="136" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your comment will be readable by anyone" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Ep-bV-Blg">
+                                        <rect key="frame" x="24" y="297.5" width="366" height="16"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstItem="15J-YC-a3o" firstAttribute="top" secondItem="0Ep-bV-Blg" secondAttribute="bottom" constant="4" id="1Ik-cq-qQ5"/>
+                                    <constraint firstItem="Ybw-LF-UUp" firstAttribute="top" secondItem="M2g-RL-IE3" secondAttribute="bottom" constant="20" id="3cn-C2-Eba"/>
                                     <constraint firstItem="15J-YC-a3o" firstAttribute="centerX" secondItem="Pku-cx-w8V" secondAttribute="centerX" id="9zP-j3-ERG"/>
                                     <constraint firstItem="P5f-HI-cml" firstAttribute="leading" secondItem="Pku-cx-w8V" secondAttribute="leading" id="BK6-Nx-Axn"/>
+                                    <constraint firstAttribute="trailing" secondItem="Ybw-LF-UUp" secondAttribute="trailing" constant="24" id="Fry-lK-ijO"/>
                                     <constraint firstAttribute="trailing" secondItem="M2g-RL-IE3" secondAttribute="trailing" constant="8" id="Wbp-PX-N2l"/>
                                     <constraint firstItem="M2g-RL-IE3" firstAttribute="top" secondItem="Pku-cx-w8V" secondAttribute="top" constant="8" id="X1f-7U-s1V"/>
+                                    <constraint firstItem="YDq-Sh-MzF" firstAttribute="centerY" secondItem="Ybw-LF-UUp" secondAttribute="centerY" id="ZNb-lD-5J8"/>
+                                    <constraint firstAttribute="trailing" secondItem="0Ep-bV-Blg" secondAttribute="trailing" constant="24" id="eri-Jw-dqm"/>
                                     <constraint firstAttribute="trailing" secondItem="15J-YC-a3o" secondAttribute="trailing" id="fMd-2c-mCs"/>
+                                    <constraint firstItem="0Ep-bV-Blg" firstAttribute="leading" secondItem="Pku-cx-w8V" secondAttribute="leading" constant="24" id="feP-m7-53z"/>
+                                    <constraint firstItem="YDq-Sh-MzF" firstAttribute="leading" secondItem="Pku-cx-w8V" secondAttribute="leading" constant="24" id="gLy-Qd-gi9"/>
+                                    <constraint firstItem="0Ep-bV-Blg" firstAttribute="top" secondItem="Ybw-LF-UUp" secondAttribute="bottom" constant="4" id="hcv-If-zSI"/>
                                     <constraint firstAttribute="trailing" secondItem="P5f-HI-cml" secondAttribute="trailing" id="nsG-Ns-dWx"/>
                                     <constraint firstItem="P5f-HI-cml" firstAttribute="top" secondItem="Pku-cx-w8V" secondAttribute="top" id="oD4-iI-R4n"/>
-                                    <constraint firstItem="15J-YC-a3o" firstAttribute="top" secondItem="M2g-RL-IE3" secondAttribute="bottom" constant="7.5" id="onB-pU-S7f"/>
                                     <constraint firstItem="M2g-RL-IE3" firstAttribute="leading" secondItem="Pku-cx-w8V" secondAttribute="leading" constant="8" id="vKx-pq-lVz"/>
                                     <constraint firstAttribute="bottom" secondItem="15J-YC-a3o" secondAttribute="bottom" constant="54.5" id="wgO-nK-wyy"/>
                                 </constraints>
@@ -252,6 +276,9 @@
                         <outlet property="cancelButton" destination="9Di-Ns-K3U" id="by9-AE-3Eo"/>
                         <outlet property="close" destination="Xd5-1I-mrc" id="fQ5-R7-asy"/>
                         <outlet property="comment" destination="M2g-RL-IE3" id="djw-5V-ZZN"/>
+                        <outlet property="encryptComment" destination="Ybw-LF-UUp" id="iCc-Ip-XvP"/>
+                        <outlet property="encryptCommentLabel" destination="YDq-Sh-MzF" id="Zr7-kw-j6e"/>
+                        <outlet property="encryptCommentSubtext" destination="0Ep-bV-Blg" id="6Jx-0q-pJy"/>
                         <outlet property="progress" destination="P5f-HI-cml" id="Egz-8b-nRC"/>
                         <outlet property="receiverAvatar" destination="ImW-VJ-Ujl" id="rSq-tL-zIq"/>
                         <outlet property="receiverName" destination="OFu-oL-EbG" id="NoZ-U7-24u"/>
@@ -324,12 +351,31 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cr4-Eo-RN3">
+                                        <rect key="frame" x="60" y="405" width="294" height="47"/>
+                                        <color key="backgroundColor" red="0.0" green="0.51605003240000002" blue="0.39081952060000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="47" id="bZg-Hf-aA4"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <inset key="contentEdgeInsets" minX="13" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <inset key="imageEdgeInsets" minX="1" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" title="Decrypt comment"/>
+                                        <connections>
+                                            <action selector="decryptComment:" destination="kZB-q6-wtU" eventType="touchUpInside" id="aGc-uJ-MpA"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="ERr-SM-PmZ" firstAttribute="top" secondItem="VD5-ws-Q62" secondAttribute="top" constant="8" id="8MD-rg-TzH"/>
+                                    <constraint firstItem="cr4-Eo-RN3" firstAttribute="leading" secondItem="VD5-ws-Q62" secondAttribute="leading" constant="60" id="9Nq-dq-mRC"/>
                                     <constraint firstAttribute="trailing" secondItem="ERr-SM-PmZ" secondAttribute="trailing" constant="8" id="ADW-sk-4X2"/>
                                     <constraint firstItem="ERr-SM-PmZ" firstAttribute="leading" secondItem="VD5-ws-Q62" secondAttribute="leading" constant="8" id="LIS-YM-6hA"/>
+                                    <constraint firstItem="cr4-Eo-RN3" firstAttribute="centerX" secondItem="VD5-ws-Q62" secondAttribute="centerX" id="Pba-q6-6FW"/>
+                                    <constraint firstAttribute="trailing" secondItem="cr4-Eo-RN3" secondAttribute="trailing" constant="60" id="a0S-OF-NE4"/>
+                                    <constraint firstAttribute="bottom" secondItem="cr4-Eo-RN3" secondAttribute="bottom" constant="60" id="a6Q-ws-RVI"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" horizontalCompressionResistancePriority="200" translatesAutoresizingMaskIntoConstraints="NO" id="VAD-WD-SKs">
@@ -479,6 +525,7 @@
                         <outlet property="close" destination="RTZ-CJ-jUt" id="KYp-Ea-4Ur"/>
                         <outlet property="comment" destination="ERr-SM-PmZ" id="0nc-sZ-Kii"/>
                         <outlet property="date" destination="uAD-fc-nQe" id="436-8Z-ffW"/>
+                        <outlet property="decryptCommentButton" destination="cr4-Eo-RN3" id="fYu-HP-jl4"/>
                         <outlet property="receiverAvatar" destination="TFJ-66-9ta" id="hze-1o-Nqv"/>
                         <outlet property="receiverName" destination="nIy-Dv-JOm" id="bDC-4i-cOO"/>
                         <outlet property="senderAvatar" destination="f5V-Zk-ahR" id="dT8-bs-0fb"/>

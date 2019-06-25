@@ -30,6 +30,7 @@ class TransactionTableViewCell: UITableViewCell {
     @IBOutlet weak var amount: UIButton!
     @IBOutlet weak var avatar: UIImageView!
     var profile: Profile?
+    
     var transaction: ParsedTransaction?
 }
 
@@ -44,7 +45,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var avatar: UIImageView!
     @IBOutlet weak var createTransaction: UIButton!
-    
+    var loginProfile: Profile?
     
     var profile: Profile? {
         didSet {
@@ -218,8 +219,21 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             let transactionView = storyBoard.instantiateViewController(withIdentifier: "MyTransactionView") as! TransactionViewController
             
             if let tx = cell.transaction {
+                if (tx.pubKey == self.profile?.issuer) {
+                    print("sender set")
+                    transactionView.sender = self.profile
+                }
+                if (tx.to.count > 0 && tx.to[0] == self.profile?.issuer) {
+                    print("receiver set")
+                    transactionView.receiver = self.profile
+                }
+                if (tx.to.count > 0 && tx.to[0] == self.loginProfile?.issuer) {
+                    print("receiver set from login profile")
+                    transactionView.receiver = self.loginProfile
+                }
                 transactionView.transaction = tx
                 transactionView.currency = self.currency
+                transactionView.loginDelegate = self
                 transactionView.isModalInPopover = true
                 
                 self.navigationController?.present(transactionView, animated: true, completion: nil)
@@ -366,3 +380,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
 }
 
+extension ProfileViewController: LoginDelegate {
+    func login(profile: Profile) {
+        self.loginProfile = profile
+    }
+}

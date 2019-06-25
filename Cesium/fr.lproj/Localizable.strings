@@ -45,9 +45,14 @@
 "no_amount"="Aucun montant";
 "no_amount_message"="Veuillez choisir un montant pour cette transaction";
 "insufficient_funds"="Solde insuffisant";
-"insufficient_funds_message"="Désolé, vous n'avez pas les fonds nécéssaires pour procéder à cette transacation. veuillez réessayer en entrant un nombre plus petit.";
+"insufficient_funds_message"="Désolé, vous n'avez pas les fonds nécéssaires pour procéder à cette transacation. Veuillez réessayer en entrant un nombre plus petit.";
 "end_results"="Fin des résultats";
 "search_placeholder"="Recherche d'utilisateurs";
 "no_comment_placeholder"="Aucun commentaire";
 "home_button_label"="Retour";
 "user_auth_prompt"="Authentification pour %@";
+"encrypt_comment_label"="Chiffrer le commentaire";
+"encrypt_comment_subtext_yes"="Commentaire uniquement visible par le destinataire";
+"encrypt_comment_subtext_no"="Commentaire visible par tous les utilisateurs";
+"comment_encrypt_failed"="Désolé, votre commentaire n'a pas pu être chiffré. Veuillez vous assurer que vous êtes bien connecté·e, puis réessayez.";
+"decrypt_comment_button_label"="Décoder le commentaire";

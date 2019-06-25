@@ -85,13 +85,13 @@ Inputs:
         // If it's not, add the next source
         //output is like : mantissa:exponent:SIG(PUBLIC_KEY)
         var rest = Decimal(amountToSend)
-        let toSend = Decimal(amountToSend)
+        
         var ret = ""
         
         for source in sources {
             let sourceAmount = Decimal(sign: FloatingPointSign.plus, exponent: source.base, significand: Decimal(source.amount))
             print("source amount", sourceAmount)
-            print("tosend amount", toSend)
+            print("rest amount", rest)
             if (sourceAmount >= rest) {
                 // We have everything we need right here, return now
                 let toMe = sourceAmount - rest
@@ -114,14 +114,12 @@ Inputs:
     }
     
     static func signTransaction(transaction: String, profile: Profile) throws -> String {
-        
-        guard let kp = profile.kp else {
+        let sodium = Sodium()
+        guard let kp = sodium.sign.keyPair(seed: Base58.bytesFromBase58(profile.kp!))?.secretKey else {
             throw TransactionCreationError.couldNotSignTransaction
         }
 
-        let sodium = Sodium()
-
-        if let signature = sodium.sign.signature(message: Array(transaction.utf8), secretKey: Base58.bytesFromBase58(kp)) {
+        if let signature = sodium.sign.signature(message: Array(transaction.utf8), secretKey: kp) {
             return signature.toBase64() ?? ""
         }
         

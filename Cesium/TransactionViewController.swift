@@ -7,12 +7,14 @@
 //
 
 import Foundation
-
+import Sodium
 import UIKit
 
 class TransactionViewController: UIViewController {
+    weak var loginDelegate: LoginDelegate?
     var transaction: ParsedTransaction?
     var currency: String = "g1"
+    var loginView: LoginViewController?
     @IBOutlet weak var senderAvatar: UIImageView!
     @IBOutlet weak var close: UILabel!
     @IBOutlet weak var receiverAvatar: UIImageView!
@@ -25,6 +27,8 @@ class TransactionViewController: UIViewController {
     @IBOutlet weak var comment: UITextView!
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var topBarHeight: NSLayoutConstraint!
+    @IBOutlet weak var decryptCommentButton: UIButton!
+    
     
     var sender: Profile? {
         didSet {
@@ -32,6 +36,7 @@ class TransactionViewController: UIViewController {
             DispatchQueue.main.async {
                 self.sender?.getAvatar(imageView: self.senderAvatar)
                 self.senderName.text = self.sender?.getName()
+                self.decodeComment()
             }
         }
     }
@@ -39,11 +44,9 @@ class TransactionViewController: UIViewController {
         didSet {
             print("got receiver")
             DispatchQueue.main.async {
-                if ( self.receiver?.title == nil || self.receiver?.uid == nil) {
-                    print(self.receiver)
-                }
                 self.receiver?.getAvatar(imageView: self.receiverAvatar)
                 self.receiverName.text = self.receiver?.getName()
+                self.decodeComment()
             }
         }
     }
@@ -106,12 +109,40 @@ class TransactionViewController: UIViewController {
                 self.comment.textColor = .lightGray
             } else {
                 self.comment.text = tx.comment
+                
             }
-            
+            print(tx.pubKey)
             self.getSender(pubKey: tx.pubKey)
-            if (tx.to.count > 0) {
+            
+            if ((tx.to.count > 0 && self.receiver == nil) || (tx.amount < 0 && self.receiver?.kp == nil)) {
                 self.getReceiver(pubKey: tx.to[0])
             }
+            if (tx.comment.starts(with: "enc ")) {
+                // Display decrypt comment button
+                if let receiver = self.receiver {
+                    self.decryptCommentButton.setTitle("decrypt_comment_button_label".localized(), for: .normal)
+                    if (receiver.kp != nil || receiver.issuer != tx.to[0]) {
+                        self.decryptCommentButton.isHidden = true
+                    }
+                }
+            } else {
+                self.decryptCommentButton.isHidden = true
+            }
+            
+        }
+    }
+    
+    @IBAction func decryptComment(_ sender: Any) {
+        print("decryptComment")
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        self.loginView = storyBoard.instantiateViewController(withIdentifier: "LoginView") as? LoginViewController
+        
+        self.loginView?.loginDelegate = self
+        self.loginView?.sendingTransaction = true
+        //loginView.isModalInPopover = true
+        if let v = self.loginView {
+            self.present(v, animated: true, completion: nil)
         }
     }
     
@@ -128,6 +159,40 @@ class TransactionViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
+    func decodeComment() {
+        print("decoding comment")
+        if let tx = self.transaction {
+            print("tx exists")
+            if (tx.comment.starts(with: "enc ")) {
+                print("comment starts with enc")
+                if let seed = self.receiver?.kp, let senderPublicKey = self.sender?.issuer {
+                    print("pk and seed exist")
+                    let sodium = Sodium()
+                    print("seed", seed)
+                    print("senderPublicKey", senderPublicKey)
+                    let kp = sodium.sign.keyPair(seed: Base58.bytesFromBase58(seed))!
+                    
+                    let conv = sodium.sign.convertEd25519KeyPairToCurve25519(keyPair: kp)!
+                    let senderPK = sodium.sign.convertEd25519PkToCurve25519(publicKey: Base58.bytesFromBase58(senderPublicKey))!
+                    
+                    let cipherText = String(tx.comment.dropFirst(4))
+                    print("decrypting from converted public key", Base58.base58FromBytes(senderPK))
+                    print("decrypting to converted private key", Base58.base58FromBytes(conv.secretKey))
+                    let d = sodium.box.open(nonceAndAuthenticatedCipherText: Array(cipherText.utf8),
+                                            senderPublicKey: senderPK,
+                                            recipientSecretKey: conv.secretKey)
+                    print("decrypted", d)
+                    if let decrypted: Bytes =
+                        sodium.box.open(nonceAndAuthenticatedCipherText: Base58.bytesFromBase58(cipherText),
+                                        senderPublicKey: senderPK,
+                                        recipientSecretKey: conv.secretKey) {
+                        self.comment.text = String(bytes: decrypted, encoding: .utf8)
+                    }
+                }
+            }
+        }
+    }
+    
     func getSender(pubKey: String) {
         print("getting sender for " + pubKey)
         Profile.getRequirements(publicKey: pubKey, callback: { identity in
@@ -139,6 +204,7 @@ class TransactionViewController: UIViewController {
             Profile.getProfile(publicKey: pubKey, identity: ident, callback: { profile in
                 if let prof = profile, let am = self.transaction?.amount {
                     //Reverse display if amount is negative
+                    print("got profile, amount is", am)
                     if (am < 0) {
                         self.receiver = prof
                     } else {
@@ -171,5 +237,22 @@ class TransactionViewController: UIViewController {
                 }
             })
         })
+    }
+}
+extension TransactionViewController: LoginDelegate {
+    func login(profile: Profile) {
+        self.receiver = profile
+        print("in login delegate")
+        DispatchQueue.main.async {
+            if let ld = self.loginDelegate {
+                ld.login(profile: profile)
+            }
+            
+            self.decryptCommentButton.isHidden = true
+            self.decodeComment()
+            if let v = self.loginView {
+                v.dismiss(animated: true, completion: nil)
+            }
+        }
     }
 }

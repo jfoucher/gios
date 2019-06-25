@@ -8,6 +8,8 @@
 
 import Foundation
 import UIKit
+import Sodium
+
 
 
 class NewTransactionViewController: UIViewController, UITextViewDelegate {
@@ -31,7 +33,18 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var progress: UIProgressView!
     @IBOutlet weak var topBarHeight: NSLayoutConstraint!
+    @IBOutlet weak var encryptComment: UISwitch!
+    @IBOutlet weak var encryptCommentSubtext: UILabel!
+    @IBOutlet weak var encryptCommentLabel: UILabel!
     
+    @IBAction func encryptCommentChanged(_ sender: UISwitch) {
+        print(sender.isOn)
+        if (sender.isOn) {
+            self.encryptCommentSubtext.text = "encrypt_comment_subtext_yes".localized()
+        } else {
+            self.encryptCommentSubtext.text = "encrypt_comment_subtext_no".localized()
+        }
+    }
     weak var loginView: LoginViewController?
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -47,6 +60,8 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
             self.view.layoutIfNeeded()
         }
         
+        self.encryptCommentLabel.text = "encrypt_comment_label".localized()
+        self.encryptCommentSubtext.text = "encrypt_comment_subtext_yes".localized()
         self.sendButton.layer.cornerRadius = 6
         
         self.close.text = "close_label".localized()
@@ -134,6 +149,22 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
         }
     }
     
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
+
+        if self.encryptComment.isOn{
+            let cipherTextLength = self.encryptedLength(text: newText)
+
+            return cipherTextLength < 256
+        }
+        
+        if (#"_:/;*[]()?!^\+=@&~#{}|<>%.€,'`"#.contains(text)) {
+            return false
+        }
+        let numberOfChars = newText.count
+        return numberOfChars < 256
+    }
+    
     func textViewDidEndEditing(_ textView: UITextView) {
         //move view down
         if (UIScreen.main.bounds.height < 700) {
@@ -154,11 +185,6 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
     }
     
     @IBAction func send(sender: UIButton?) {
-        
-        // Set buttons disabled
-        
-        
-        
         
         print("will send")
         guard let receiver = self.receiver else {
@@ -225,7 +251,7 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
 
         let amountString = String(format: "%.2f %@", Float(truncating: am), Currency.formattedCurrency(currency: currency))
         
-        let msg = String(format: "transaction_confirm_message".localized(), amountString, title ?? "")
+        let msg = String(format: "transaction_confirm_message".localized(), amountString, title)
         let alert = UIAlertController(title: "transaction_confirm_prompt".localized(), message: msg, preferredStyle: .actionSheet)
         print("preparing action")
         alert.addAction(UIAlertAction(title: "transaction_confirm_button_label".localized(), style: .default, handler: {ac in
@@ -237,12 +263,19 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
                 text = ""
             }
             
+            if (self.encryptComment.isOn) {
+                if let cipherText = self.encryptComment(text: text) {
+                    text = cipherText
+                } else {
+                    self.errorAlert(message: "comment_encrypt_failed".localized())
+                }
+            }
+            
             //TODO validate amount, etc...
             self.progress.setProgress(0.1, animated: true)
             self.sender?.getSources(callback: { (error: Error?, resp: SourceResponse?) in
-                print("source response", resp)
+
                 if let pk = self.receiver?.issuer, let response = resp {
-                    print("issuer", pk)
                     let intAmount = Int(truncating: NSNumber(value: Float(truncating: am) * 100))
                     let url = String(format: "%@/blockchain/current", currentNode)
                     let request = Request(url: url)
@@ -250,7 +283,6 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
                         self.progress.setProgress(0.3, animated: true)
                     }
                     request.jsonDecodeWithCallback(type: Block.self, callback: { (err: Error?, block: Block?) in
-                        print("block", block)
                         guard let blk = block else {
                             return
                         }
@@ -266,7 +298,7 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
                             print("processUrl", processUrl)
                             let processRequest = Request(url: processUrl)
                             processRequest.postRaw(rawTx: signedTx, type: Transaction.self, callback: { (error, res) in
-                                print(error, res)
+                                
                                 if let er = error as? RequestError {
                                     print("ERROR")
                                     if let resp = er.responseData {
@@ -308,13 +340,8 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
                         } catch {
                             self.errorAlert(message: String(format:"transaction_fail_text".localized(), "unknown error"))
                         }
-                        
-                        // send transaction
-                        
                     })
-                    
                 }
-                
             })
         }))
         
@@ -323,11 +350,48 @@ class NewTransactionViewController: UIViewController, UITextViewDelegate {
         self.present(alert, animated: true)
     }
     
+    func encryptedLength(text: String) -> Int {
+        let sodium = Sodium()
+        
+        let sec = sodium.box.keyPair()!
+        if let encrypted: Bytes =
+            sodium.box.seal(message: Array(text.utf8),
+                            recipientPublicKey: sec.publicKey,
+                            senderSecretKey: sec.secretKey) {
+            return String("enc " + Base58.base58FromBytes(encrypted)).count
+        }
+        return 0
+    }
+    
+    func encryptComment(text: String) -> String? {
+        if let sk = self.sender?.kp, let pk = self.receiver?.issuer {
+            let sodium = Sodium()
+            
+            let sec = sodium.sign.keyPair(seed: Base58.bytesFromBase58(sk))!
+            
+            let conv = sodium.sign.convertEd25519KeyPairToCurve25519(keyPair: sec)!
+            let recipientPublicKey = sodium.sign.convertEd25519PkToCurve25519(publicKey: Base58.bytesFromBase58(pk))!
+            
+            //let msg = String(format: "pk %@ c %@", pk, text)
+            
+            if let encrypted: Bytes =
+                sodium.box.seal(message: Array(text.utf8),
+                                recipientPublicKey: recipientPublicKey,
+                                senderSecretKey: conv.secretKey) {
+                return "enc " + Base58.base58FromBytes(encrypted)
+            }
+        }
+        return nil
+    }
+    
     func finish(action: UIAlertAction) {
         DispatchQueue.main.async {
             self.cancelButton.isEnabled = true
             self.sendButton.isEnabled = true
             self.progress.progress = 0.0
+            self.comment?.text = "comment_placeholder".localized()
+            self.comment?.textColor = .lightGray
+            self.amount.text = ""
         }
     }
     
@@ -395,8 +459,6 @@ extension NewTransactionViewController: LoginDelegate {
                     }
                 })
             }
-            
         }
-        
     }
 }

@@ -22,18 +22,3 @@ struct Source: Codable {
     var base: Int
     var conditions: String
 }
-
-//        {
-//            "currency": "g1",
-//            "pubkey": "EEdwxSkAuWyHuYMt4eX5V81srJWVy7kUaEkft3CWLEiq",
-//            "sources": [
-//            {
-//            "type": "T",
-//            "noffset": 0,
-//            "identifier": "A888D00A7085DD1EEBABCD55A9B2F189FBD7E838E3776DB175857758FCE8AFB2",
-//            "amount": 500,
-//            "base": 0,
-//            "conditions": "SIG(EEdwxSkAuWyHuYMt4eX5V81srJWVy7kUaEkft3CWLEiq)"
-//            }
-//            ]
-//        }
