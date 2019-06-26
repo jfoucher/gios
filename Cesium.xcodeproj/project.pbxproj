@@ -47,6 +47,9 @@
 		FCB7705622C33E9C003D0D5F /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB7705522C33E9C003D0D5F /* UITextField+Extensions.swift */; };
 		FCB7705822C33EB6003D0D5F /* UITextView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB7705722C33EB6003D0D5F /* UITextView+Extensions.swift */; };
 		FCB7705A22C33F03003D0D5F /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB7705922C33F03003D0D5F /* Data+Extensions.swift */; };
+		FCBE209422C3906600709D3E /* CloseButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = FCBE209322C3906600709D3E /* CloseButton.xib */; };
+		FCBE209A22C3947900709D3E /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBE209922C3947900709D3E /* CloseButton.swift */; };
+		FCBE209C22C394C900709D3E /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBE209B22C394C900709D3E /* UIView+Extensions.swift */; };
 		FCE1976622C34422006E0A1F /* NewTransactionViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCE1976522C34422006E0A1F /* NewTransactionViewController.storyboard */; };
 		FCE1976922C3446B006E0A1F /* LoginViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCE1976822C3446B006E0A1F /* LoginViewController.storyboard */; };
 		FCE1976C22C3457E006E0A1F /* ProfileViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCE1976B22C3457E006E0A1F /* ProfileViewController.storyboard */; };
@@ -135,6 +138,9 @@
 		FCB7705522C33E9C003D0D5F /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
 		FCB7705722C33EB6003D0D5F /* UITextView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Extensions.swift"; sourceTree = "<group>"; };
 		FCB7705922C33F03003D0D5F /* Data+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extensions.swift"; sourceTree = "<group>"; };
+		FCBE209322C3906600709D3E /* CloseButton.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CloseButton.xib; sourceTree = "<group>"; };
+		FCBE209922C3947900709D3E /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
+		FCBE209B22C394C900709D3E /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		FCE1976522C34422006E0A1F /* NewTransactionViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NewTransactionViewController.storyboard; sourceTree = "<group>"; };
 		FCE1976822C3446B006E0A1F /* LoginViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LoginViewController.storyboard; sourceTree = "<group>"; };
 		FCE1976B22C3457E006E0A1F /* ProfileViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProfileViewController.storyboard; sourceTree = "<group>"; };
@@ -229,6 +235,7 @@
 				FCB7704522C33CE2003D0D5F /* Extensions */,
 				AB1AC3C822A1574E00CDEEB7 /* Utils */,
 				AB996F1622A06D9A005966E2 /* Models */,
+				FCBE209122C3902800709D3E /* Views */,
 				FCE1976322C343FC006E0A1F /* Modules */,
 				FC9C1FFC22C33FA8007BFCEF /* Resources */,
 			);
@@ -300,6 +307,7 @@
 				FCB7705522C33E9C003D0D5F /* UITextField+Extensions.swift */,
 				FCB7705722C33EB6003D0D5F /* UITextView+Extensions.swift */,
 				FCB7705922C33F03003D0D5F /* Data+Extensions.swift */,
+				FCBE209B22C394C900709D3E /* UIView+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -314,6 +322,24 @@
 				FCB7704F22C33D9B003D0D5F /* Social.swift */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		FCBE209122C3902800709D3E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FCBE209222C3905B00709D3E /* Buttons */,
+			);
+			name = Views;
+			path = Modules/Views;
+			sourceTree = "<group>";
+		};
+		FCBE209222C3905B00709D3E /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				FCBE209322C3906600709D3E /* CloseButton.xib */,
+				FCBE209922C3947900709D3E /* CloseButton.swift */,
+			);
+			path = Buttons;
 			sourceTree = "<group>";
 		};
 		FCE1976322C343FC006E0A1F /* Modules */ = {
@@ -540,6 +566,7 @@
 				FCE1976F22C345E8006E0A1F /* TransactionViewController.storyboard in Resources */,
 				FCE1977322C34613006E0A1F /* ChangeReceiverViewController.storyboard in Resources */,
 				ABD781B422A00AFE00574458 /* Assets.xcassets in Resources */,
+				FCBE209422C3906600709D3E /* CloseButton.xib in Resources */,
 				AB04BF33229F539400B1111E /* QRCodeViewController.storyboard in Resources */,
 				FCE1976922C3446B006E0A1F /* LoginViewController.storyboard in Resources */,
 				FCE1976C22C3457E006E0A1F /* ProfileViewController.storyboard in Resources */,
@@ -675,6 +702,7 @@
 				AB38A65922A37B24008D7215 /* Block.swift in Sources */,
 				AB1AC3BC22A05F1100CDEEB7 /* Base58.swift in Sources */,
 				FCB7705222C33E50003D0D5F /* UIImage+Extensions.swift in Sources */,
+				FCBE209A22C3947900709D3E /* CloseButton.swift in Sources */,
 				ABE007D222A2CDA10077C9C3 /* Currency.swift in Sources */,
 				FCB7704A22C33D51003D0D5F /* ProfileSearchResponse.swift in Sources */,
 				FCE1977722C34AE3006E0A1F /* IdentityResponse.swift in Sources */,
@@ -686,6 +714,7 @@
 				AB38A65D22A5AE65008D7215 /* ChangeReceiverViewController.swift in Sources */,
 				AB996F1C22A08452005966E2 /* LoginViewController.swift in Sources */,
 				AB38A65B22A38309008D7215 /* Transactions.swift in Sources */,
+				FCBE209C22C394C900709D3E /* UIView+Extensions.swift in Sources */,
 				FCB7704E22C33D82003D0D5F /* ProfileResponse.swift in Sources */,
 				FCE1977E22C34B40006E0A1F /* DuniterResponse.swift in Sources */,
 				FCE1977922C34AF7006E0A1F /* Certification.swift in Sources */,

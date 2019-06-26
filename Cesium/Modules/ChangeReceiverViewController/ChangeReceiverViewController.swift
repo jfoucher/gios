@@ -24,10 +24,13 @@ class LoadingViewCell: UITableViewCell {
 }
 
 class ChangeReceiverViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
+    
+    @IBOutlet weak var closeButtonView: CloseButton!
     @IBOutlet weak var close: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var search: UITextField!
     @IBOutlet weak var topBarHeight: NSLayoutConstraint!
+    
     var request: Request?
     var profiles: [Profile?] = []
     var page: Int = 0
@@ -37,15 +40,14 @@ class ChangeReceiverViewController: UIViewController, UITableViewDelegate, UITab
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.close.text = "close_label".localized()
+        
+        self.closeButtonView.closeClosure = {
+            self.dismiss(animated: true, completion: nil)
+        }
+        
         self.tableView.rowHeight = 64.0
         self.search.becomeFirstResponder()
         self.search.placeholder = "search_placeholder".localized()
-        if let navigationController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController {
-            print("found")
-            self.topBarHeight.constant = navigationController.navigationBar.frame.height
-            self.view.layoutIfNeeded()
-        }
         
         self.search.addDoneButtonToKeyboard(myAction:  #selector(self.search.resignFirstResponder))
 

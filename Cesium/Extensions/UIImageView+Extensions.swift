@@ -12,6 +12,11 @@ import UIKit
 let imageCache = NSCache<NSString, AnyObject>()
 
 extension UIImageView {
+    func with(color: UIColor) {
+        self.image = self.image?.withRenderingMode(.alwaysTemplate)
+        self.tintColor = color
+    }
+    
     func loadImageUsingCache(withUrl urlString : String, fail: ((Error?) -> Void)?) {
         let url = URL(string: urlString)
         

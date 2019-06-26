@@ -64,8 +64,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func close(_ sender: Any) {
-        self.dismiss(animated: true
-            , completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
