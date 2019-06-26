@@ -1,8 +1,8 @@
 //
-//  Image.swift
+//  UIImageView+Extensions.swift
 //  Cesium
 //
-//  Created by Jonathan Foucher on 31/05/2019.
+//  Created by Afx on 26/06/2019.
 //  Copyright © 2019 Jonathan Foucher. All rights reserved.
 //
 
@@ -10,19 +10,6 @@ import Foundation
 import UIKit
 
 let imageCache = NSCache<NSString, AnyObject>()
-
-extension UIImage {
-    func resize(width: CGFloat) -> UIImage {
-        let scale = width / self.size.width
-        let newHeight = self.size.height * scale
-        UIGraphicsBeginImageContextWithOptions(CGSize(width: width, height: newHeight), false, UIScreen.main.scale)
-        self.draw(in: CGRect(x: 0, y: 0, width: width, height: newHeight))
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return newImage!
-    }
-}
 
 extension UIImageView {
     func loadImageUsingCache(withUrl urlString : String, fail: ((Error?) -> Void)?) {

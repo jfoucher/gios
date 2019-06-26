@@ -3,27 +3,24 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		04EAF88BCBF3BE0401382CDA /* Pods_CesiumUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C75C4A288EACA9554B6CBD1 /* Pods_CesiumUITests.framework */; };
-		12CED1E29B13C80FAE10B024 /* Pods_Cesium.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4A9576E045C516D7255FFE2 /* Pods_Cesium.framework */; };
-		423EEC6332CFFBAC7BE0EA55 /* Pods_CesiumTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F9F18C04C898676C44F4926 /* Pods_CesiumTests.framework */; };
+		29CACBD7547A929B6775FC17 /* Pods_CesiumUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7D01AB9C065E5CD675B9FA7 /* Pods_CesiumUITests.framework */; };
+		4F5A6E1D58A1D9CA680B7201 /* Pods_Cesium.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D81A7B7ECD68D84955DF726 /* Pods_Cesium.framework */; };
 		AB04BF2C229F539400B1111E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB04BF2B229F539400B1111E /* AppDelegate.swift */; };
 		AB04BF2E229F539400B1111E /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB04BF2D229F539400B1111E /* FirstViewController.swift */; };
-		AB04BF33229F539400B1111E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB04BF31229F539400B1111E /* Main.storyboard */; };
+		AB04BF33229F539400B1111E /* QRCodeViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB04BF31229F539400B1111E /* QRCodeViewController.storyboard */; };
 		AB04BF38229F539500B1111E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB04BF36229F539500B1111E /* LaunchScreen.storyboard */; };
 		AB04BF43229F539600B1111E /* CesiumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB04BF42229F539600B1111E /* CesiumTests.swift */; };
 		AB04BF4E229F539600B1111E /* CesiumUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB04BF4D229F539600B1111E /* CesiumUITests.swift */; };
 		AB168A7122A3219E00952DDE /* NewTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB168A7022A3219E00952DDE /* NewTransactionViewController.swift */; };
-		AB168A7322A341A900952DDE /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB168A7222A341A900952DDE /* TextField.swift */; };
 		AB1AC3BC22A05F1100CDEEB7 /* Base58.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1AC3BB22A05F1100CDEEB7 /* Base58.swift */; };
 		AB1AC3BF22A060EB00CDEEB7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AB1AC3C122A060EB00CDEEB7 /* Localizable.strings */; };
 		AB1AC3C622A1490B00CDEEB7 /* Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1AC3C522A1490B00CDEEB7 /* Source.swift */; };
 		AB1AC3CA22A1575E00CDEEB7 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1AC3C922A1575E00CDEEB7 /* Request.swift */; };
 		AB1AC3CC22A1600700CDEEB7 /* Identity.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1AC3CB22A1600700CDEEB7 /* Identity.swift */; };
-		AB1AC3CE22A1686F00CDEEB7 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1AC3CD22A1686F00CDEEB7 /* Image.swift */; };
 		AB1AC3D022A17FD700CDEEB7 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1AC3CF22A17FD700CDEEB7 /* Transaction.swift */; };
 		AB38A65922A37B24008D7215 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB38A65822A37B24008D7215 /* Block.swift */; };
 		AB38A65B22A38309008D7215 /* Transactions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB38A65A22A38309008D7215 /* Transactions.swift */; };
@@ -39,6 +36,30 @@
 		ABE007D222A2CDA10077C9C3 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE007D122A2CDA10077C9C3 /* Currency.swift */; };
 		ABF6251A22B5AA60008D5087 /* KeyChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF6251922B5AA60008D5087 /* KeyChain.swift */; };
 		ABF6252122B5CCCB008D5087 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = ABF6252322B5CCCB008D5087 /* InfoPlist.strings */; };
+		F747C185049D61ED9453DC0A /* Pods_CesiumTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 482D0A87F3028867EEE5104B /* Pods_CesiumTests.framework */; };
+		FCB7704722C33CF7003D0D5F /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB7704622C33CF7003D0D5F /* String+Extensions.swift */; };
+		FCB7704A22C33D51003D0D5F /* ProfileSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB7704922C33D51003D0D5F /* ProfileSearchResponse.swift */; };
+		FCB7704C22C33D73003D0D5F /* Hits.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB7704B22C33D73003D0D5F /* Hits.swift */; };
+		FCB7704E22C33D82003D0D5F /* ProfileResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB7704D22C33D82003D0D5F /* ProfileResponse.swift */; };
+		FCB7705022C33D9B003D0D5F /* Social.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB7704F22C33D9B003D0D5F /* Social.swift */; };
+		FCB7705222C33E50003D0D5F /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB7705122C33E50003D0D5F /* UIImage+Extensions.swift */; };
+		FCB7705422C33E6A003D0D5F /* UIImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB7705322C33E6A003D0D5F /* UIImageView+Extensions.swift */; };
+		FCB7705622C33E9C003D0D5F /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB7705522C33E9C003D0D5F /* UITextField+Extensions.swift */; };
+		FCB7705822C33EB6003D0D5F /* UITextView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB7705722C33EB6003D0D5F /* UITextView+Extensions.swift */; };
+		FCB7705A22C33F03003D0D5F /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB7705922C33F03003D0D5F /* Data+Extensions.swift */; };
+		FCE1976622C34422006E0A1F /* NewTransactionViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCE1976522C34422006E0A1F /* NewTransactionViewController.storyboard */; };
+		FCE1976922C3446B006E0A1F /* LoginViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCE1976822C3446B006E0A1F /* LoginViewController.storyboard */; };
+		FCE1976C22C3457E006E0A1F /* ProfileViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCE1976B22C3457E006E0A1F /* ProfileViewController.storyboard */; };
+		FCE1976F22C345E8006E0A1F /* TransactionViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCE1976E22C345E8006E0A1F /* TransactionViewController.storyboard */; };
+		FCE1977322C34613006E0A1F /* ChangeReceiverViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCE1977222C34613006E0A1F /* ChangeReceiverViewController.storyboard */; };
+		FCE1977722C34AE3006E0A1F /* IdentityResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE1977622C34AE3006E0A1F /* IdentityResponse.swift */; };
+		FCE1977922C34AF7006E0A1F /* Certification.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE1977822C34AF7006E0A1F /* Certification.swift */; };
+		FCE1977B22C34B09006E0A1F /* Meta.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE1977A22C34B09006E0A1F /* Meta.swift */; };
+		FCE1977E22C34B40006E0A1F /* DuniterResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE1977D22C34B40006E0A1F /* DuniterResponse.swift */; };
+		FCE1978122C34B62006E0A1F /* SourceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE1978022C34B62006E0A1F /* SourceResponse.swift */; };
+		FCE1978422C34B8A006E0A1F /* TransactionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE1978322C34B8A006E0A1F /* TransactionResponse.swift */; };
+		FCE1978622C34B9C006E0A1F /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE1978522C34B9C006E0A1F /* History.swift */; };
+		FCE1978822C34BB2006E0A1F /* ParsedTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE1978722C34BB2006E0A1F /* ParsedTransaction.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,18 +80,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2F9F18C04C898676C44F4926 /* Pods_CesiumTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CesiumTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5A8EB425419945549A10FE12 /* Pods-Cesium.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cesium.debug.xcconfig"; path = "Target Support Files/Pods-Cesium/Pods-Cesium.debug.xcconfig"; sourceTree = "<group>"; };
-		60E5F249E3BF9CE3054DD1E8 /* Pods-CesiumUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CesiumUITests.debug.xcconfig"; path = "Target Support Files/Pods-CesiumUITests/Pods-CesiumUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		68C719E261FA17FA2FDA8D54 /* Pods-CesiumUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CesiumUITests.release.xcconfig"; path = "Target Support Files/Pods-CesiumUITests/Pods-CesiumUITests.release.xcconfig"; sourceTree = "<group>"; };
-		6AF8A9565E5D11B7513ACCAB /* Pods-CesiumTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CesiumTests.release.xcconfig"; path = "Target Support Files/Pods-CesiumTests/Pods-CesiumTests.release.xcconfig"; sourceTree = "<group>"; };
-		6C6D4DD590A64A108468EA72 /* Pods-CesiumTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CesiumTests.debug.xcconfig"; path = "Target Support Files/Pods-CesiumTests/Pods-CesiumTests.debug.xcconfig"; sourceTree = "<group>"; };
-		6C75C4A288EACA9554B6CBD1 /* Pods_CesiumUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CesiumUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9F4A2F125B45F703665A987C /* Pods-Cesium.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cesium.release.xcconfig"; path = "Target Support Files/Pods-Cesium/Pods-Cesium.release.xcconfig"; sourceTree = "<group>"; };
+		0AF4B560FF691C8B5D7C260A /* Pods-CesiumUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CesiumUITests.debug.xcconfig"; path = "Target Support Files/Pods-CesiumUITests/Pods-CesiumUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		482D0A87F3028867EEE5104B /* Pods_CesiumTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CesiumTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4FC155556B0E713F287229BE /* Pods-CesiumUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CesiumUITests.release.xcconfig"; path = "Target Support Files/Pods-CesiumUITests/Pods-CesiumUITests.release.xcconfig"; sourceTree = "<group>"; };
+		6334C07CA8955E60F7875A89 /* Pods-CesiumTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CesiumTests.debug.xcconfig"; path = "Target Support Files/Pods-CesiumTests/Pods-CesiumTests.debug.xcconfig"; sourceTree = "<group>"; };
+		8B68543E1C390E295E107412 /* Pods-Cesium.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cesium.release.xcconfig"; path = "Target Support Files/Pods-Cesium/Pods-Cesium.release.xcconfig"; sourceTree = "<group>"; };
+		9D57D35E47776D114E87475F /* Pods-Cesium.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cesium.debug.xcconfig"; path = "Target Support Files/Pods-Cesium/Pods-Cesium.debug.xcconfig"; sourceTree = "<group>"; };
+		9D81A7B7ECD68D84955DF726 /* Pods_Cesium.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Cesium.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB04BF28229F539400B1111E /* Cesium.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cesium.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB04BF2B229F539400B1111E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AB04BF2D229F539400B1111E /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
-		AB04BF32229F539400B1111E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		AB04BF32229F539400B1111E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/QRCodeViewController.storyboard; sourceTree = "<group>"; };
 		AB04BF37229F539500B1111E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AB04BF39229F539500B1111E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB04BF3E229F539600B1111E /* CesiumTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CesiumTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -80,14 +100,12 @@
 		AB04BF4D229F539600B1111E /* CesiumUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CesiumUITests.swift; sourceTree = "<group>"; };
 		AB04BF4F229F539600B1111E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB168A7022A3219E00952DDE /* NewTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTransactionViewController.swift; sourceTree = "<group>"; };
-		AB168A7222A341A900952DDE /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		AB1AC3BB22A05F1100CDEEB7 /* Base58.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Base58.swift; path = ../Base58.swift; sourceTree = "<group>"; };
 		AB1AC3C022A060EB00CDEEB7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AB1AC3C222A060EF00CDEEB7 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AB1AC3C522A1490B00CDEEB7 /* Source.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Source.swift; sourceTree = "<group>"; };
 		AB1AC3C922A1575E00CDEEB7 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		AB1AC3CB22A1600700CDEEB7 /* Identity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identity.swift; sourceTree = "<group>"; };
-		AB1AC3CD22A1686F00CDEEB7 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		AB1AC3CF22A17FD700CDEEB7 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		AB33BE62229FF6150003EEA3 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		AB38A65822A37B24008D7215 /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
@@ -105,7 +123,31 @@
 		ABF6251922B5AA60008D5087 /* KeyChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChain.swift; sourceTree = "<group>"; };
 		ABF6252222B5CCCB008D5087 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		ABF6252422B5CCD3008D5087 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		B4A9576E045C516D7255FFE2 /* Pods_Cesium.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Cesium.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C60F8C105828B10B60AEF169 /* Pods-CesiumTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CesiumTests.release.xcconfig"; path = "Target Support Files/Pods-CesiumTests/Pods-CesiumTests.release.xcconfig"; sourceTree = "<group>"; };
+		E7D01AB9C065E5CD675B9FA7 /* Pods_CesiumUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CesiumUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FCB7704622C33CF7003D0D5F /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		FCB7704922C33D51003D0D5F /* ProfileSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSearchResponse.swift; sourceTree = "<group>"; };
+		FCB7704B22C33D73003D0D5F /* Hits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hits.swift; sourceTree = "<group>"; };
+		FCB7704D22C33D82003D0D5F /* ProfileResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResponse.swift; sourceTree = "<group>"; };
+		FCB7704F22C33D9B003D0D5F /* Social.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Social.swift; sourceTree = "<group>"; };
+		FCB7705122C33E50003D0D5F /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
+		FCB7705322C33E6A003D0D5F /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
+		FCB7705522C33E9C003D0D5F /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
+		FCB7705722C33EB6003D0D5F /* UITextView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Extensions.swift"; sourceTree = "<group>"; };
+		FCB7705922C33F03003D0D5F /* Data+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extensions.swift"; sourceTree = "<group>"; };
+		FCE1976522C34422006E0A1F /* NewTransactionViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NewTransactionViewController.storyboard; sourceTree = "<group>"; };
+		FCE1976822C3446B006E0A1F /* LoginViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LoginViewController.storyboard; sourceTree = "<group>"; };
+		FCE1976B22C3457E006E0A1F /* ProfileViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProfileViewController.storyboard; sourceTree = "<group>"; };
+		FCE1976E22C345E8006E0A1F /* TransactionViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TransactionViewController.storyboard; sourceTree = "<group>"; };
+		FCE1977222C34613006E0A1F /* ChangeReceiverViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ChangeReceiverViewController.storyboard; sourceTree = "<group>"; };
+		FCE1977622C34AE3006E0A1F /* IdentityResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentityResponse.swift; sourceTree = "<group>"; };
+		FCE1977822C34AF7006E0A1F /* Certification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Certification.swift; sourceTree = "<group>"; };
+		FCE1977A22C34B09006E0A1F /* Meta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meta.swift; sourceTree = "<group>"; };
+		FCE1977D22C34B40006E0A1F /* DuniterResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuniterResponse.swift; sourceTree = "<group>"; };
+		FCE1978022C34B62006E0A1F /* SourceResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceResponse.swift; sourceTree = "<group>"; };
+		FCE1978322C34B8A006E0A1F /* TransactionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionResponse.swift; sourceTree = "<group>"; };
+		FCE1978522C34B9C006E0A1F /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
+		FCE1978722C34BB2006E0A1F /* ParsedTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsedTransaction.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,7 +155,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				12CED1E29B13C80FAE10B024 /* Pods_Cesium.framework in Frameworks */,
+				4F5A6E1D58A1D9CA680B7201 /* Pods_Cesium.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,7 +163,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				423EEC6332CFFBAC7BE0EA55 /* Pods_CesiumTests.framework in Frameworks */,
+				F747C185049D61ED9453DC0A /* Pods_CesiumTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,7 +171,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04EAF88BCBF3BE0401382CDA /* Pods_CesiumUITests.framework in Frameworks */,
+				29CACBD7547A929B6775FC17 /* Pods_CesiumUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,22 +181,22 @@
 		2EBD3338C5F534E66374BFBB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				5A8EB425419945549A10FE12 /* Pods-Cesium.debug.xcconfig */,
-				9F4A2F125B45F703665A987C /* Pods-Cesium.release.xcconfig */,
-				6C6D4DD590A64A108468EA72 /* Pods-CesiumTests.debug.xcconfig */,
-				6AF8A9565E5D11B7513ACCAB /* Pods-CesiumTests.release.xcconfig */,
-				60E5F249E3BF9CE3054DD1E8 /* Pods-CesiumUITests.debug.xcconfig */,
-				68C719E261FA17FA2FDA8D54 /* Pods-CesiumUITests.release.xcconfig */,
+				9D57D35E47776D114E87475F /* Pods-Cesium.debug.xcconfig */,
+				8B68543E1C390E295E107412 /* Pods-Cesium.release.xcconfig */,
+				6334C07CA8955E60F7875A89 /* Pods-CesiumTests.debug.xcconfig */,
+				C60F8C105828B10B60AEF169 /* Pods-CesiumTests.release.xcconfig */,
+				0AF4B560FF691C8B5D7C260A /* Pods-CesiumUITests.debug.xcconfig */,
+				4FC155556B0E713F287229BE /* Pods-CesiumUITests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		50581DD10C806710CA489AF7 /* Frameworks */ = {
+		8CB224E593F5D1DB7C3316FF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B4A9576E045C516D7255FFE2 /* Pods_Cesium.framework */,
-				2F9F18C04C898676C44F4926 /* Pods_CesiumTests.framework */,
-				6C75C4A288EACA9554B6CBD1 /* Pods_CesiumUITests.framework */,
+				9D81A7B7ECD68D84955DF726 /* Pods_Cesium.framework */,
+				482D0A87F3028867EEE5104B /* Pods_CesiumTests.framework */,
+				E7D01AB9C065E5CD675B9FA7 /* Pods_CesiumUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -167,7 +209,7 @@
 				AB04BF4C229F539600B1111E /* CesiumUITests */,
 				AB04BF29229F539400B1111E /* Products */,
 				2EBD3338C5F534E66374BFBB /* Pods */,
-				50581DD10C806710CA489AF7 /* Frameworks */,
+				8CB224E593F5D1DB7C3316FF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -184,22 +226,11 @@
 		AB04BF2A229F539400B1111E /* Cesium */ = {
 			isa = PBXGroup;
 			children = (
+				FCB7704522C33CE2003D0D5F /* Extensions */,
 				AB1AC3C822A1574E00CDEEB7 /* Utils */,
 				AB996F1622A06D9A005966E2 /* Models */,
-				AB04BF2B229F539400B1111E /* AppDelegate.swift */,
-				AB04BF2D229F539400B1111E /* FirstViewController.swift */,
-				ABE007CE22A281370077C9C3 /* TransactionViewController.swift */,
-				AB996F1B22A08452005966E2 /* LoginViewController.swift */,
-				AB38A65C22A5AE65008D7215 /* ChangeReceiverViewController.swift */,
-				ABB3F0A622BC31F400188D45 /* QRCodeViewController.swift */,
-				AB168A7022A3219E00952DDE /* NewTransactionViewController.swift */,
-				AB996F1D22A0847B005966E2 /* ProfileViewController.swift */,
-				ABD781B322A00AFE00574458 /* Assets.xcassets */,
-				AB04BF31229F539400B1111E /* Main.storyboard */,
-				AB04BF36229F539500B1111E /* LaunchScreen.storyboard */,
-				AB04BF39229F539500B1111E /* Info.plist */,
-				ABF6252322B5CCCB008D5087 /* InfoPlist.strings */,
-				AB1AC3C122A060EB00CDEEB7 /* Localizable.strings */,
+				FCE1976322C343FC006E0A1F /* Modules */,
+				FC9C1FFC22C33FA8007BFCEF /* Resources */,
 			);
 			path = Cesium;
 			sourceTree = "<group>";
@@ -227,9 +258,7 @@
 			children = (
 				AB1AC3BB22A05F1100CDEEB7 /* Base58.swift */,
 				AB1AC3C922A1575E00CDEEB7 /* Request.swift */,
-				AB1AC3CD22A1686F00CDEEB7 /* Image.swift */,
 				ABE007D122A2CDA10077C9C3 /* Currency.swift */,
-				AB168A7222A341A900952DDE /* TextField.swift */,
 				AB38A65A22A38309008D7215 /* Transactions.swift */,
 				ABF6251922B5AA60008D5087 /* KeyChain.swift */,
 				AB7681AC22C16802004755C4 /* Sign.swift */,
@@ -240,14 +269,160 @@
 		AB996F1622A06D9A005966E2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				AB996F1722A06E02005966E2 /* Profile.swift */,
-				AB1AC3C522A1490B00CDEEB7 /* Source.swift */,
-				AB1AC3CB22A1600700CDEEB7 /* Identity.swift */,
-				AB1AC3CF22A17FD700CDEEB7 /* Transaction.swift */,
+				FCB7704822C33D42003D0D5F /* Profile */,
+				FCE1977522C34AD2006E0A1F /* Identity */,
+				FCE1977C22C34B30006E0A1F /* Duniter */,
+				FCE1978222C34B7B006E0A1F /* Transaction */,
+				FCE1977F22C34B53006E0A1F /* Source */,
 				AB38A65822A37B24008D7215 /* Block.swift */,
-				ABD2E1E322A9214D001A40CD /* Duniter.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		FC9C1FFC22C33FA8007BFCEF /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				ABD781B322A00AFE00574458 /* Assets.xcassets */,
+				AB04BF36229F539500B1111E /* LaunchScreen.storyboard */,
+				AB04BF39229F539500B1111E /* Info.plist */,
+				ABF6252322B5CCCB008D5087 /* InfoPlist.strings */,
+				AB1AC3C122A060EB00CDEEB7 /* Localizable.strings */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		FCB7704522C33CE2003D0D5F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				FCB7704622C33CF7003D0D5F /* String+Extensions.swift */,
+				FCB7705122C33E50003D0D5F /* UIImage+Extensions.swift */,
+				FCB7705322C33E6A003D0D5F /* UIImageView+Extensions.swift */,
+				FCB7705522C33E9C003D0D5F /* UITextField+Extensions.swift */,
+				FCB7705722C33EB6003D0D5F /* UITextView+Extensions.swift */,
+				FCB7705922C33F03003D0D5F /* Data+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		FCB7704822C33D42003D0D5F /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				AB996F1722A06E02005966E2 /* Profile.swift */,
+				FCB7704D22C33D82003D0D5F /* ProfileResponse.swift */,
+				FCB7704922C33D51003D0D5F /* ProfileSearchResponse.swift */,
+				FCB7704B22C33D73003D0D5F /* Hits.swift */,
+				FCB7704F22C33D9B003D0D5F /* Social.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		FCE1976322C343FC006E0A1F /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				AB04BF2B229F539400B1111E /* AppDelegate.swift */,
+				FCE1976722C3445A006E0A1F /* LoginViewController */,
+				FCE1976A22C3455E006E0A1F /* FirstViewController */,
+				FCE1976D22C345DA006E0A1F /* TransactionViewController */,
+				FCE1977422C34647006E0A1F /* QRCodeViewController */,
+				FCE1977022C345F8006E0A1F /* ChangeReceiverViewController */,
+				FCE1976422C34415006E0A1F /* NewTransactionViewController */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		FCE1976422C34415006E0A1F /* NewTransactionViewController */ = {
+			isa = PBXGroup;
+			children = (
+				AB168A7022A3219E00952DDE /* NewTransactionViewController.swift */,
+				FCE1976522C34422006E0A1F /* NewTransactionViewController.storyboard */,
+			);
+			path = NewTransactionViewController;
+			sourceTree = "<group>";
+		};
+		FCE1976722C3445A006E0A1F /* LoginViewController */ = {
+			isa = PBXGroup;
+			children = (
+				AB996F1B22A08452005966E2 /* LoginViewController.swift */,
+				FCE1976822C3446B006E0A1F /* LoginViewController.storyboard */,
+			);
+			path = LoginViewController;
+			sourceTree = "<group>";
+		};
+		FCE1976A22C3455E006E0A1F /* FirstViewController */ = {
+			isa = PBXGroup;
+			children = (
+				AB04BF2D229F539400B1111E /* FirstViewController.swift */,
+				AB996F1D22A0847B005966E2 /* ProfileViewController.swift */,
+				FCE1976B22C3457E006E0A1F /* ProfileViewController.storyboard */,
+			);
+			path = FirstViewController;
+			sourceTree = "<group>";
+		};
+		FCE1976D22C345DA006E0A1F /* TransactionViewController */ = {
+			isa = PBXGroup;
+			children = (
+				ABE007CE22A281370077C9C3 /* TransactionViewController.swift */,
+				FCE1976E22C345E8006E0A1F /* TransactionViewController.storyboard */,
+			);
+			path = TransactionViewController;
+			sourceTree = "<group>";
+		};
+		FCE1977022C345F8006E0A1F /* ChangeReceiverViewController */ = {
+			isa = PBXGroup;
+			children = (
+				AB38A65C22A5AE65008D7215 /* ChangeReceiverViewController.swift */,
+				FCE1977222C34613006E0A1F /* ChangeReceiverViewController.storyboard */,
+			);
+			path = ChangeReceiverViewController;
+			sourceTree = "<group>";
+		};
+		FCE1977422C34647006E0A1F /* QRCodeViewController */ = {
+			isa = PBXGroup;
+			children = (
+				ABB3F0A622BC31F400188D45 /* QRCodeViewController.swift */,
+				AB04BF31229F539400B1111E /* QRCodeViewController.storyboard */,
+			);
+			path = QRCodeViewController;
+			sourceTree = "<group>";
+		};
+		FCE1977522C34AD2006E0A1F /* Identity */ = {
+			isa = PBXGroup;
+			children = (
+				AB1AC3CB22A1600700CDEEB7 /* Identity.swift */,
+				FCE1977622C34AE3006E0A1F /* IdentityResponse.swift */,
+				FCE1977822C34AF7006E0A1F /* Certification.swift */,
+				FCE1977A22C34B09006E0A1F /* Meta.swift */,
+			);
+			path = Identity;
+			sourceTree = "<group>";
+		};
+		FCE1977C22C34B30006E0A1F /* Duniter */ = {
+			isa = PBXGroup;
+			children = (
+				ABD2E1E322A9214D001A40CD /* Duniter.swift */,
+				FCE1977D22C34B40006E0A1F /* DuniterResponse.swift */,
+			);
+			path = Duniter;
+			sourceTree = "<group>";
+		};
+		FCE1977F22C34B53006E0A1F /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				AB1AC3C522A1490B00CDEEB7 /* Source.swift */,
+				FCE1978022C34B62006E0A1F /* SourceResponse.swift */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		FCE1978222C34B7B006E0A1F /* Transaction */ = {
+			isa = PBXGroup;
+			children = (
+				AB1AC3CF22A17FD700CDEEB7 /* Transaction.swift */,
+				FCE1978322C34B8A006E0A1F /* TransactionResponse.swift */,
+				FCE1978722C34BB2006E0A1F /* ParsedTransaction.swift */,
+				FCE1978522C34B9C006E0A1F /* History.swift */,
+			);
+			path = Transaction;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,11 +432,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AB04BF52229F539600B1111E /* Build configuration list for PBXNativeTarget "Cesium" */;
 			buildPhases = (
-				8BE3B0F963F4E484CC26969E /* [CP] Check Pods Manifest.lock */,
+				FF9B61942E994FCF9F57C621 /* [CP] Check Pods Manifest.lock */,
 				AB04BF24229F539400B1111E /* Sources */,
 				AB04BF25229F539400B1111E /* Frameworks */,
 				AB04BF26229F539400B1111E /* Resources */,
-				C21B66F59A9771B67EB56BB9 /* [CP] Embed Pods Frameworks */,
+				19A9EEF86E831D53E240D8E2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -276,7 +451,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AB04BF55229F539600B1111E /* Build configuration list for PBXNativeTarget "CesiumTests" */;
 			buildPhases = (
-				54683E6D48DF080EC034A967 /* [CP] Check Pods Manifest.lock */,
+				F81B30C45A93FF38B93801F2 /* [CP] Check Pods Manifest.lock */,
 				AB04BF3A229F539600B1111E /* Sources */,
 				AB04BF3B229F539600B1111E /* Frameworks */,
 				AB04BF3C229F539600B1111E /* Resources */,
@@ -295,7 +470,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AB04BF58229F539600B1111E /* Build configuration list for PBXNativeTarget "CesiumUITests" */;
 			buildPhases = (
-				A65397CA93F7F5174F28AF82 /* [CP] Check Pods Manifest.lock */,
+				C6AE6068893ACE78EA0B224D /* [CP] Check Pods Manifest.lock */,
 				AB04BF45229F539600B1111E /* Sources */,
 				AB04BF46229F539600B1111E /* Frameworks */,
 				AB04BF47229F539600B1111E /* Resources */,
@@ -360,9 +535,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB04BF38229F539500B1111E /* LaunchScreen.storyboard in Resources */,
+				FCE1976622C34422006E0A1F /* NewTransactionViewController.storyboard in Resources */,
 				AB1AC3BF22A060EB00CDEEB7 /* Localizable.strings in Resources */,
+				FCE1976F22C345E8006E0A1F /* TransactionViewController.storyboard in Resources */,
+				FCE1977322C34613006E0A1F /* ChangeReceiverViewController.storyboard in Resources */,
 				ABD781B422A00AFE00574458 /* Assets.xcassets in Resources */,
-				AB04BF33229F539400B1111E /* Main.storyboard in Resources */,
+				AB04BF33229F539400B1111E /* QRCodeViewController.storyboard in Resources */,
+				FCE1976922C3446B006E0A1F /* LoginViewController.storyboard in Resources */,
+				FCE1976C22C3457E006E0A1F /* ProfileViewController.storyboard in Resources */,
 				ABF6252122B5CCCB008D5087 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -384,7 +564,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		54683E6D48DF080EC034A967 /* [CP] Check Pods Manifest.lock */ = {
+		19A9EEF86E831D53E240D8E2 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -392,43 +572,31 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
+				"${PODS_ROOT}/Target Support Files/Pods-Cesium/Pods-Cesium-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Base58String/Base58String.framework",
+				"${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework",
+				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SipHash/SipHash.framework",
+				"${BUILT_PRODUCTS_DIR}/Sodium/Sodium.framework",
+				"${BUILT_PRODUCTS_DIR}/SwipeableTabBarController/SwipeableTabBarController.framework",
 			);
-			name = "[CP] Check Pods Manifest.lock";
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-CesiumTests-checkManifestLockResult.txt",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Base58String.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BigInt.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SipHash.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sodium.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwipeableTabBarController.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Cesium/Pods-Cesium-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8BE3B0F963F4E484CC26969E /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Cesium-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A65397CA93F7F5174F28AF82 /* [CP] Check Pods Manifest.lock */ = {
+		C6AE6068893ACE78EA0B224D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -450,21 +618,48 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C21B66F59A9771B67EB56BB9 /* [CP] Embed Pods Frameworks */ = {
+		F81B30C45A93FF38B93801F2 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Cesium/Pods-Cesium-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Cesium/Pods-Cesium-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CesiumTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Cesium/Pods-Cesium-frameworks.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FF9B61942E994FCF9F57C621 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Cesium-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -474,28 +669,44 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FCB7705422C33E6A003D0D5F /* UIImageView+Extensions.swift in Sources */,
+				FCB7705822C33EB6003D0D5F /* UITextView+Extensions.swift in Sources */,
 				AB1AC3D022A17FD700CDEEB7 /* Transaction.swift in Sources */,
 				AB38A65922A37B24008D7215 /* Block.swift in Sources */,
 				AB1AC3BC22A05F1100CDEEB7 /* Base58.swift in Sources */,
+				FCB7705222C33E50003D0D5F /* UIImage+Extensions.swift in Sources */,
 				ABE007D222A2CDA10077C9C3 /* Currency.swift in Sources */,
+				FCB7704A22C33D51003D0D5F /* ProfileSearchResponse.swift in Sources */,
+				FCE1977722C34AE3006E0A1F /* IdentityResponse.swift in Sources */,
 				AB7681AD22C16802004755C4 /* Sign.swift in Sources */,
-				AB168A7322A341A900952DDE /* TextField.swift in Sources */,
+				FCB7705A22C33F03003D0D5F /* Data+Extensions.swift in Sources */,
 				AB996F1822A06E02005966E2 /* Profile.swift in Sources */,
 				AB1AC3CA22A1575E00CDEEB7 /* Request.swift in Sources */,
 				AB1AC3C622A1490B00CDEEB7 /* Source.swift in Sources */,
-				AB1AC3CE22A1686F00CDEEB7 /* Image.swift in Sources */,
 				AB38A65D22A5AE65008D7215 /* ChangeReceiverViewController.swift in Sources */,
 				AB996F1C22A08452005966E2 /* LoginViewController.swift in Sources */,
 				AB38A65B22A38309008D7215 /* Transactions.swift in Sources */,
+				FCB7704E22C33D82003D0D5F /* ProfileResponse.swift in Sources */,
+				FCE1977E22C34B40006E0A1F /* DuniterResponse.swift in Sources */,
+				FCE1977922C34AF7006E0A1F /* Certification.swift in Sources */,
 				ABB3F0A722BC31F400188D45 /* QRCodeViewController.swift in Sources */,
+				FCE1978822C34BB2006E0A1F /* ParsedTransaction.swift in Sources */,
+				FCE1978422C34B8A006E0A1F /* TransactionResponse.swift in Sources */,
+				FCB7705622C33E9C003D0D5F /* UITextField+Extensions.swift in Sources */,
 				AB1AC3CC22A1600700CDEEB7 /* Identity.swift in Sources */,
 				ABE007D022A28D820077C9C3 /* TransactionViewController.swift in Sources */,
 				AB168A7122A3219E00952DDE /* NewTransactionViewController.swift in Sources */,
 				ABD2E1E422A9214D001A40CD /* Duniter.swift in Sources */,
+				FCE1978122C34B62006E0A1F /* SourceResponse.swift in Sources */,
 				AB996F1E22A0847B005966E2 /* ProfileViewController.swift in Sources */,
+				FCE1977B22C34B09006E0A1F /* Meta.swift in Sources */,
+				FCB7704722C33CF7003D0D5F /* String+Extensions.swift in Sources */,
 				ABF6251A22B5AA60008D5087 /* KeyChain.swift in Sources */,
 				AB04BF2C229F539400B1111E /* AppDelegate.swift in Sources */,
 				AB04BF2E229F539400B1111E /* FirstViewController.swift in Sources */,
+				FCE1978622C34B9C006E0A1F /* History.swift in Sources */,
+				FCB7704C22C33D73003D0D5F /* Hits.swift in Sources */,
+				FCB7705022C33D9B003D0D5F /* Social.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -531,12 +742,12 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		AB04BF31229F539400B1111E /* Main.storyboard */ = {
+		AB04BF31229F539400B1111E /* QRCodeViewController.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				AB04BF32229F539400B1111E /* Base */,
 			);
-			name = Main.storyboard;
+			name = QRCodeViewController.storyboard;
 			sourceTree = "<group>";
 		};
 		AB04BF36229F539500B1111E /* LaunchScreen.storyboard */ = {
@@ -691,12 +902,12 @@
 		};
 		AB04BF53229F539600B1111E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5A8EB425419945549A10FE12 /* Pods-Cesium.debug.xcconfig */;
+			baseConfigurationReference = 9D57D35E47776D114E87475F /* Pods-Cesium.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 24G23598DF;
-				INFOPLIST_FILE = Cesium/Info.plist;
+				DEVELOPMENT_TEAM = RP68K7NXAW;
+				INFOPLIST_FILE = "$(SRCROOT)/Cesium/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -711,12 +922,12 @@
 		};
 		AB04BF54229F539600B1111E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9F4A2F125B45F703665A987C /* Pods-Cesium.release.xcconfig */;
+			baseConfigurationReference = 8B68543E1C390E295E107412 /* Pods-Cesium.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 24G23598DF;
-				INFOPLIST_FILE = Cesium/Info.plist;
+				DEVELOPMENT_TEAM = RP68K7NXAW;
+				INFOPLIST_FILE = "$(SRCROOT)/Cesium/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -731,7 +942,7 @@
 		};
 		AB04BF56229F539600B1111E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6C6D4DD590A64A108468EA72 /* Pods-CesiumTests.debug.xcconfig */;
+			baseConfigurationReference = 6334C07CA8955E60F7875A89 /* Pods-CesiumTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -753,7 +964,7 @@
 		};
 		AB04BF57229F539600B1111E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6AF8A9565E5D11B7513ACCAB /* Pods-CesiumTests.release.xcconfig */;
+			baseConfigurationReference = C60F8C105828B10B60AEF169 /* Pods-CesiumTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -775,7 +986,7 @@
 		};
 		AB04BF59229F539600B1111E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 60E5F249E3BF9CE3054DD1E8 /* Pods-CesiumUITests.debug.xcconfig */;
+			baseConfigurationReference = 0AF4B560FF691C8B5D7C260A /* Pods-CesiumUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -796,7 +1007,7 @@
 		};
 		AB04BF5A229F539600B1111E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 68C719E261FA17FA2FDA8D54 /* Pods-CesiumUITests.release.xcconfig */;
+			baseConfigurationReference = 4FC155556B0E713F287229BE /* Pods-CesiumUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

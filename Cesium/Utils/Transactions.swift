@@ -38,16 +38,17 @@ class Transactions {
         }
         
         var tx = """
-Version: 10
-Type: Transaction
-Currency: \(block.currency)
-Blockstamp: \(block.number)-\(block.hash)
-Locktime: 0
-Issuers:
-\(profile.issuer)
-Inputs:
+            Version: 10
+            Type: Transaction
+            Currency: \(block.currency)
+            Blockstamp: \(block.number)-\(block.hash)
+            Locktime: 0
+            Issuers:
+            \(profile.issuer)
+            Inputs:
 
-"""
+        """
+        
         let inputs = sources.map {
             return String(format:"%d:%d:%@:%@:%d", $0.amount, $0.base, $0.type, $0.identifier, $0.noffset)
             }.reduce("") { (res: String, str: String) -> String in

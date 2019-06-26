@@ -14,7 +14,7 @@ struct TransactionRequest: Codable {
 
 struct RequestError: Error {
     enum ErrorKind {
-        case nodata
+        case noData
         case encodingFailed
         case decodingFailed
         case notJson
@@ -32,7 +32,6 @@ class Request {
     init(url: String) {
         self.url = URL(string: url)!
     }
-    
     
     func postRaw<T>(rawTx: String, type: T.Type, callback: ((Error?, T?) -> Void)?) where T : Decodable {
         let session = URLSession.shared
@@ -58,7 +57,7 @@ class Request {
             }
             
             guard let data = data else {
-                callback?(RequestError(requestData: nil, responseData: nil, kind: .nodata), nil)
+                callback?(RequestError(requestData: nil, responseData: nil, kind: .noData), nil)
                 print("no data")
                 return
             }
@@ -94,7 +93,7 @@ class Request {
             }
             guard let responseData = data else {
                 //print("no data")
-                callback?(RequestError(requestData: nil, responseData: data, kind: .nodata), nil)
+                callback?(RequestError(requestData: nil, responseData: data, kind: .noData), nil)
                 return
             }
             
@@ -112,6 +111,7 @@ class Request {
         
         self.task?.resume()
     }
+    
     func cancel() {
         self.task?.cancel()
     }

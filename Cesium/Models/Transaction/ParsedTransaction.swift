@@ -1,56 +1,17 @@
 //
-//  Transaction.swift
+//  ParsedTransaction.swift
 //  Cesium
 //
-//  Created by Jonathan Foucher on 31/05/2019.
+//  Created by Afx on 26/06/2019.
 //  Copyright © 2019 Jonathan Foucher. All rights reserved.
 //
 
 import Foundation
-import CryptoSwift
-import Sodium
-
-struct TransactionResponse: Codable {
-    var currency: String = "g1"
-    var pubkey: String? = nil
-    var history: History?
-}
-
-struct History: Codable {
-    var sent: [Transaction] = []
-    var received: [Transaction] = []
-    var sending: [Transaction] = []
-    var receiving: [Transaction] = []
-}
-
-struct Transaction: Codable, Comparable {
-    // https://git.duniter.org/nodes/typescript/duniter/issues/1382
-    //var version: Int?
-    var received: Int? = nil
-    var hash: String? = nil
-    var currency: String? = nil
-    var block_number: Int? = nil
-    var time: Int?
-    var comment: String? = nil
-    var issuers: [String] = []
-    var inputs: [String] = []
-    var outputs: [String] = []
-    var signatures: [String] = []
-    var blockstampTime: Int?
-    var blockstamp: String?
-    
-    var locktime: Int = 0
-    
-    static func < (lhs: Transaction, rhs: Transaction) -> Bool {
-        return lhs.time! < rhs.time!
-    }
-}
-
 
 struct ParsedTransaction: Comparable {
     var transaction: Transaction
     var amount: Decimal
-
+    
     var time: Int
     var inputs: [String] = []
     var sources: [String] = []
@@ -91,13 +52,13 @@ struct ParsedTransaction: Comparable {
         let total = tx.outputs.reduce(0) {
             (sum: Decimal, output: String) -> Decimal in
             let outputArray = output.components(separatedBy: ":")
-
+            
             let outputBase = Int(outputArray[1])!
             let outputAmount = powBase(amount: Decimal(Int(outputArray[0])!), base: outputBase)
-
+            
             let outputCondition = outputArray[2]
             let pattern = "SIG\\(([0-9a-zA-Z]+)\\)"
-
+            
             var sigMatches:[String] = []
             
             let res = self.matchAll(string: outputCondition, pattern: pattern)
@@ -122,23 +83,23 @@ struct ParsedTransaction: Comparable {
                         return sum - outputAmount;
                     }
                 }
-            
+                
             } else if (outputCondition.contains("SIG("+pubKey+")")) {
                 print("TODOTODO")
-//                var lockedOutput = BMA.tx.parseUnlockCondition(outputCondition);
-//                if (lockedOutput) {
-//
-//                    lockedOutput.amount = outputAmount;
-//                    lockedOutputs = lockedOutputs || [];
-//                    lockedOutputs.push(lockedOutput);
-//                    console.debug('[tx] has locked output:', lockedOutput);
-//
-//                    return sum + outputAmount;
-//                }
+                //                var lockedOutput = BMA.tx.parseUnlockCondition(outputCondition);
+                //                if (lockedOutput) {
+                //
+                //                    lockedOutput.amount = outputAmount;
+                //                    lockedOutputs = lockedOutputs || [];
+                //                    lockedOutputs.push(lockedOutput);
+                //                    console.debug('[tx] has locked output:', lockedOutput);
+                //
+                //                    return sum + outputAmount;
+                //                }
             }
             return sum
         }
-    
+        
         self.to = tx.outputs.map { out -> String in
             let outputArray = out.components(separatedBy: ":")
             let pattern = "SIG\\(([0-9a-zA-Z]+)\\)"
@@ -152,13 +113,13 @@ struct ParsedTransaction: Comparable {
             }
             return ""
             }.filter { $0 == pubKey }
-//            .filter { out in
-//            return !out.contains("SIG("+pubKey+")")
-//        }
-
+        //            .filter { out in
+        //            return !out.contains("SIG("+pubKey+")")
+        //        }
+        
         
         let txPubkey = total > 0 ? otherIssuer : otherReceiver;
-
+        
         
         let time = tx.time != nil ? tx.time : tx.blockstampTime;
         self.time = time!
@@ -168,15 +129,15 @@ struct ParsedTransaction: Comparable {
         self.isUD = false
         
         
-
+        
         // If pending: store sources and inputs for a later use - see method processTransactionsAndSources()
         if (walletIsIssuer && tx.block_number == nil) {
             self.inputs = tx.inputs;
         }
         
-//        if (lockedOutputs) {
-//            newTx.lockedOutputs = lockedOutputs;
-//        }
+        //        if (lockedOutputs) {
+        //            newTx.lockedOutputs = lockedOutputs;
+        //        }
     }
     
     func powBase(amount: Decimal, base: Int) -> Decimal {
@@ -200,6 +161,3 @@ struct ParsedTransaction: Comparable {
         }
     }
 }
-
-
-
