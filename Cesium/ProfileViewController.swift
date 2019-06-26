@@ -36,7 +36,7 @@ class TransactionTableViewCell: UITableViewCell {
 
 class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     weak var changeUserDelegate: ViewUserDelegate?
-
+    var displayingAvatar: Bool = true
     @IBOutlet weak var check: UIImageView!
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var balance: UILabel!
@@ -104,6 +104,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.avatar.clipsToBounds = true
             
             profile.getAvatar(imageView: self.avatar)
+            
+
             // make key image white
             self.keyImage.tintColor = .white
             self.keyImage.image = UIImage(named: "key")?.withRenderingMode(.alwaysTemplate)
@@ -158,6 +160,61 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             tableView.refreshControl = refreshControl
         } else {
             tableView.addSubview(refreshControl)
+        }
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
+        self.avatar.isUserInteractionEnabled = true
+        self.avatar.addGestureRecognizer(tapGestureRecognizer)
+        
+    }
+    
+    @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer)
+    {
+        let tappedImage = tapGestureRecognizer.view as! UIImageView
+        print("displaying avatar")
+        if (self.displayingAvatar) {
+            self.displayingAvatar = false
+            self.avatar.layer.borderWidth = 1
+            self.avatar.layer.masksToBounds = false
+            self.avatar.layer.borderColor = UIColor.white.cgColor
+            if #available(iOS 11, *) {
+                UIView.animate(withDuration: 0.15, animations: {
+                    self.avatar.layer.cornerRadius = 0
+                })
+            } else {
+                self.avatar.layer.cornerRadius = 0
+            }
+            
+            self.avatar.clipsToBounds = true
+            if let data = self.profile?.issuer.data(using: String.Encoding.ascii) {
+                if let filter = CIFilter(name: "CIQRCodeGenerator") {
+                    filter.setValue(data, forKey: "inputMessage")
+                    let transform = CGAffineTransform(scaleX: 3, y: 3)
+                    
+                    if let output = filter.outputImage?.transformed(by: transform) {
+                        tappedImage.image = UIImage(ciImage: output)
+                        
+                    }
+                }
+            }
+        } else {
+            if let prof = self.profile {
+                self.displayingAvatar = true
+                prof.getAvatar(imageView: tappedImage)
+                self.avatar.layer.borderWidth = 1
+                self.avatar.layer.masksToBounds = false
+                self.avatar.layer.borderColor = UIColor.white.cgColor
+                
+                if #available(iOS 11, *) {
+                    UIView.animate(withDuration: 0.15, animations: {
+                        self.avatar.layer.cornerRadius = self.avatar.frame.width/2
+                    })
+                } else {
+                    self.avatar.layer.cornerRadius = self.avatar.frame.width/2
+                }
+                
+                self.avatar.clipsToBounds = true
+            }
         }
     }
     
