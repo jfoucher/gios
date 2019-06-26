@@ -18,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fNf-UO-BUr">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fNf-UO-BUr" userLabel="TopView">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="110"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="89I-pX-Sbz" customClass="CloseButton" customModule="Cesium" customModuleProvider="target">
@@ -43,15 +43,9 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" horizontalCompressionResistancePriority="200" translatesAutoresizingMaskIntoConstraints="NO" id="jba-ud-GMt">
+                            <view contentMode="scaleToFill" horizontalCompressionResistancePriority="200" translatesAutoresizingMaskIntoConstraints="NO" id="jba-ud-GMt" userLabel="SenderView">
                                 <rect key="frame" x="12" y="188.5" width="96" height="140"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.89999997615814209" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Loading..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GU6-gq-iox">
-                                        <rect key="frame" x="0.0" y="116" width="96" height="16"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="200" translatesAutoresizingMaskIntoConstraints="NO" id="59d-KH-Vjx">
                                         <rect key="frame" x="0.0" y="0.0" width="96" height="96"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -61,6 +55,12 @@
                                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="96" id="IjR-dG-feD"/>
                                         </constraints>
                                     </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.89999997615814209" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Loading..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GU6-gq-iox">
+                                        <rect key="frame" x="0.0" y="116" width="96" height="16"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="59d-KH-Vjx" firstAttribute="leading" secondItem="jba-ud-GMt" secondAttribute="leading" id="LEW-ER-u8j"/>
@@ -105,7 +105,7 @@
                                     <constraint firstItem="isb-VJ-CsP" firstAttribute="centerX" secondItem="lo4-XD-RiY" secondAttribute="centerX" id="vWQ-pN-NYe"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" horizontalCompressionResistancePriority="200" translatesAutoresizingMaskIntoConstraints="NO" id="PpS-xP-o3D">
+                            <view contentMode="scaleToFill" horizontalCompressionResistancePriority="200" translatesAutoresizingMaskIntoConstraints="NO" id="PpS-xP-o3D" userLabel="ReceeiverView">
                                 <rect key="frame" x="306" y="188.5" width="96" height="140"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="200" translatesAutoresizingMaskIntoConstraints="NO" id="4BF-Y8-723">
@@ -142,7 +142,7 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YAz-kC-UlP">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YAz-kC-UlP" userLabel="BottomView">
                                 <rect key="frame" x="0.0" y="375" width="414" height="521"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Bxn-qD-zZe">
@@ -212,17 +212,17 @@
                     </view>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
-                        <outlet property="amount" destination="isb-VJ-CsP" id="M2K-VM-LaT"/>
-                        <outlet property="arrow" destination="fc9-Ly-lWk" id="lWg-wJ-IiA"/>
+                        <outlet property="amountLabel" destination="isb-VJ-CsP" id="cY8-eb-Mzv"/>
+                        <outlet property="arrowImageView" destination="fc9-Ly-lWk" id="oXs-CG-dDF"/>
                         <outlet property="closeButtonView" destination="89I-pX-Sbz" id="4zX-UY-h0C"/>
-                        <outlet property="comment" destination="Bxn-qD-zZe" id="fg9-96-JTF"/>
-                        <outlet property="date" destination="QLc-BA-dOt" id="Yjf-r6-n6L"/>
+                        <outlet property="commentTextView" destination="Bxn-qD-zZe" id="KD5-J7-ChS"/>
+                        <outlet property="dateLabel" destination="QLc-BA-dOt" id="mT5-I7-ES1"/>
                         <outlet property="decryptCommentButton" destination="CgH-tk-Te5" id="qbF-mm-tjN"/>
-                        <outlet property="receiverAvatar" destination="4BF-Y8-723" id="0L9-qU-cg5"/>
-                        <outlet property="receiverName" destination="D8c-Tn-inT" id="W33-NL-oYC"/>
-                        <outlet property="senderAvatar" destination="59d-KH-Vjx" id="73E-4f-vai"/>
-                        <outlet property="senderName" destination="GU6-gq-iox" id="vkw-ls-faL"/>
-                        <outlet property="txHash" destination="6kM-Nr-vjA" id="uim-CK-noN"/>
+                        <outlet property="receiverAvatarImageView" destination="4BF-Y8-723" id="fUb-Qw-CdO"/>
+                        <outlet property="receiverNameLabel" destination="D8c-Tn-inT" id="v3W-Sm-Ce9"/>
+                        <outlet property="senderAvatarImageView" destination="59d-KH-Vjx" id="ge5-pV-WPn"/>
+                        <outlet property="senderNameLabel" destination="GU6-gq-iox" id="0EA-BQ-4vq"/>
+                        <outlet property="txHashLabel" destination="6kM-Nr-vjA" id="Cbf-FJ-5h4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X9q-7I-L98" userLabel="First Responder" sceneMemberID="firstResponder"/>
