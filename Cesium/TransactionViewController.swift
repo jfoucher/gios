@@ -114,7 +114,7 @@ class TransactionViewController: UIViewController {
             print(tx.pubKey)
             self.getSender(pubKey: tx.pubKey)
             
-            if ((tx.to.count > 0 && self.receiver == nil) || (tx.amount < 0 && self.receiver?.kp == nil)) {
+            if ((tx.to.count > 0 && self.receiver == nil) || (tx.to.count > 0 && tx.amount < 0 && self.receiver?.kp == nil)) {
                 self.getReceiver(pubKey: tx.to[0])
             }
             if (tx.comment.starts(with: "enc ")) {
